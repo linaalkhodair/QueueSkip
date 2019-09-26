@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">QueueSkip</string>
+    <string name="title_camera">Camera</string>
+    <string name="title_cart">Cart</string>
+    <string name="title_logout">Log out</string>
+    <string name="sign_up_name_hint">Name</string>
+    <string name="login_email_hint">Email address</string>
+    <string name="login_pass_hint">Password</string>
+    <string name="sign_up_confirm_pass">Confirm Password</string>
+    <string name="register_btn">Register</string>
+    <string name="invalid_email_address">Email address not in the correct format</string>
+    <string name="invalid_user">There is no user with this email address</string>
+    <string name="invalid_email_or_pass">Invalid email or password</string>
+    <string name="fill_required_fields">Please fill in all required fields</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="already_registered">You have already registered with this E-mail</string>
+    <string name="passwords_do_not_match">Your password and confirmation password do not match.</string>
+    <string name="network_failed">Network Failed</string>
+    <string name="result_text_default">please focus camera to QR code</string>
+
+
+</resources>
