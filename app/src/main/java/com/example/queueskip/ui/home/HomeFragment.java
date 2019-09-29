@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        /*
+        //removed comment
         scan = (Button)view.findViewById(R.id.scan);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment {
                 startActivity(new Intent(getContext(), ScanActivity.class));
             }
         });
-        */
+
         return view;
 
     }
