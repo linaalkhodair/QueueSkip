@@ -95,6 +95,10 @@
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:clickable="true"
+            android:onClick="@{() -> viewModel.onDateEditTextClicked()}"
+            android:focusable="false"
+            android:editable="false"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 

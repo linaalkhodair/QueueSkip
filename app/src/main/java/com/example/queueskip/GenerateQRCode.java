@@ -1,11 +1,13 @@
 package com.example.queueskip;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -20,6 +22,10 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 
 public class GenerateQRCode extends AppCompatActivity {
@@ -47,6 +53,43 @@ public class GenerateQRCode extends AppCompatActivity {
         databaseItem = FirebaseDatabase.getInstance().getReference("item");
         firebaseAuth = FirebaseAuth.getInstance();
 
+        final Calendar myCalendar = Calendar.getInstance();
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+            private void updateLabel() {
+                String myFormat = "MM/dd/yy"; //In which you need put here
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                textExpire.setText(sdf.format(myCalendar.getTime()));
+            }
+
+        };
+
+        textExpire.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(GenerateQRCode.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+
+
+
         logout = findViewById(R.id.admin_logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,25 +99,45 @@ public class GenerateQRCode extends AppCompatActivity {
         });
 
         sub_btn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                text2QR="Item:"+text.getText().toString().trim()+" "+"Price"+textPrice.getText().toString().trim()+" SR " +"Expiration date"+textExpire.getText().toString().trim();
-                MultiFormatWriter multiFormatWriter =new MultiFormatWriter();
-                try{
-                    BitMatrix bitMatrix =multiFormatWriter.encode(text2QR, BarcodeFormat.QR_CODE,200,200);
-                    BarcodeEncoder barcodeEncoder=new BarcodeEncoder();
-                    bitmap=barcodeEncoder.createBitmap(bitMatrix);
-                    image.setImageBitmap(bitmap);
-                    addItem();
+                text2QR = "Item:" + text.getText().toString().trim() + " " + "Price" + textPrice.getText().toString().trim() + " SR " + "Expiration date" + textExpire.getText().toString().trim();
+                MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
-                } catch (WriterException e) {
-                    e.printStackTrace();
-                }
+                if (validate()) {
+                    try {
+                        BitMatrix bitMatrix = multiFormatWriter.encode(text2QR, BarcodeFormat.QR_CODE, 200, 200);
+                        BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                        bitmap = barcodeEncoder.createBitmap(bitMatrix);
+                        image.setImageBitmap(bitmap);
+                        addItem();
 
+                    } catch (WriterException e) {
+                        e.printStackTrace();
+                    }
+            }//end if
             }
         });
 
     }
+
+    public boolean validate(){
+        String name=text.getText().toString().trim();
+        String price=textPrice.getText().toString().trim();
+        String expire=textExpire.getText().toString().trim();
+        if((TextUtils.isEmpty(name)) ||(TextUtils.isEmpty(price))||(TextUtils.isEmpty(expire))){
+            Toast.makeText(this,"You should fill all fields",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if(!TextUtils.isDigitsOnly(price)){
+            Toast.makeText(this,"Price should be digits only",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+
+        } //end validate
+
     public void logout(){
         firebaseAuth.signOut();
         finish();
@@ -85,6 +148,7 @@ public class GenerateQRCode extends AppCompatActivity {
         String name=text.getText().toString().trim();
         String price=textPrice.getText().toString().trim();
         String expire=textExpire.getText().toString().trim();
+
         if((!TextUtils.isEmpty(name)) &&(! TextUtils.isEmpty(price))&&(! TextUtils.isEmpty(expire))){
             String id=databaseItem.push().getKey();
             Items item=new Items(id,name,price,expire);
@@ -94,8 +158,9 @@ public class GenerateQRCode extends AppCompatActivity {
 
         }
         else{
-            Toast.makeText(this,"You should fill all fields",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"You should fill all fields",Toast.LENGTH_LONG).show(); // ithink would be no need?
         }
     }
+
 
 }
