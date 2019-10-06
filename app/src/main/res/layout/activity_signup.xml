@@ -17,13 +17,13 @@
         app:titleTextColor="@android:color/white"
         ></androidx.appcompat.widget.Toolbar>
 
+
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
-        android:src="@drawable/logo"/>
-
+        android:src="@drawable/logo" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_height="wrap_content"
@@ -104,11 +104,33 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:background="@color/colorPrimary"
         android:text="@string/register_btn"
         android:textColor="@android:color/white"
-        android:background="@color/colorPrimary"
-        android:textStyle="bold"
+        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        >
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Already have an account?"
+    android:layout_gravity="center"
+    android:textColor="@color/colorPrimaryDark"/>
+
+    <TextView
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="5dp"
+        android:text="Log in"
+        android:textColor="@color/colorPrimary"
+
         />
-
-
+    </LinearLayout>
 </LinearLayout>

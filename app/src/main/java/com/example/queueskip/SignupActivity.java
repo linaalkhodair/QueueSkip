@@ -4,9 +4,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,6 +40,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private String emailInput;
     private String passInput;
     private String confPassInput;
+    private TextView login;
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
@@ -58,7 +62,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         editPass=findViewById(R.id.signUpPasswordET);
         editConfPass=findViewById(R.id.confPasswordET);
         registerBtn=findViewById(R.id.registerBtn);
-
+       login=findViewById(R.id.login);
 
         reff= FirebaseDatabase.getInstance().getReference().child("User");
 
@@ -66,8 +70,19 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         firebaseAuth = FirebaseAuth.getInstance();
         registerBtn.setOnClickListener(this);
 
+        //underlines text
+        SpannableString content = new SpannableString("Log in");
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        login.setText(content);
 
-    }
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+            }
+        });
+
+    } // end of onCreate
 
     public void onClick(View view) {
 
@@ -113,10 +128,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         }
 
     }//end of onClick
-
-
-
-
 
 
     private boolean validate() {
@@ -267,7 +278,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private void createDialog(String message){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(SignupActivity.this);
         alertDialog.setMessage(message);
-
 
         alertDialog.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
