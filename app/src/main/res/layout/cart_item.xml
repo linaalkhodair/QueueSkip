@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="8dp">
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_margin="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/img_product"
+       />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_product_name"
+            android:text="Milk"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="7">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_price"
+                android:text="20"
+                android:textSize="20sp"
+                android:layout_weight="6"/>
+<com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+    android:layout_width="80dp"
+    android:layout_height="30dp"
+    android:id="@+id/txt_amount"
+    android:layout_weight="1"
+    app:initialNumber="1"
+    app:finalNumber="300"
+    app:backGroundColor="@android:color/darker_gray"
+    app:textSize="10sp"
+    app:textColor="@color/colorPrimaryDark"
+    ></com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
+</androidx.cardview.widget.CardView>
