@@ -38,6 +38,7 @@ public class GenerateQRCode extends AppCompatActivity {
     DatabaseReference databaseItem;
     Bitmap bitmap;
     private ImageView logout;
+    private ImageView calendar;
     private FirebaseAuth firebaseAuth;
 
 
@@ -53,8 +54,11 @@ public class GenerateQRCode extends AppCompatActivity {
         databaseItem = FirebaseDatabase.getInstance().getReference("item");
         firebaseAuth = FirebaseAuth.getInstance();
 
-        final Calendar myCalendar = Calendar.getInstance();
 
+        //Calendar
+        calendar=(ImageView) findViewById(R.id.calendar);
+
+        final Calendar myCalendar = Calendar.getInstance();
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -76,7 +80,7 @@ public class GenerateQRCode extends AppCompatActivity {
 
         };
 
-        textExpire.setOnClickListener(new View.OnClickListener() {
+        calendar.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -86,8 +90,6 @@ public class GenerateQRCode extends AppCompatActivity {
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-
-
 
 
         logout = findViewById(R.id.admin_logout);
@@ -127,7 +129,7 @@ public class GenerateQRCode extends AppCompatActivity {
         String price=textPrice.getText().toString().trim();
         String expire=textExpire.getText().toString().trim();
         if((TextUtils.isEmpty(name)) ||(TextUtils.isEmpty(price))||(TextUtils.isEmpty(expire))){
-            Toast.makeText(this,"You should fill all fields",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Please fill in all required fields",Toast.LENGTH_LONG).show();
             return false;
         }
         else if(!TextUtils.isDigitsOnly(price)){
@@ -136,7 +138,7 @@ public class GenerateQRCode extends AppCompatActivity {
         }
         return true;
 
-        } //end validate
+    } //end validate
 
     public void logout(){
         firebaseAuth.signOut();
@@ -149,7 +151,7 @@ public class GenerateQRCode extends AppCompatActivity {
         String price=textPrice.getText().toString().trim();
         String expire=textExpire.getText().toString().trim();
 
-        if((!TextUtils.isEmpty(name)) &&(! TextUtils.isEmpty(price))&&(! TextUtils.isEmpty(expire))){
+        if((!TextUtils.isEmpty(name)) &&(! TextUtils.isEmpty(price))&&(! TextUtils.isEmpty(expire))){ //i think no need since we validate before
             String id=databaseItem.push().getKey();
             Items item=new Items(id,name,price,expire);
             databaseItem.child(id).setValue(item);
@@ -160,7 +162,7 @@ public class GenerateQRCode extends AppCompatActivity {
         else{
             Toast.makeText(this,"You should fill all fields",Toast.LENGTH_LONG).show(); // ithink would be no need?
         }
-    }
+    } //end of addItem
 
 
 }
