@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,6 +48,16 @@ public class LoginActivity extends AppCompatActivity {
         attempts = findViewById(R.id.attempts);
         forgot = findViewById(R.id.forgot);
         register = findViewById(R.id.register);
+
+        //underlines text
+        SpannableString content = new SpannableString("Sign up!");
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        register.setText(content);
+
+        SpannableString content2 = new SpannableString("Forgot password?");
+        content2.setSpan(new UnderlineSpan(), 0, content2.length(), 0);
+        forgot.setText(content2);
+
 
 
         attempts.setText("Number of attempts remaining:5");// wrote down number 5 so it doesn't appear empty at first.
