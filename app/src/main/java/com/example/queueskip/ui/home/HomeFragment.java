@@ -1,7 +1,10 @@
 package com.example.queueskip.ui.home;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -25,7 +28,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.queueskip.LoginActivity;
 import com.example.queueskip.R;
-import com.example.queueskip.ScanActivity;
 import com.example.queueskip.SignupActivity;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -33,7 +35,7 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
-
+/*
 public class HomeFragment extends Fragment {
     private Button scan;
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,13 +55,22 @@ public class HomeFragment extends Fragment {
     }
 }
 
-/*
+
+ */
+
+public class HomeFragment extends Fragment {
+
 private HomeViewModel homeViewModel;
     SurfaceView cameraPreview;
     TextView txtResult;
     BarcodeDetector barcodeDetector;
     CameraSource cameraSource;
     final int RequestCameraPermissionID=1001;
+    private Button closeBtn;
+    private TextView productNameTxt;
+
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -69,6 +80,7 @@ private HomeViewModel homeViewModel;
 
         cameraPreview = (SurfaceView)view.findViewById(R.id.cameraPreview);
         txtResult= (TextView)view.findViewById(R.id.txtResult);
+
         barcodeDetector=new BarcodeDetector.Builder(context).setBarcodeFormats(Barcode.QR_CODE).build();
         cameraSource = new CameraSource.Builder(getContext(),barcodeDetector).setRequestedPreviewSize(640,480).build();
 //        homeViewModel =
@@ -80,6 +92,9 @@ private HomeViewModel homeViewModel;
 //                textView.setText(s);
 //            }
 //        });
+
+
+
         //add event
         cameraPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -122,14 +137,56 @@ private HomeViewModel homeViewModel;
                     txtResult.post(new Runnable() {
                         @Override
                         public void run() {
+                            cameraSource.stop();//check
                             //create vibrate
                             Vibrator vibrator=(Vibrator)getActivity().getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                             vibrator.vibrate(100);
-                            txtResult.setText(qrcodes.valueAt(0).displayValue);
+                            //txtResult.setText(qrcodes.valueAt(0).displayValue);
+                            //----------------
+                            final Dialog dialog = new Dialog(getContext());
+                            dialog.setContentView(R.layout.product_dialog);
+                            closeBtn=dialog.findViewById(R.id.button_close);
+                            productNameTxt=dialog.findViewById(R.id.product_name_dialog);
+
+
+                            productNameTxt.setText(qrcodes.valueAt(0).displayValue);
+
+
+                            closeBtn.setOnClickListener(new View.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(View view) {
+                                                                dialog.cancel();
+                                                            }//end of onClick
+                                                        }//end of OnClickListener
+                            );
+
+                            dialog.show();
+                            //-----------------
+                            /*
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+
+                            alertDialog.setMessage(qrcodes.valueAt(0).displayValue);
+
+
+                            alertDialog.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }//end of onClick
+                                    }//end of OnClickListener
+                            );
+
+                            alertDialog.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }//end of onClick
+                                    }//end of OnClickListener
+                            );
+                            alertDialog.show();
+
+                             */
                         }
                     });
                 }
-
             }
         });
         return view;
@@ -158,5 +215,7 @@ private HomeViewModel homeViewModel;
         }
     }
 }
- */
+
+
+
 

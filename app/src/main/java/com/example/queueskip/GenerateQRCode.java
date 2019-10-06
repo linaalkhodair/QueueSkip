@@ -102,7 +102,7 @@ public class GenerateQRCode extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                text2QR = "Item:" + text.getText().toString().trim() + " " + "Price" + textPrice.getText().toString().trim() + " SR " + "Expiration date" + textExpire.getText().toString().trim();
+                text2QR = "Item:" + text.getText().toString().trim() + " " + "\n"+"Price" + textPrice.getText().toString().trim() + " SR " +"\n"+ "Expiration date" + textExpire.getText().toString().trim();
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
                 if (validate()) {
