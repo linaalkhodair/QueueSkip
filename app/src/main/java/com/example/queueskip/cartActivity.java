@@ -17,23 +17,25 @@ import com.example.queueskip.utliz.Common;
 
 import java.util.List;
 
-public class cartActivity extends AppCompatActivity {
+
+public class cartActivity extends AppCompatActivity  {
 RecyclerView recycler_cart;
 Button btn_place_order;
     CompositeDisposable compositionDisposable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
-        compositionDisposable=new CompositeDisposable ();
-        recycler_cart=(RecyclerView)findViewById(R.id.recycler_cart);
-        recycler_cart.setLayoutManager(new LinearLayoutManager(this));
-        recycler_cart.setHasFixedSize(true);
+        super.onCreate( savedInstanceState );
+        setContentView( R.layout.activity_cart );
 
-        btn_place_order=(Button) findViewById(R.id.btn_place_order);
-        loadCartItems();
+        compositionDisposable = new CompositeDisposable();
+        recycler_cart = (RecyclerView) findViewById( R.id.recycler_cart );
+        recycler_cart.setLayoutManager( new LinearLayoutManager( this ) );
+        recycler_cart.setHasFixedSize( true );
 
+        btn_place_order = (Button) findViewById( R.id.btn_place_order );
+        //loadCartItems();
     }
+
 
     @Override
     protected void onStop() {
@@ -47,21 +49,26 @@ Button btn_place_order;
         super.onDestroy();
     }
 
-    private void loadCartItems(){
+    /*private void loadCartItems() {
 
         compositionDisposable.add(
 
-                Common.cartRepository.getCartItems().observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<List<Cart>>(){
-                    public void accept(List<Cart> carts) {
-                        displayCartItem(carts);
+                Common.cartRepository.getCartItems().observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<List<Cart>>() {
+
+                  @Override
+                    public void accept(List<Cart> carts) throws Exception {
+                      displayCartItem(carts);
                     }
+
                 })
         );
-        private void displayCartItem( List<Cart> carts){
-            CartAdapter cartAdapter=new CartAdapter(this,carts);
-            recycler_cart.setAdapter(cartAdapter);//subscribenOn
-        }
 
 
+    }*/
+    private void displayCartItem(List<Cart> carts){
+        CartAdapter cartAdapter=new CartAdapter(cartActivity.this,carts);
+        recycler_cart.setAdapter(cartAdapter);
     }
-}
+    }
+
+
