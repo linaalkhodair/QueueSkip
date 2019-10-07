@@ -1,11 +1,11 @@
 package com.example.queueskip;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.util.Consumer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import android.os.Bundle;
@@ -49,22 +49,25 @@ Button btn_place_order;
         super.onDestroy();
     }
 
-    /*private void loadCartItems() {
+    private void loadCartItems() {
 
         compositionDisposable.add(
 
-                Common.cartRepository.getCartItems().observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<List<Cart>>() {
+              Common.cartRepository.getCartItems().observeOn(AndroidSchedulers.mainThread())
+                      .subscribeOn(Schedulers.io() )
+                      .subscribe( new Consumer<List<Cart>>() {
+                          @Override
+                          public void accept(List<Cart> carts) throws Exception {
+                              displayCartItem(carts);
+                          }
+                      } )
 
-                  @Override
-                    public void accept(List<Cart> carts) throws Exception {
-                      displayCartItem(carts);
-                    }
 
-                })
+
         );
 
 
-    }*/
+    }
     private void displayCartItem(List<Cart> carts){
         CartAdapter cartAdapter=new CartAdapter(cartActivity.this,carts);
         recycler_cart.setAdapter(cartAdapter);
