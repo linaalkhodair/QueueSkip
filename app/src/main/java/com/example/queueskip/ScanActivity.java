@@ -1,12 +1,14 @@
 package com.example.queueskip;
 
-
+/*
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -26,7 +28,7 @@ import static android.content.pm.PackageManager.*;
 
 public class ScanActivity extends AppCompatActivity {
     SurfaceView cameraPreview;
-    TextView txtResult;
+   //TextView txtResult;
     BarcodeDetector barcodeDetector;
     CameraSource cameraSource;
     final int RequestCameraPermissionID=1001;
@@ -57,10 +59,10 @@ public class ScanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan);
+        setContentView(R.layout.fragment_home);
 
         cameraPreview = (SurfaceView)findViewById(R.id.cameraPreview);
-        txtResult= (TextView)findViewById(R.id.txtResult);
+        //txtResult= (TextView)findViewById(R.id.txtResult);
         barcodeDetector=new BarcodeDetector.Builder(this.getApplicationContext()).setBarcodeFormats(Barcode.QR_CODE).build();
         cameraSource = new CameraSource.Builder(this,barcodeDetector).setRequestedPreviewSize(640,480).build();
         //add event
@@ -109,7 +111,26 @@ public class ScanActivity extends AppCompatActivity {
                             //create vibrate
                             Vibrator vibrator=(Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                             vibrator.vibrate(100);
-                            txtResult.setText(qrcodes.valueAt(0).displayValue);
+                           //txtResult.setText(qrcodes.valueAt(0).displayValue);
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(ScanActivity.this);
+
+                            alertDialog.setMessage(qrcodes.valueAt(0).displayValue);
+
+
+                            alertDialog.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }//end of onClick
+                                    }//end of OnClickListener
+                            );
+
+                            alertDialog.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }//end of onClick
+                                    }//end of OnClickListener
+                            );
+                            alertDialog.show();
                         }
                     });
                 }
@@ -120,3 +141,6 @@ public class ScanActivity extends AppCompatActivity {
     }
 
 }
+
+
+*/

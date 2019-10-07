@@ -18,6 +18,8 @@
     <string name="passwords_do_not_match">Your password and confirmation password do not match.</string>
     <string name="network_failed">Network Failed</string>
     <string name="result_text_default">please focus camera to QR code</string>
+    <string name="forgot_pass">Reset password</string>
+
 
 
 </resources>
