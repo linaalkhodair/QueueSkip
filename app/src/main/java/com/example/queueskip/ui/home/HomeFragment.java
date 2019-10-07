@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -26,6 +27,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.queueskip.Database.Local.CartDatabase;
+import com.example.queueskip.Database.ModelDB.Cart;
 import com.example.queueskip.LoginActivity;
 import com.example.queueskip.R;
 import com.example.queueskip.SignupActivity;
@@ -68,6 +71,9 @@ private HomeViewModel homeViewModel;
     final int RequestCameraPermissionID=1001;
     private Button closeBtn;
     private TextView productNameTxt;
+    private TextView productPriceTxt;
+    private Button addBTn;
+
 
 
 
@@ -147,9 +153,27 @@ private HomeViewModel homeViewModel;
                             dialog.setContentView(R.layout.product_dialog);
                             closeBtn=dialog.findViewById(R.id.button_close);
                             productNameTxt=dialog.findViewById(R.id.product_name_dialog);
+                            productPriceTxt=dialog.findViewById( R.id.product_price_dialog );
+                            addBTn=dialog.findViewById( R.id.Add);
 
 
                             productNameTxt.setText(qrcodes.valueAt(0).displayValue);
+                            productPriceTxt.setText(qrcodes.valueAt( 1 ).displayValue);
+
+                            addBTn.setOnClickListener( new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Cart cart=new Cart();
+                                    cart.setName( (String) productNameTxt.getText() );
+                                    cart.setPrice(Integer.parseInt( (String ) productPriceTxt.getText()  ));
+                                    CartDatabase.getInstance( ).cartDAO().insertToCart( cart );
+
+                                    Toast.makeText(getActivity(),"Item added successfully",Toast.LENGTH_SHORT).show();
+
+
+
+                                }
+                            } );
 
 
                             closeBtn.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +183,7 @@ private HomeViewModel homeViewModel;
                                                             }//end of onClick
                                                         }//end of OnClickListener
                             );
+
 
                             dialog.show();
                             //-----------------

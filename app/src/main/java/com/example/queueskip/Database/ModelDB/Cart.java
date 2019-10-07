@@ -24,8 +24,23 @@ public class Cart {
     @ColumnInfo (name="link")
     public String link;
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public void setLink(String link) {
+        this.link = link;
+    }
 
+    public void setPrice(int price) {
+        Price = price;
+    }
 }
