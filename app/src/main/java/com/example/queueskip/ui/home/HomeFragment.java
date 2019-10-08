@@ -158,18 +158,25 @@ private HomeViewModel homeViewModel;
 
 
                             productNameTxt.setText(qrcodes.valueAt(0).displayValue);
-                            productPriceTxt.setText(qrcodes.valueAt( 1 ).displayValue);
+                            int s = productNameTxt.getText().toString().indexOf('P');
+                            int e = productNameTxt.getText().toString().indexOf('E');
+
+                            productPriceTxt.setText(productNameTxt.getText().toString().substring(s,e));
 
                             addBTn.setOnClickListener( new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Cart cart=new Cart();
+                                    Cart cart=new Cart(productNameTxt.getText().toString());
                                     cart.setName( (String) productNameTxt.getText() );
-                                    cart.setPrice(Integer.parseInt( (String ) productPriceTxt.getText()  ));
-                                    CartDatabase.getInstance( ).cartDAO().insertToCart( cart );
+                                    //cart.setPrice(Integer.parseInt( (String ) productPriceTxt.getText()  ));
+                                    CartDatabase.getInstance(getActivity().getApplicationContext()).cartDAO().insertToCart(cart); //?
 
                                     Toast.makeText(getActivity(),"Item added successfully",Toast.LENGTH_SHORT).show();
 
+                                  /*  int items1 = CartDatabase.getInstance(getActivity().getApplicationContext()).cartDAO().countCartItems();
+                                    String items = String.valueOf(items1);
+                                    Toast.makeText(getActivity(),"Items:" + items,Toast.LENGTH_SHORT).show();
+                                    */
 
 
                                 }
@@ -180,6 +187,7 @@ private HomeViewModel homeViewModel;
                                                             @Override
                                                             public void onClick(View view) {
                                                                 dialog.cancel();
+                                                                
                                                             }//end of onClick
                                                         }//end of OnClickListener
                             );

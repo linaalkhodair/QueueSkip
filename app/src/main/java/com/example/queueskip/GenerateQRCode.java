@@ -38,7 +38,7 @@ public class GenerateQRCode extends AppCompatActivity {
     DatabaseReference databaseItem;
     Bitmap bitmap;
     private ImageView logout;
-    private ImageView calendar;
+   // private ImageView calendar;
     private FirebaseAuth firebaseAuth;
 
 
@@ -56,7 +56,6 @@ public class GenerateQRCode extends AppCompatActivity {
 
 
         //Calendar
-        calendar=(ImageView) findViewById(R.id.calendar);
 
         final Calendar myCalendar = Calendar.getInstance();
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -80,7 +79,7 @@ public class GenerateQRCode extends AppCompatActivity {
 
         };
 
-        calendar.setOnClickListener(new View.OnClickListener() {
+        textExpire.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

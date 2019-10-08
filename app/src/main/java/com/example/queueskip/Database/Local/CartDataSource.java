@@ -34,6 +34,11 @@ public class CartDataSource implements ICartDataSource {
     }
 
     @Override
+    public List<Cart> getCartItemss() {
+        return cartDAO.getCartItemss();
+    } //NEW NEW NEW //ADDED
+
+    @Override
     public int countCartItems() {
         return cartDAO.countCartItems();
     }

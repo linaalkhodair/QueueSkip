@@ -11,8 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".cart"></activity>
-        <activity android:name=".ScanActivity" />
+        <activity android:name=".cartActivity"></activity>
         <activity android:name=".PasswordActivity" />
         <activity
             android:name=".SignupActivity"

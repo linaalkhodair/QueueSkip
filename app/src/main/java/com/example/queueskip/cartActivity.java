@@ -33,7 +33,7 @@ Button btn_place_order;
         recycler_cart.setHasFixedSize( true );
 
         btn_place_order = (Button) findViewById( R.id.btn_place_order );
-        //loadCartItems();
+        loadCartItems(); //it was a comment!!!!!
     }
 
 
@@ -57,7 +57,7 @@ Button btn_place_order;
                       .subscribeOn(Schedulers.io() )
                       .subscribe( new Consumer<List<Cart>>() {
                           @Override
-                          public void accept(List<Cart> carts) throws Exception {
+                          public void accept(List<Cart> carts) {
                               displayCartItem(carts);
                           }
                       } )
@@ -69,7 +69,7 @@ Button btn_place_order;
 
     }
     private void displayCartItem(List<Cart> carts){
-        CartAdapter cartAdapter=new CartAdapter(cartActivity.this,carts);
+        CartAdapter cartAdapter=new CartAdapter(this,carts);
         recycler_cart.setAdapter(cartAdapter);
     }
     }

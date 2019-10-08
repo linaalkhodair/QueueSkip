@@ -8,7 +8,7 @@
 android:padding="8dp"
     android:orientation="vertical"
     android:background="@color/colorBackground"
-    tools:context=".cart">
+    tools:context=".cartActivity">
 
 
     <Button

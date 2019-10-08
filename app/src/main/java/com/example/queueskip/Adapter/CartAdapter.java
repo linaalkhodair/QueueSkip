@@ -63,9 +63,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     class CartViewHolder extends RecyclerView.ViewHolder{
-ImageView img_product;
-TextView txt_product_name,txt_sugar_ice,txt_price;
-ElegantNumberButton txt_amount;
+        ImageView img_product;
+        TextView txt_product_name,txt_sugar_ice,txt_price;
+        ElegantNumberButton txt_amount;
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
