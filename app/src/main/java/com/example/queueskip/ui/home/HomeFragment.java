@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
@@ -27,11 +28,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.queueskip.Database.DataSource.CartRepository;
+import com.example.queueskip.Database.Local.CartDataSource;
 import com.example.queueskip.Database.Local.CartDatabase;
 import com.example.queueskip.Database.ModelDB.Cart;
 import com.example.queueskip.LoginActivity;
 import com.example.queueskip.R;
 import com.example.queueskip.SignupActivity;
+import com.example.queueskip.utliz.Common;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -88,7 +92,7 @@ private HomeViewModel homeViewModel;
         View view = inflater.inflate(R.layout.fragment_home, container, false);
        // Context context=getContext().getApplicationContext();
 
-
+        iniDB();
         cameraPreview = (SurfaceView)view.findViewById(R.id.cameraPreview);
         txtResult= (TextView)view.findViewById(R.id.txtResult);
 
@@ -176,7 +180,9 @@ private HomeViewModel homeViewModel;
                                     cart.setName( (String) productNameTxt.getText() );
                                     //cart.setPrice(Integer.parseInt( (String ) productPriceTxt.getText()  ));
 
-                                    CartDatabase.getInstance(mContext).cartDAO().insertToCart(cart); //?
+                                    Common.cartRepository.insertToCart(cart); //?
+
+
 
                                     Toast.makeText(getActivity(),"Item added successfully",Toast.LENGTH_SHORT).show();
 
@@ -253,6 +259,10 @@ private HomeViewModel homeViewModel;
 
             break;
         }
+    }
+    private void iniDB(){
+        Common.cartDatabase=CartDatabase.getInstance( mContext );
+        Common.cartRepository= CartRepository.getInstance( CartDataSource.getInstance( Common.cartDatabase.cartDAO() ) );
     }
 }
 

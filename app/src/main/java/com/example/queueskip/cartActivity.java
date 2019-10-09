@@ -32,6 +32,7 @@ Button btn_place_order;
         recycler_cart.setLayoutManager( new LinearLayoutManager( this ) );
         recycler_cart.setHasFixedSize( true );
 
+
         btn_place_order = (Button) findViewById( R.id.btn_place_order );
         loadCartItems(); //it was a comment!!!!!
     }
