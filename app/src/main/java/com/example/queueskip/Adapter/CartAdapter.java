@@ -37,9 +37,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, final int position) {
-        Picasso.with(context).load(cartList.get(position).link).into(holder.img_product);
-        holder.txt_amount.setNumber(String.valueOf(cartList.get(position).amount));
-        holder.txt_price.setText(new StringBuilder("$").append(cartList.get(position).Price));
+      //  Picasso.with(context).load(cartList.get(position).link).into(holder.img_product);
+       // holder.txt_amount.setNumber(String.valueOf(cartList.get(position).amount));
+//        holder.txt_price.setText(new StringBuilder("$").append(cartList.get(position).Price));
         holder.txt_product_name.setText(cartList.get(position).name);
 
         //auto save item whem user change amount
@@ -49,7 +49,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 Cart cart=cartList.get(position);
                 cart.amount=newValue;
                // Common.cartRepository.updateCart(cart);
-                cartRepository.updateCart(cart);
+                //cartRepository.updateCart(cart); << LATER REMOVED FOR NOW!!!!!!!!!!!!!!!!!!
 
             }
         });

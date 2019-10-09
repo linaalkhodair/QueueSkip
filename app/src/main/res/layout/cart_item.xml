@@ -44,8 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txt_price"
-                android:text="20"
-                android:textSize="20sp"
+                android:textSize="15dp"
                 android:layout_weight="6"/>
 <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
     android:layout_width="80dp"
@@ -54,9 +53,9 @@
     android:layout_weight="1"
     app:initialNumber="1"
     app:finalNumber="300"
-    app:backGroundColor="@android:color/darker_gray"
+    app:backGroundColor="@color/colorPrimary"
     app:textSize="10sp"
-    app:textColor="@color/colorPrimaryDark"
+    app:textColor="@color/colorBackground"
     ></com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
         </LinearLayout>
 

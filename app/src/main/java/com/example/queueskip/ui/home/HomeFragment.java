@@ -170,8 +170,8 @@ private HomeViewModel homeViewModel;
                             int s = productNameTxt.getText().toString().indexOf('P');
                             int e = productNameTxt.getText().toString().indexOf('E');
 
-                            productPriceTxt.setText(productNameTxt.getText().toString().substring(s,e));
-
+                            //productPriceTxt.setText(productNameTxt.getText().toString().substring(s,e));
+                            productPriceTxt.setText(qrcodes.valueAt(0).displayValue.substring(s,e));
 
                             addBTn.setOnClickListener( new View.OnClickListener() {
                                 @Override
