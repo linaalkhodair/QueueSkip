@@ -2,6 +2,7 @@ package com.example.queueskip.Database.Local;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.room.Database;
 import androidx.room.Room;
@@ -25,6 +26,7 @@ public  abstract class CartDatabase extends RoomDatabase {
 
     public static CartDatabase getInstance(Context context) {
         if (instance == null) {
+            Log.d("DEBUG_CONTEXT", context.toString() );
             instance = Room.inMemoryDatabaseBuilder(context.getApplicationContext(), CartDatabase.class).allowMainThreadQueries().build();
            // instance = Room.databaseBuilder(context.getApplicationContext(), CartDatabase.class, "Cart")//if we want in memory builder  ithink we can add it here
              //       .allowMainThreadQueries().build();

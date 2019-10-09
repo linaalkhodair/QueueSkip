@@ -61,6 +61,7 @@ public class HomeFragment extends Fragment {
 
  */
 
+
 public class HomeFragment extends Fragment {
 
 private HomeViewModel homeViewModel;
@@ -73,21 +74,25 @@ private HomeViewModel homeViewModel;
     private TextView productNameTxt;
     private TextView productPriceTxt;
     private Button addBTn;
+    private Context mContext;
 
 
-
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        Context context=getContext().getApplicationContext();
+       // Context context=getContext().getApplicationContext();
 
 
         cameraPreview = (SurfaceView)view.findViewById(R.id.cameraPreview);
         txtResult= (TextView)view.findViewById(R.id.txtResult);
 
-        barcodeDetector=new BarcodeDetector.Builder(context).setBarcodeFormats(Barcode.QR_CODE).build();
+        barcodeDetector=new BarcodeDetector.Builder(mContext).setBarcodeFormats(Barcode.QR_CODE).build();
         cameraSource = new CameraSource.Builder(getContext(),barcodeDetector).setRequestedPreviewSize(640,480).build();
 //        homeViewModel =
 //                ViewModelProviders.of(this).get(HomeViewModel.class);
@@ -149,7 +154,7 @@ private HomeViewModel homeViewModel;
                             vibrator.vibrate(100);
                             //txtResult.setText(qrcodes.valueAt(0).displayValue);
                             //----------------
-                            final Dialog dialog = new Dialog(getContext());
+                            final Dialog dialog = new Dialog(mContext);
                             dialog.setContentView(R.layout.product_dialog);
                             closeBtn=dialog.findViewById(R.id.button_close);
                             productNameTxt=dialog.findViewById(R.id.product_name_dialog);
@@ -163,13 +168,15 @@ private HomeViewModel homeViewModel;
 
                             productPriceTxt.setText(productNameTxt.getText().toString().substring(s,e));
 
+
                             addBTn.setOnClickListener( new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     Cart cart=new Cart(productNameTxt.getText().toString());
                                     cart.setName( (String) productNameTxt.getText() );
                                     //cart.setPrice(Integer.parseInt( (String ) productPriceTxt.getText()  ));
-                                    CartDatabase.getInstance(getActivity().getApplicationContext()).cartDAO().insertToCart(cart); //?
+
+                                    CartDatabase.getInstance(mContext).cartDAO().insertToCart(cart); //?
 
                                     Toast.makeText(getActivity(),"Item added successfully",Toast.LENGTH_SHORT).show();
 
