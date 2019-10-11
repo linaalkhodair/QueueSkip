@@ -165,20 +165,33 @@ private HomeViewModel homeViewModel;
                             productPriceTxt=dialog.findViewById( R.id.product_price_dialog );
                             addBTn=dialog.findViewById( R.id.Add);
 
+                            String qrtext=(qrcodes.valueAt(0).displayValue);
 
-                            productNameTxt.setText(qrcodes.valueAt(0).displayValue);
-                            int s = productNameTxt.getText().toString().indexOf('P');
-                            int e = productNameTxt.getText().toString().indexOf('E');
+                           // productNameTxt=qrtext.
 
-                            productPriceTxt.setText(productNameTxt.getText().toString().substring(s,e));
+                          int   x=qrtext.indexOf( '-');
+                          int y=qrtext.indexOf("-", x + 1);
+
+
+
+                            productNameTxt.setText(qrtext.substring(0, x ));
+                            productPriceTxt.setText( qrtext.substring(x+1, y ) );
+
+
+
+                           // int s = productNameTxt.getText().toString().indexOf('P');
+                           // int e = productNameTxt.getText().toString().indexOf('E');
+
+                           // productPriceTxt.setText(productNameTxt.getText().toString().substring(s,e));
 
 
                             addBTn.setOnClickListener( new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Cart cart=new Cart(productNameTxt.getText().toString());
+                                    Cart cart=new Cart();
                                     cart.setName( (String) productNameTxt.getText() );
-                                    //cart.setPrice(Integer.parseInt( (String ) productPriceTxt.getText()  ));
+                                    cart.setPrice(Integer.parseInt( (String ) productPriceTxt.getText()  ));
+                                    cart.setAmount( 1 );
 
                                     Common.cartRepository.insertToCart(cart); //?
 
@@ -186,10 +199,10 @@ private HomeViewModel homeViewModel;
 
                                     Toast.makeText(getActivity(),"Item added successfully",Toast.LENGTH_SHORT).show();
 
-                                  /*  int items1 = CartDatabase.getInstance(getActivity().getApplicationContext()).cartDAO().countCartItems();
+                                   /* int items1 = CartDatabase.getInstance(getActivity().getApplicationContext()).cartDAO().countCartItems();
                                     String items = String.valueOf(items1);
-                                    Toast.makeText(getActivity(),"Items:" + items,Toast.LENGTH_SHORT).show();
-                                    */
+                                    Toast.makeText(getActivity(),"Items:" + items,Toast.LENGTH_SHORT).show();*/
+
 
 
                                 }
