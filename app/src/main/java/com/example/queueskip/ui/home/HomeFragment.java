@@ -173,9 +173,10 @@ private HomeViewModel homeViewModel;
                           int y=qrtext.indexOf("-", x + 1);
 
 
-
-                            productNameTxt.setText(qrtext.substring(0, x ));
-                            productPriceTxt.setText( qrtext.substring(x+1, y ) );
+                            final String price = qrtext.substring(x+1, y );
+                            final String name = qrtext.substring(0, x );
+                            productNameTxt.setText("Item: "+ qrtext.substring(0, x ));
+                            productPriceTxt.setText("Price: "+ qrtext.substring(x+1, y )+" SR" );
 
 
 
@@ -189,8 +190,8 @@ private HomeViewModel homeViewModel;
                                 @Override
                                 public void onClick(View view) {
                                     Cart cart=new Cart();
-                                    cart.setName( (String) productNameTxt.getText() );
-                                    cart.setPrice(Integer.parseInt( (String ) productPriceTxt.getText()  ));
+                                    cart.setName(name);
+                                    cart.setPrice(Integer.parseInt( (String ) price  ));
                                     cart.setAmount( 1 );
 
                                     Common.cartRepository.insertToCart(cart); //?
