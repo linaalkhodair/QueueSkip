@@ -165,20 +165,21 @@ private HomeViewModel homeViewModel;
                             productPriceTxt=dialog.findViewById( R.id.product_price_dialog );
                             addBTn=dialog.findViewById( R.id.Add);
 
+                            String txt = qrcodes.valueAt(0).rawValue;
+                            int startOfPrice = txt.indexOf('P');
+                            int startOfExp = txt.indexOf('E');
 
-                            productNameTxt.setText(qrcodes.valueAt(0).displayValue);
-                            int s = productNameTxt.getText().toString().indexOf('P');
-                            int e = productNameTxt.getText().toString().indexOf('E');
 
-                            //productPriceTxt.setText(productNameTxt.getText().toString().substring(s,e));
-                            productPriceTxt.setText(qrcodes.valueAt(0).displayValue.substring(s,e));
+                            productNameTxt.setText(txt.substring(0,startOfPrice));
+                            productPriceTxt.setText(txt.substring(startOfPrice,startOfExp));
 
                             addBTn.setOnClickListener( new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     Cart cart=new Cart(productNameTxt.getText().toString());
                                     cart.setName( (String) productNameTxt.getText() );
-                                    //cart.setPrice(Integer.parseInt( (String ) productPriceTxt.getText()  ));
+                                   // cart.setPrice(Integer.parseInt( (String ) productPriceTxt.getText()  ));
+                                    //cart.setAmount(1);
 
                                     Common.cartRepository.insertToCart(cart); //?
 
