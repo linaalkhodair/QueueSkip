@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -110,6 +112,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 final Dialog dialog = new Dialog(LoginActivity.this);
                 dialog.setContentView(R.layout.password_dialogue);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
                 closeBtn=dialog.findViewById(R.id.button_close_forgot);
                 Resetpass=dialog.findViewById(R.id.passtxt);
                 resetEdit=dialog.findViewById( R.id.reset );

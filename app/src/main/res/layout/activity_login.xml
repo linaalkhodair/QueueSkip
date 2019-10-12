@@ -59,7 +59,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:text="Login"
-        android:background="@drawable/round_shape_login_btn"
+        android:background="@drawable/round_shape_btn"
         android:textColor="@color/colorBackground"
 
         />
