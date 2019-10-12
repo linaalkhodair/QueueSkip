@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-android:padding="8dp"
+    android:padding="8dp"
     android:orientation="vertical"
     android:background="@color/colorBackground"
     tools:context=".cartActivity">
@@ -18,6 +18,10 @@ android:padding="8dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="8dp"
         android:text="PLACE ORDER" />
+
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 <androidx.recyclerview.widget.RecyclerView
     tools:ignore="ExtraText"
    android:id="@+id/recycler_cart"
@@ -26,6 +30,6 @@ android:padding="8dp"
     android:layout_height="match_parent"
     >
 </androidx.recyclerview.widget.RecyclerView>
-
+</androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>
