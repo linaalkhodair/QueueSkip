@@ -1,6 +1,8 @@
 package com.example.queueskip;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,6 +38,14 @@ public class LoginActivity extends AppCompatActivity {
     private TextView register;
     private FirebaseAuth firebaseAuth;
     //private ProgressDialog;
+    private EditText email;
+    private Button passwordReset;
+    private Context mContext;
+    private Button  closeBtn;
+    private TextView Resetpass;
+    private Button ResetBtn;
+    private EditText resetEdit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,12 +106,54 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         forgot.setOnClickListener(new View.OnClickListener() {
+            public  void onClick(View v){
 
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, PasswordActivity.class));
-            }
-        });
+                final Dialog dialog = new Dialog(LoginActivity.this);
+                dialog.setContentView(R.layout.password_dialogue);
+                closeBtn=dialog.findViewById(R.id.button_close_forgot);
+                Resetpass=dialog.findViewById(R.id.passtxt);
+                resetEdit=dialog.findViewById( R.id.reset );
+                ResetBtn=dialog.findViewById( R.id.ResetBtn);
+
+                dialog.show();
+
+                ResetBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String useremail = resetEdit.getText().toString().trim();
+
+                        if(useremail.equals("")){
+                            Toast.makeText(LoginActivity.this, "Please enter your registered email ID", Toast.LENGTH_SHORT).show();
+                        }else{
+                            firebaseAuth.sendPasswordResetEmail(useremail).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(LoginActivity.this, "Password reset email sent!", Toast.LENGTH_SHORT).show();
+                                        //finish();
+                                        dialog.cancel();
+                                    }else{
+                                        Toast.makeText(LoginActivity.this, "Error in sending password reset email", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        } //end else
+                    } //end onclick
+
+                }); //end onCLickListener
+                closeBtn.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    dialog.cancel();
+
+                                                }//end of onClick
+                                            }//end of OnClickListener
+                );
+
+            }//end onclick  forgot
+
+
+        }); //end onCLickListener forgot
 
     }//end on create.
 
