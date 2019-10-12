@@ -13,11 +13,37 @@
 
     <Button
         android:id="@+id/btn_place_order"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
+        android:layout_marginStart="230dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="8dp"
         android:text="PLACE ORDER" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dp"
+        android:text="Total amount: "
+        android:textColor="@color/colorPrimary"
+        android:textSize="25dp"
+
+       >
+
+    </TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/total"
+        android:text="hello"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25dp"
+        android:layout_marginStart="170dp">
+
+    </TextView>
+
 
 <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
