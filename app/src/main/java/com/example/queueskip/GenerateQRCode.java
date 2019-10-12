@@ -115,6 +115,10 @@ public class GenerateQRCode extends AppCompatActivity {
                         bitmap = barcodeEncoder.createBitmap(bitMatrix);
                         image.setImageBitmap(bitmap);
                         addItem();
+                        text.getText().clear();
+                        textPrice.getText().clear();
+                        textExpire.getText().clear();
+
 
                     } catch (WriterException e) {
                         e.printStackTrace();
