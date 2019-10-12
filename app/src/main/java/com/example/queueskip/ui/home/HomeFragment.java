@@ -199,6 +199,7 @@ private HomeViewModel homeViewModel;
 
 
                                     Toast.makeText(getActivity(),"Item added successfully",Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
 
                                    /* int items1 = CartDatabase.getInstance(getActivity().getApplicationContext()).cartDAO().countCartItems();
                                     String items = String.valueOf(items1);

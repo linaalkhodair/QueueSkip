@@ -9,23 +9,32 @@
     android:background="@color/colorBackground">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:src="@drawable/logo">
 
     </ImageView>
-
+    <com.google.android.material.textfield.TextInputLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:errorEnabled="true"
+        android:layout_marginTop="20dp"
+        >
 
     <EditText
         android:id="@+id/username"
         android:layout_width="243dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
         android:hint="@string/login_email_hint"
-        android:textColor="@color/colorPrimaryDark" />
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@drawable/round_shape"
+        android:textSize="15dp"
+        android:padding="8dp"
+        android:layout_marginTop="15dp"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,12 +43,14 @@
     <EditText
         android:id="@+id/pass"
         android:layout_width="244dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
         android:hint="Password"
         android:inputType="textPassword"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@drawable/round_shape"
+        android:textSize="15dp"
+        android:padding="8dp"/>
     </com.google.android.material.textfield.TextInputLayout>
     <Button
         android:id="@+id/login"
@@ -48,8 +59,10 @@
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:text="Login"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/colorBackground"/>
+        android:background="@drawable/round_shape_login_btn"
+        android:textColor="@color/colorBackground"
+
+        />
 
     <TextView
         android:id="@+id/forgot"

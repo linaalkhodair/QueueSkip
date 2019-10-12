@@ -3,6 +3,10 @@
 
 
 
+    <item
+        android:id="@+id/navigation_cart"
+        android:icon="@drawable/ic_shopping_basket_black_24dp"
+        android:title="@string/title_cart" />
 
     <item
         android:id="@+id/navigation_camera"
@@ -14,8 +18,4 @@
         android:icon="@drawable/ic_power_settings_new_black_24dp"
         android:title="@string/title_logout" />
 
-    <item
-        android:id="@+id/navigation_cart"
-        android:icon="@drawable/ic_shopping_basket_black_24dp"
-        android:title="@string/title_cart" />
 </menu>

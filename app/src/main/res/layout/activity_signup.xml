@@ -26,11 +26,10 @@
         android:src="@drawable/logo" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_width="match_parent"
         app:errorEnabled="true"
         >
-
 
         <EditText
             android:id="@+id/signUpNameET"
@@ -39,32 +38,38 @@
             android:layout_gravity="center"
             android:ems="10"
             android:hint="@string/sign_up_name_hint"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/round_shape"
+            android:padding="8dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_width="match_parent"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        android:layout_marginTop="15dp"
+        >
 
         <EditText
             android:id="@+id/signUpEmailET"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="@string/login_email_hint"
             android:inputType="textEmailAddress"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/round_shape"
+            android:padding="8dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         app:passwordToggleEnabled="true"
+        android:layout_marginTop="15dp"
         >
 
         <EditText
@@ -75,14 +80,17 @@
             android:ems="10"
             android:hint="@string/login_pass_hint"
             android:inputType="textPassword"
+            android:background="@drawable/round_shape"
+            android:padding="8dp"
             android:textColor="@color/colorPrimaryDark" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         app:passwordToggleEnabled="true"
+        android:layout_marginTop="15dp"
         >
 
         <EditText
@@ -93,6 +101,8 @@
             android:ems="10"
             android:hint="@string/sign_up_confirm_pass"
             android:inputType="textPassword"
+            android:background="@drawable/round_shape"
+            android:padding="8dp"
             android:textColor="@color/colorPrimaryDark" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -104,7 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/round_shape_login_btn"
         android:text="@string/register_btn"
         android:textColor="@android:color/white"
         android:textStyle="bold" />

@@ -3,10 +3,10 @@
     <string name="title_camera">Camera</string>
     <string name="title_cart">Cart</string>
     <string name="title_logout">Log out</string>
-    <string name="sign_up_name_hint">Name</string>
-    <string name="login_email_hint">Email address</string>
-    <string name="login_pass_hint">Password</string>
-    <string name="sign_up_confirm_pass">Confirm Password</string>
+    <string name="sign_up_name_hint"><font size="10">Name</font></string>
+    <string name="login_email_hint"><font size="10"> Email address</font></string>
+    <string name="login_pass_hint"><font size="10"> Password</font></string>
+    <string name="sign_up_confirm_pass"><font size="10">Confirm Password</font></string>
     <string name="register_btn">Register</string>
     <string name="invalid_email_address">Email address not in the correct format</string>
     <string name="invalid_user">There is no user with this email address</string>

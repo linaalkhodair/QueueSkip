@@ -1,6 +1,9 @@
 package com.example.queueskip;
 
+import android.app.AlertDialog;
+import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -9,7 +12,7 @@ import android.widget.Button;
 
 import com.example.queueskip.ui.dashboard.DashboardFragment;
 import com.example.queueskip.ui.home.HomeFragment;
-import com.example.queueskip.ui.notifications.NotificationsFragment;
+//import com.example.queueskip.ui.notifications.NotificationsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity  {
     private FirebaseAuth firebaseAuth;
     //private Button logout;
     BottomNavigationView navView;
+    MenuItem logoutBtn;
 
 
     @Override
@@ -32,6 +36,8 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
          navView = findViewById(R.id.nav_view);
+         logoutBtn=navView.getMenu().getItem(2);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         //.........
@@ -51,11 +57,16 @@ public class MainActivity extends AppCompatActivity  {
 
 
         firebaseAuth = FirebaseAuth.getInstance();
+        logoutBtn.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+            createDialog();
+            return true;
+            }
+        });
 
 //        logout = (Button)view.findViewById(R.id.logoutBtn);
 //        logout.setOnClickListener(this);
-
-
 
     }
 //
@@ -64,12 +75,13 @@ public class MainActivity extends AppCompatActivity  {
 //            logout();
 //    }
 
-//    public void logout(){
-//        firebaseAuth.signOut();
-//        finish();
-//        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-//    }
-    //----------------------------------
+
+
+    public void logout(){
+        firebaseAuth.signOut();
+        finish();
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+    }
 
 //
 //    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -114,6 +126,26 @@ public class MainActivity extends AppCompatActivity  {
 //        }
 //    };
 //----------------------------------
+private void createDialog(){
+    AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+    alertDialog.setMessage("Are you sure you want to logout?");
 
+
+    alertDialog.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+            logout();
+                }//end of onClick
+            }//end of OnClickListener
+    );
+
+    alertDialog.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }//end of onClick
+            }//end of OnClickListener
+    );
+    alertDialog.show();
+
+}//end of createDialog
 
 }

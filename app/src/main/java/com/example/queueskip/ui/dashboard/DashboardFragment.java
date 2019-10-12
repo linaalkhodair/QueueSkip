@@ -8,20 +8,33 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.queueskip.Adapter.CartAdapter;
+import com.example.queueskip.Database.ModelDB.Cart;
 import com.example.queueskip.R;
-import com.example.queueskip.cartActivity;
+import com.example.queueskip.utliz.Common;
 
 import org.w3c.dom.Text;
 
+import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 public class DashboardFragment extends Fragment {
-private Button cartBut;
-private TextView testText;
+//private Button cartBut;
+//private TextView testText;
+    RecyclerView recycler_cart;
+    Button btn_place_order;
+    TextView total;
+    CompositeDisposable compositionDisposable;
 
     private DashboardViewModel dashboardViewModel;
 
@@ -31,15 +44,15 @@ private TextView testText;
                 ViewModelProviders.of(this).get(DashboardViewModel.class);
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        cartBut = (Button)view.findViewById(R.id.cartAct); //new new new added
-        testText = view.findViewById(R.id.testText); //??new new added
-
-        cartBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), cartActivity.class));
-            }
-        });
+//        cartBut = (Button)view.findViewById(R.id.cartAct); //new new new added
+//        testText = view.findViewById(R.id.testText); //??new new added
+//
+//        cartBut.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getContext(), cartActivity.class));
+//            }
+//        });
         // final TextView textView = root.findViewById(R.id.text_dashboard);
 //        dashboardViewModel.getText().observe(this, new Observer<String>() {
 //            @Override
@@ -47,6 +60,71 @@ private TextView testText;
 //                textView.setText(s);
 //            }
 //        });
+        compositionDisposable = new CompositeDisposable();
+        recycler_cart = (RecyclerView) view.findViewById( R.id.recycler_cart );
+        recycler_cart.setLayoutManager( new LinearLayoutManager( getContext() ) );
+        recycler_cart.setHasFixedSize( true );
+
+        total= view.findViewById(R.id.total);
+
+
+
+
+        btn_place_order = (Button) view.findViewById( R.id.btn_place_order );
+        loadCartItems(); //it was a comment!!!!!
         return view;
     }
+
+    @Override
+    public void onStop() {
+        compositionDisposable.clear();
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        compositionDisposable.clear();
+        super.onDestroy();
+    }
+    private void loadCartItems() {
+
+        compositionDisposable.add(
+
+                Common.cartRepository.getCartItems().observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io() )
+                        .subscribe( new Consumer<List<Cart>>() {
+                            @Override
+                            public void accept(List<Cart> carts) {
+                                displayCartItem(carts);
+                            }
+                        } )
+
+
+
+        );
+
+
+    }
+
+    private void displayCartItem(List<Cart> carts){
+        CartAdapter cartAdapter=new CartAdapter(getContext(),carts);
+        recycler_cart.setAdapter(cartAdapter);
+        totalAmount(carts);
+    }
+
+    private void totalAmount(List<Cart> cartList){
+        int totalAmount = 0;
+        int price=0;
+        int amount=0;
+
+        for(int i=0; i<cartList.size(); i++){
+            price= cartList.get(i).Price;
+            amount= cartList.get(i).amount;
+            totalAmount+=  price*amount;
+        }
+
+        total.setText(""+totalAmount);
+        //return totalAmount;
+    }
+
 }
