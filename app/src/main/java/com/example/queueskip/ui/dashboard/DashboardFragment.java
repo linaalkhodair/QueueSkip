@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.queueskip.Adapter.CartAdapter;
 import com.example.queueskip.Database.ModelDB.Cart;
 import com.example.queueskip.R;
@@ -31,6 +32,7 @@ import io.reactivex.schedulers.Schedulers;
 public class DashboardFragment extends Fragment {
 //private Button cartBut;
 //private TextView testText;
+    private ElegantNumberButton elegantNumberButton;
     RecyclerView recycler_cart;
     Button btn_place_order;
     TextView total;
@@ -43,6 +45,7 @@ public class DashboardFragment extends Fragment {
         //dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel.class);
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        elegantNumberButton=view.findViewById(R.id.txt_amount);
 
 //        cartBut = (Button)view.findViewById(R.id.cartAct); //new new new added
 //        testText = view.findViewById(R.id.testText); //??new new added
@@ -65,7 +68,7 @@ public class DashboardFragment extends Fragment {
         recycler_cart.setLayoutManager( new LinearLayoutManager( getContext() ) );
         recycler_cart.setHasFixedSize( true );
 
-        total= view.findViewById(R.id.total);
+       // total= view.findViewById(R.id.total);
 
 
 
@@ -114,16 +117,19 @@ public class DashboardFragment extends Fragment {
 
     private void totalAmount(List<Cart> cartList){
         int totalAmount = 0;
-        int price=0;
-        int amount=0;
+        int price;
+        int amount;
 
         for(int i=0; i<cartList.size(); i++){
+            //elegantNumberButton.setNumber(String.valueOf(cartList.get(i).amount));
+
             price= cartList.get(i).Price;
             amount= cartList.get(i).amount;
             totalAmount+=  price*amount;
         }
+        btn_place_order.setText("Check out"+"    Total price: "+totalAmount+"SR");
 
-        total.setText(""+totalAmount);
+       // total.setText(""+totalAmount);
         //return totalAmount;
     }
 

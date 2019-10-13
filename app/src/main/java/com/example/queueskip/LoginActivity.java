@@ -48,6 +48,9 @@ public class LoginActivity extends AppCompatActivity {
     private Button ResetBtn;
     private EditText resetEdit;
 
+    Button okBtn,cancelBtn;
+    TextView dialogMsg;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,24 +243,37 @@ public class LoginActivity extends AppCompatActivity {
     } //end of isEmpty
 
     private void createDialog(String message){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);
-        alertDialog.setMessage(message);
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.logout_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        okBtn=dialog.findViewById(R.id.ok_btn_dialog);
+        cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
+        dialogMsg=dialog.findViewById(R.id.dialog_message);
 
 
-        alertDialog.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }//end of onClick
-                }//end of OnClickListener
+        dialogMsg.setText(message);
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+                                     @Override
+                                     public void onClick(View view) {
+                                         dialog.cancel();
+                                     }//end of onClick
+                                 }//end of OnClickListener
         );
 
-        alertDialog.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }//end of onClick
-                }//end of OnClickListener
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View view) {
+                                             dialog.cancel();
+
+                                         }//end of onClick
+                                     }//end of OnClickListener
         );
-        alertDialog.show();
+        okBtn.setVisibility(View.INVISIBLE);
+        cancelBtn.setText("OK");
+
+        dialog.show();
 
     }//end of createDialog
 

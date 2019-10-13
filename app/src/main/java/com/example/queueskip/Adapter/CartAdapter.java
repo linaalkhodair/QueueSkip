@@ -42,8 +42,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public void onBindViewHolder(@NonNull CartViewHolder holder, final int position) {
         Picasso.with(context).load(cartList.get(position).link).into(holder.img_product);
         holder.txt_amount.setNumber(String.valueOf(cartList.get(position).amount));
-        holder.txt_price.setText("Price: "+cartList.get(position).Price);
-        holder.txt_product_name.setText("Item: "+cartList.get(position).name);
+        holder.txt_price.setText(cartList.get(position).Price+" SR");
+        holder.txt_product_name.setText(cartList.get(position).name);
+
 
         //auto save item when user change amount
         holder.txt_amount.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
@@ -56,7 +57,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
             }
         });
-
 
     }
 

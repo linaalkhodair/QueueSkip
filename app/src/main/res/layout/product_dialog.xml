@@ -1,76 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/round_shape_dialog"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/linear_layout"
-        android:layout_width="500dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/round_shape_dialog"
-        android:orientation="vertical"
-        android:padding="@dimen/padd_10"
-        >
+
+
 
         <Button
             android:id="@+id/button_close"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="4dp"
-            android:layout_marginRight="9dp"
             android:background="@drawable/x_icon"
-            android:layout_marginStart="250dp"/>
+            android:layout_marginStart="250dp"
+            android:layout_marginEnd="10dp"/>
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorBackground"
-            android:padding="@dimen/padd_10"
-            android:layout_marginTop="10dp">
 
             <ImageView
                 android:id="@+id/product_img_dialog"
                 android:layout_width="@dimen/thumbnail"
                 android:layout_height="@dimen/thumbnail"
-                android:layout_marginEnd="@dimen/activity_padding_horizontal"
-                android:scaleType="centerCrop"
-                android:src="@drawable/protein"/>
+                android:src="@drawable/protein"
+             android:layout_gravity="center"/>
 
 
-            <TextView
-                android:id="@+id/product_name_dialog"
-                android:layout_width="700dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:maxLines="1"
-                android:text="hiii"
-                android:layout_marginStart="100dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="17dp" />
+    <TextView
+        android:id="@+id/product_name_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="hiihhhhhhhi"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="17dp" />
 
-            <TextView
+    <TextView
                 android:id="@+id/product_price_dialog"
-                android:layout_width="700dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:layout_marginStart="100dp"
+                android:layout_marginTop="10dp"
                 android:maxLines="1"
                 android:text="hiii"
+        android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="17dp" />
+
+<!--    <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton-->
+<!--        android:layout_width="80dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:id="@+id/txt_amount_dialog"-->
+<!--        android:layout_weight="1"-->
+<!--        app:initialNumber="1"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        app:finalNumber="300"-->
+<!--        app:backGroundColor="@color/colorAccent"-->
+<!--        app:textSize="10sp"-->
+<!--        app:textColor="@color/colorBackground"-->
+<!--        ></com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>-->
 
             <Button
                 android:id="@+id/Add"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="135dp"
-                android:layout_marginTop="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/round_shape_btn"
                 android:text="Add to cart"
+                android:layout_gravity="center"
                 android:textColor="@color/colorBackground" />
-    </RelativeLayout>
-    </RelativeLayout>
-    </RelativeLayout>
+
+    </LinearLayout>

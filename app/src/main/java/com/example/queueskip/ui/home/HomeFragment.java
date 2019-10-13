@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
@@ -28,6 +30,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.queueskip.Database.DataSource.CartRepository;
 import com.example.queueskip.Database.Local.CartDataSource;
 import com.example.queueskip.Database.Local.CartDatabase;
@@ -160,6 +163,8 @@ private HomeViewModel homeViewModel;
                             //----------------
                             final Dialog dialog = new Dialog(mContext);
                             dialog.setContentView(R.layout.product_dialog);
+                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
                             closeBtn=dialog.findViewById(R.id.button_close);
                             productNameTxt=dialog.findViewById(R.id.product_name_dialog);
                             productPriceTxt=dialog.findViewById( R.id.product_price_dialog );
@@ -178,6 +183,16 @@ private HomeViewModel homeViewModel;
                             productNameTxt.setText("Item: "+ qrtext.substring(0, x ));
                             productPriceTxt.setText("Price: "+ qrtext.substring(x+1, y )+" SR" );
 
+//                            final ElegantNumberButton quantity=dialog.findViewById(R.id.txt_amount_dialog);
+//                              final Integer quant=Integer.parseInt(quantity.getNumber());
+
+                            /*quantity.setOnClickListener(new ElegantNumberButton.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String num = quantity.getNumber();
+                                }
+                            });
+                            */
 
 
                            // int s = productNameTxt.getText().toString().indexOf('P');
@@ -200,6 +215,8 @@ private HomeViewModel homeViewModel;
 
                                     Toast.makeText(getActivity(),"Item added successfully",Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
+
+
 
                                    /* int items1 = CartDatabase.getInstance(getActivity().getApplicationContext()).cartDAO().countCartItems();
                                     String items = String.valueOf(items1);
