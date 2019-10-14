@@ -270,8 +270,8 @@ public class LoginActivity extends AppCompatActivity {
                                          }//end of onClick
                                      }//end of OnClickListener
         );
-        okBtn.setVisibility(View.INVISIBLE);
-        cancelBtn.setText("OK");
+        cancelBtn.setVisibility(View.INVISIBLE);
+      //  cancelBtn.setText("OK");
 
         dialog.show();
 

@@ -3,6 +3,7 @@ package com.example.queueskip.ui.home;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,11 +32,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.queueskip.Database.DataSource.CartRepository;
 import com.example.queueskip.Database.Local.CartDataSource;
 import com.example.queueskip.Database.Local.CartDatabase;
 import com.example.queueskip.Database.ModelDB.Cart;
+import com.example.queueskip.Items;
 import com.example.queueskip.LoginActivity;
 import com.example.queueskip.R;
 import com.example.queueskip.SignupActivity;
@@ -43,6 +47,12 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 /*
@@ -82,7 +92,10 @@ private HomeViewModel homeViewModel;
     private TextView productPriceTxt;
     private Button addBTn;
     private Context mContext;
-
+    private ImageView productImg;
+    DatabaseReference reff;
+    DataSnapshot dataSnapshot; //?
+    private String photo;
 
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -98,6 +111,10 @@ private HomeViewModel homeViewModel;
         iniDB();
         cameraPreview = (SurfaceView)view.findViewById(R.id.cameraPreview);
         txtResult= (TextView)view.findViewById(R.id.txtResult);
+
+        reff= FirebaseDatabase.getInstance().getReference().child("Items");
+//        dataSnapshot.child("Items").getValue();
+
 
         barcodeDetector=new BarcodeDetector.Builder(mContext).setBarcodeFormats(Barcode.QR_CODE).build();
         cameraSource = new CameraSource.Builder(getContext(),barcodeDetector).setRequestedPreviewSize(640,480).build();
@@ -169,6 +186,9 @@ private HomeViewModel homeViewModel;
                             productNameTxt=dialog.findViewById(R.id.product_name_dialog);
                             productPriceTxt=dialog.findViewById( R.id.product_price_dialog );
                             addBTn=dialog.findViewById( R.id.Add);
+                            productImg=dialog.findViewById(R.id.product_img_dialog);
+
+
 
                             String qrtext=(qrcodes.valueAt(0).displayValue);
 
@@ -177,11 +197,35 @@ private HomeViewModel homeViewModel;
                           int   x=qrtext.indexOf( '-');
                           int y=qrtext.indexOf("-", x + 1);
 
-
                             final String price = qrtext.substring(x+1, y );
                             final String name = qrtext.substring(0, x );
                             productNameTxt.setText("Item: "+ qrtext.substring(0, x ));
                             productPriceTxt.setText("Price: "+ qrtext.substring(x+1, y )+" SR" );
+
+                           // String itemId = reff.push().getKey();
+                          //  reff= FirebaseDatabase.getInstance().getReference().child("Items");///?!?!???!?!??!
+
+                            reff.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                        Items item = snapshot.getValue(Items.class);
+                                        if(item.getName().equals(name)){
+                                             photo = item.getPhoto();
+                                            Glide.with(getActivity().getApplicationContext()).load(photo).into(productImg);
+                                        }
+
+                                        //just for testing retrieving data
+
+                                       // text.setText(item.getName()+" Item retrieved successfully :)");
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
 
 //                            final ElegantNumberButton quantity=dialog.findViewById(R.id.txt_amount_dialog);
 //                              final Integer quant=Integer.parseInt(quantity.getNumber());
@@ -208,6 +252,7 @@ private HomeViewModel homeViewModel;
                                     cart.setName(name);
                                     cart.setPrice(Integer.parseInt( (String ) price  ));
                                     cart.setAmount( 1 );
+                                    cart.setLink(photo);
 
                                     Common.cartRepository.insertToCart(cart); //?
 

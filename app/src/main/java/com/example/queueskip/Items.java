@@ -1,41 +1,57 @@
 package com.example.queueskip;
 
-public class Items {
-    String ItemId;
-    String ItemName;
-    String ItemPrice;
-    String ItemExpire;
-   // Bitmap ItemQR;
+import java.io.Serializable;
 
-    public Items(){
+public class Items implements Serializable {
+    private String name;
+    private String price;
+    private String expire;
+    private String photo;
 
+    public Items() {
     }
 
-    public Items(String itemId, String ItemName, String ItemPrice, String ItemExpire) {
-        ItemId = itemId;
-        this.ItemName=ItemName;
-        this.ItemPrice=ItemPrice;
-        this.ItemExpire=ItemExpire;
-       // this.ItemQR=ItemQR;
+    public Items(String name, String price, String expire,String photo) {
+        this.name = name;
+        this.price = price;
+        this.expire = expire;
+        this.photo = photo;
     }
 
-    public String getItemId() {
-        return ItemId;
+    //getters
+
+
+    public String getName() {
+        return name;
     }
 
-    public String getItemPrice() {
-        return ItemPrice;
+    public String getPrice() {
+        return price;
     }
 
-    public String getItemName() {
-        return ItemName;
+    public String getExpire() {
+        return expire;
     }
 
-    public String getItemExpire() {
-        return ItemExpire;
+    public String getPhoto() {
+        return photo;
     }
 
-  //  public Bitmap getItemQR() {
-    //    return ItemQR;
-    //}
+    //setters
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public void setExpire(String expire) {
+        this.expire = expire;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 }

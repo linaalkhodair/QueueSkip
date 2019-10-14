@@ -310,9 +310,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                                          }//end of onClick
                                      }//end of OnClickListener
         );
-        okBtn.setVisibility(View.INVISIBLE);
-        cancelBtn.setText("OK");
-
+        cancelBtn.setVisibility(View.INVISIBLE);
+        //  cancelBtn.setText("OK");
 
         dialog.show();
 

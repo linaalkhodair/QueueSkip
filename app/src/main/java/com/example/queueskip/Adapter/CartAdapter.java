@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.queueskip.Database.DataSource.CartRepository;
 import com.example.queueskip.Database.Local.CartDataSource;
@@ -44,6 +45,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.txt_amount.setNumber(String.valueOf(cartList.get(position).amount));
         holder.txt_price.setText(cartList.get(position).Price+" SR");
         holder.txt_product_name.setText(cartList.get(position).name);
+        Glide.with(context).load(cartList.get(position).link).into(holder.img_product);
 
 
         //auto save item when user change amount
@@ -76,6 +78,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             txt_amount=(ElegantNumberButton) itemView.findViewById(R.id.txt_amount);
             txt_product_name=(TextView) itemView.findViewById(R.id.txt_product_name);
             txt_price=(TextView) itemView.findViewById(R.id.txt_price);
+
            // txt_amount=(ElegantNumberButton) itemView.findViewById(R.id.txt_amount);
 
         }

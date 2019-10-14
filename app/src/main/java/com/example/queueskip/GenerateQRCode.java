@@ -1,10 +1,14 @@
 package com.example.queueskip;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -12,57 +16,115 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+//import com.google.zxing.BarcodeFormat;
+//import com.google.zxing.MultiFormatWriter;
+//import com.google.zxing.WriterException;
+//import com.google.zxing.common.BitMatrix;
+//import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.UUID;
+import java.util.HashMap;
 
 
 public class GenerateQRCode extends AppCompatActivity {
-    EditText text;
+    EditText text1;
     Button sub_btn;
-    ImageView image;
-    String text2QR;
+    String text2QR, name, price, expire;
     EditText textPrice;
     EditText textExpire;
     DatabaseReference databaseItem;
     Bitmap bitmap;
+    ImageView img;
     private ImageView logout;
-   // private ImageView calendar;
+    String temp;
+    Uri filePath;
+
+    private Button btn_upload, btn_choose;
+    private ImageView imageView;
+    private Uri filepath;
+    private FirebaseStorage storage;
+    private StorageReference storageReference, storageRef;
     private FirebaseAuth firebaseAuth;
+    DataSnapshot dataSnapshot;
+
+    //DatabaseReference mDatabase;
+    // private ImageView calendar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+        //you need to chang it
+
         setContentView(R.layout.activity_generate_qr_code);
-        text =(EditText) findViewById(R.id.text);
-        sub_btn=(Button) findViewById(R.id.sub_btn);
-        image=(ImageView) findViewById(R.id.image);
-        textPrice=(EditText) findViewById(R.id.text1);
-        textExpire=(EditText)findViewById(R.id.text3) ;
-        databaseItem = FirebaseDatabase.getInstance().getReference("item");
+
+        //Find views By ID
+
+        text1 = (EditText) findViewById(R.id.text1);
+        sub_btn = (Button) findViewById(R.id.sub_btn);
+        textPrice = (EditText) findViewById(R.id.text2);
+        textExpire = (EditText) findViewById(R.id.text3);
+        btn_choose = (Button) findViewById(R.id.btn_choose);
+        img = (ImageView) findViewById(R.id.image);
+      //  imageView = (ImageView) findViewById(R.id.myImage);
+        logout = findViewById(R.id.admin_logout);
+
+        //Database
+      //  databaseItem = FirebaseDatabase.getInstance().getReference();//???????
+
+        databaseItem = FirebaseDatabase.getInstance().getReference().child("Items");//???????
         firebaseAuth = FirebaseAuth.getInstance();
 
+        //Storage for an image
 
-        //Calendar
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+        //choose image event listener
+
+        btn_choose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent();
+                intent.setType("image/*");
+                intent.setAction(intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent,"select image"),1);
+            }
+        });
+
+        //Calendar settings
 
         final Calendar myCalendar = Calendar.getInstance();
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 // TODO Auto-generated method stub
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
@@ -76,8 +138,9 @@ public class GenerateQRCode extends AppCompatActivity {
 
                 textExpire.setText(sdf.format(myCalendar.getTime()));
             }
-
         };
+
+        //Expire date event listener
 
         textExpire.setOnClickListener(new View.OnClickListener() {
 
@@ -90,8 +153,8 @@ public class GenerateQRCode extends AppCompatActivity {
             }
         });
 
+        //Logout event listener
 
-        logout = findViewById(R.id.admin_logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,13 +162,15 @@ public class GenerateQRCode extends AppCompatActivity {
             }
         });
 
+        //Add Item event listener
+
         sub_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
                 //text2QR = "Item:" + text.getText().toString().trim() + " " + "\n"+"Price" + textPrice.getText().toString().trim() + " SR " +"\n"+ "Expiration date" + textExpire.getText().toString().trim();
-                text2QR =text.getText().toString().trim()+"-" + textPrice.getText().toString().trim() + "-" + textExpire.getText().toString().trim();
+                text2QR = text1.getText().toString().trim() + "-" + textPrice.getText().toString().trim() + "-" + textExpire.getText().toString().trim();//?
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
                 if (validate()) {
@@ -113,61 +178,150 @@ public class GenerateQRCode extends AppCompatActivity {
                         BitMatrix bitMatrix = multiFormatWriter.encode(text2QR, BarcodeFormat.QR_CODE, 200, 200);
                         BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                         bitmap = barcodeEncoder.createBitmap(bitMatrix);
-                        image.setImageBitmap(bitmap);
-                        addItem();
-                        text.getText().clear();
-                        textPrice.getText().clear();
-                        textExpire.getText().clear();
+                        img.setImageBitmap(bitmap);
+                        //
+                        ImageLink();
 
-
-                    } catch (WriterException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
-            }//end if
+                }//end if validated
             }
         });
 
-    }
+    } //end onCreate method
 
-    public boolean validate(){
-        String name=text.getText().toString().trim();
-        String price=textPrice.getText().toString().trim();
-        String expire=textExpire.getText().toString().trim();
-        if((TextUtils.isEmpty(name)) ||(TextUtils.isEmpty(price))||(TextUtils.isEmpty(expire))){
-            Toast.makeText(this,"Please fill in all required fields",Toast.LENGTH_LONG).show();
+
+    //Validate method
+
+    public boolean validate() {
+        name = text1.getText().toString().trim();
+        price = textPrice.getText().toString().trim();
+        expire = textExpire.getText().toString().trim();
+        if ((TextUtils.isEmpty(name)) || (TextUtils.isEmpty(price)) || (TextUtils.isEmpty(expire))) {
+            Toast.makeText(this, "Please fill in all required fields", Toast.LENGTH_LONG).show();
             return false;
-        }
-        else if(!TextUtils.isDigitsOnly(price)){
-            Toast.makeText(this,"Price should be digits only",Toast.LENGTH_LONG).show();
+        } else if (!TextUtils.isDigitsOnly(price)) {
+            Toast.makeText(this, "Price should be digits only", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
+    }
 
-    } //end validate
+    //Logout method
 
-    public void logout(){
+    public void logout() {
         firebaseAuth.signOut();
         finish();
         startActivity(new Intent(this, LoginActivity.class));
         // getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
     }
-    private void addItem(){
-        String name=text.getText().toString().trim();
-        String price=textPrice.getText().toString().trim();
-        String expire=textExpire.getText().toString().trim();
 
-        if((!TextUtils.isEmpty(name)) &&(! TextUtils.isEmpty(price))&&(! TextUtils.isEmpty(expire))){ //i think no need since we validate before
-            String id=databaseItem.push().getKey();
-            Items item=new Items(id,name,price,expire);
-            databaseItem.child(id).setValue(item);
-            Toast.makeText(this,"The item is added successfully ",Toast.LENGTH_LONG).show();
+    //IDK :)
 
+    public String BitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        temp = Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
 
+    //On choosing an image
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==1 && resultCode== RESULT_OK && data!=null && data.getData() !=null){
+
+            filepath = data.getData();}
+//        Bitmap bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(),filepath);
+//        imageView.setImageBitmap(bitmap);
+//        BitMapToString(bitmap);
+    }
+
+    //Add Image to Database Storage
+
+    private void ImageLink() {
+
+        if(filepath!=null){
+             final ProgressDialog progressDialog = new ProgressDialog(GenerateQRCode.this);
+            progressDialog.setTitle("Image uploaded");
+            progressDialog.show();
+
+            if (progressDialog!= null) {
+                progressDialog.dismiss();
+            }
+
+            storageRef = storageReference.child("images/" + UUID.randomUUID().toString());
+
+            storageRef.putFile(filepath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+
+                    storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            saveToDatabase(uri.toString());
+                            progressDialog.dismiss();
+                        }
+                    });
+                }
+            });
+
+        }else {
+
+            saveToDatabase("https://i-love-png.com/images/no-image_7299.png");
         }
-        else{
-            Toast.makeText(this,"You should fill all fields",Toast.LENGTH_LONG).show(); // ithink would be no need?
-        }
-    } //end of addItem
+    }
 
 
-}
+
+    //Save Item in database
+
+    public void saveToDatabase(String ImageLink){
+
+        //Item Id
+        
+       String itemId = databaseItem.push().getKey();
+
+
+        //put Item inside hash map
+
+        Items item=new Items(name,price,expire,ImageLink);
+        HashMap<String, Items> hashMap = new HashMap<>();
+        hashMap.put( itemId , item);
+
+       // databaseItem.child(itemId).setValue(hashMap);
+
+        //Toast.makeText(this, "Successful insertion", Toast.LENGTH_LONG).show();
+
+
+        //databaseItem.child("Items").child(itemId).setValue(hashMap); //duplicated id's
+        // databaseItem.push().setValue(hashMap); //two id's diff
+
+        databaseItem.setValue(hashMap); //pusj
+        //here the retrieve items code
+
+        databaseItem.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                       //  Items item = snapshot.child(snapshot.getKey()).getValue(Items.class);
+                       Items item = snapshot.getValue(Items.class);
+                        //just for testing retrieving data
+
+                        text1.setText(item.getName() + " Item retrieved successfully :)");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    } //end saveToDatabase
+
+}//End Java Class

@@ -127,7 +127,7 @@ public class DashboardFragment extends Fragment {
             amount= cartList.get(i).amount;
             totalAmount+=  price*amount;
         }
-        btn_place_order.setText("Check out"+"    Total price: "+totalAmount+"SR");
+        btn_place_order.setText("Check out"+"     Total price: "+totalAmount+"SR");
 
        // total.setText(""+totalAmount);
         //return totalAmount;
