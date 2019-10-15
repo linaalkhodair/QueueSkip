@@ -106,7 +106,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
         android:layout_gravity="center"
-        android:text="Number of remaining attempts:"
         android:textColor="@color/colorPrimaryDark"/>
 
 

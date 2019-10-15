@@ -48,6 +48,9 @@ public class LoginActivity extends AppCompatActivity {
     private Button ResetBtn;
     private EditText resetEdit;
 
+    Button okBtn,cancelBtn;
+    TextView dialogMsg;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        attempts.setText("Number of attempts remaining:5");// wrote down number 5 so it doesn't appear empty at first.
+//        attempts.setText("Number of attempts remaining:5");// wrote down number 5 so it doesn't appear empty at first.
 
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser(); //checks if user already  logged in to direct him to the next activity
@@ -94,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validate(Name.getText().toString(), Pass.getText().toString());
+                validate(Name.getText().toString().trim(), Pass.getText().toString().trim());
 
             }
         });
@@ -107,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //RESET PASSWORD
         forgot.setOnClickListener(new View.OnClickListener() {
             public  void onClick(View v){
 
@@ -157,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
             }//end onclick  forgot
 
 
-        }); //end onCLickListener forgot
+        }); //end onCLickListener forgot //END RESET PASSWORD
 
     }//end on create.
 
@@ -177,29 +181,40 @@ public class LoginActivity extends AppCompatActivity {
                         else
                         checkEmailVerification();
                     } else {
+                        //attempts.setText("Number of attempts remaining: " + counter);
+                        if (counter == 0) {
+                            login.setEnabled(false);
+                            login.setBackground(getResources().getDrawable(R.drawable.round_shape_btn_gray));
+                            attempts.setText("Number of attempts remaining: " + counter);
+                        }
                         //Toast.makeText(LoginActivity.this,"Login Failed",Toast.LENGTH_SHORT).show();
                         try {
                             throw task.getException();
                         } catch (FirebaseAuthInvalidUserException e) {
                             createDialog(getResources().getString(R.string.invalid_user));
+                            counter--;
                         } catch (FirebaseAuthInvalidCredentialsException e) {
                             createDialog(getResources().getString(R.string.invalid_email_or_pass));
+                            counter--;
 
                         } catch (FirebaseNetworkException e) {
                             createDialog(getResources().getString(R.string.network_failed));
-
                         } catch (IllegalArgumentException e) {
                             createDialog(getResources().getString(R.string.fill_required_fields)); //?maybe no need
+                            counter--;
                         } catch (Exception e) {
                             Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            counter--;
                         }
 
 
-                        counter--;
-                        attempts.setText("Number of attempts remaining: " + counter);
-                        if (counter == 0) {
-                            login.setEnabled(false);
-                        }
+//                        counter--;
+////                        attempts.setText("Number of attempts remaining: " + counter);
+//                        if (counter == 0) {
+//                            login.setEnabled(false);
+//                            login.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+//                            attempts.setText("Number of attempts remaining: " + counter);
+//                        }
                     }
                 }
             });
@@ -240,24 +255,37 @@ public class LoginActivity extends AppCompatActivity {
     } //end of isEmpty
 
     private void createDialog(String message){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);
-        alertDialog.setMessage(message);
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.logout_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        okBtn=dialog.findViewById(R.id.ok_btn_dialog);
+        cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
+        dialogMsg=dialog.findViewById(R.id.dialog_message);
 
 
-        alertDialog.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }//end of onClick
-                }//end of OnClickListener
+        dialogMsg.setText(message);
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+                                     @Override
+                                     public void onClick(View view) {
+                                         dialog.cancel();
+                                     }//end of onClick
+                                 }//end of OnClickListener
         );
 
-        alertDialog.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }//end of onClick
-                }//end of OnClickListener
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View view) {
+                                             dialog.cancel();
+
+                                         }//end of onClick
+                                     }//end of OnClickListener
         );
-        alertDialog.show();
+        cancelBtn.setVisibility(View.INVISIBLE);
+      //  cancelBtn.setText("OK");
+
+        dialog.show();
 
     }//end of createDialog
 

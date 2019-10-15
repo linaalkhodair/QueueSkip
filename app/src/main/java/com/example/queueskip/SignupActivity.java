@@ -1,8 +1,11 @@
 package com.example.queueskip;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -41,6 +44,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private String passInput;
     private String confPassInput;
     private TextView login;
+
+    Button okBtn,cancelBtn;
+    TextView dialogMsg;
+
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
@@ -276,23 +283,37 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private void createDialog(String message){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(SignupActivity.this);
-        alertDialog.setMessage(message);
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.logout_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        alertDialog.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }//end of onClick
-                }//end of OnClickListener
+        okBtn=dialog.findViewById(R.id.ok_btn_dialog);
+        cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
+        dialogMsg=dialog.findViewById(R.id.dialog_message);
+
+
+        dialogMsg.setText(message);
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+                                     @Override
+                                     public void onClick(View view) {
+                                         dialog.cancel();
+                                     }//end of onClick
+                                 }//end of OnClickListener
         );
 
-        alertDialog.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }//end of onClick
-                }//end of OnClickListener
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View view) {
+                                             dialog.cancel();
+
+                                         }//end of onClick
+                                     }//end of OnClickListener
         );
-        alertDialog.show();
+        cancelBtn.setVisibility(View.INVISIBLE);
+        //  cancelBtn.setText("OK");
+
+        dialog.show();
 
     }//end of createDialog
 

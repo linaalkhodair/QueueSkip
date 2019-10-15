@@ -11,7 +11,8 @@
     <item
         android:id="@+id/navigation_camera"
         android:icon="@drawable/ic_camera_alt_black_24dp"
-        android:title="@string/title_camera" />
+        android:title="@string/title_camera"
+        />
 
     <item
         android:id="@+id/navigation_logout"

@@ -5,124 +5,142 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GenerateQRCode"
+
     android:orientation="vertical"
     android:background="@color/colorBackground">
 
+    <!--    tools:context=".GenerateQRCode"-->
 
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="30dp"
-            android:layout_marginTop="30dp"
-            android:text="Add Item"
-            tools:ignore="MissingConstraints"
-            android:textColor="@color/colorPrimary"
-            />
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:text="Item name:"
-            android:textSize="17dp"
-            android:textColor="@color/colorPrimaryDark"
-            />
-        <EditText
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:id="@+id/text"
-            android:layout_marginStart="10dp"
-           />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Item price:"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="16dp"
-            android:textSize="17dp"
-            android:textColor="@color/colorPrimaryDark"
-            tools:ignore="MissingConstraints" />
-
-        <EditText
-            android:id="@+id/text1"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-             />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Item Expire Date:"
-            android:layout_marginStart="16dp"
-            tools:ignore="MissingConstraints"
-        android:textSize="17dp"
-        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:text="Add Item"
+        tools:ignore="MissingConstraints"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
         />
 
 
-        <EditText
-            android:id="@+id/text3"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:clickable="true"
-            android:focusable="false"
-            android:editable="false"
-            tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:text="Item name:"
+        android:textColor="@color/colorAccent"></TextView>
 
 
-    </LinearLayout>
 
-        <Button
-            android:id="@+id/sub_btn"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginTop="30dp"
-            android:text="ADD"
-            tools:ignore="MissingConstraints"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/colorBackground"/>
+    <EditText
+        android:id="@+id/text1"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:ems="4"
+        android:textSize="16dp"
 
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@drawable/round_shape"
+        android:padding="8dp"/>
+
+
+
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="2dp"
+        android:text="Item price:"
+        android:textColor="@color/colorAccent"></TextView>
+
+
+
+
+    <EditText
+        android:id="@+id/text2"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:ems="4"
+        android:textSize="16dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@drawable/round_shape"
+        android:padding="8dp"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="2dp"
+        android:text="Expiry Date:"
+        android:textColor="@color/colorAccent"></TextView>
+
+
+
+    <EditText
+        android:id="@+id/text3"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:ems="4"
+        android:textSize="16dp"
+        android:background="@drawable/round_shape"
+        android:padding="8dp"
+        android:editable="false"
+        android:textColor="@color/colorPrimaryDark" />
+
+
+    <ImageView
+        android:id="@+id/calendar"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_date_range_black_24dp"
+        android:layout_marginLeft="280dp"
+        android:layout_marginTop="-35dp"
+        ></ImageView>
+
+    <Button
+        android:id="@+id/btn_choose"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:text="UPLOAD"
+        tools:ignore="MissingConstraints"
+        android:background="@drawable/round_shape_btn_gray"
+        android:textColor="@color/colorBackground"/>
+
+
+    <Button
+        android:id="@+id/sub_btn"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:text="ADD"
+        tools:ignore="MissingConstraints"
+        android:background="@drawable/round_shape_btn"
+        android:textColor="@color/colorBackground"/>
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
     <ImageView
         android:id="@+id/admin_logout"
         android:layout_width="30dp"
@@ -133,3 +151,5 @@
 
 
 </LinearLayout>
+
+

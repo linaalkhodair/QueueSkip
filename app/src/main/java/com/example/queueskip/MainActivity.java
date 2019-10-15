@@ -1,14 +1,18 @@
 package com.example.queueskip;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.queueskip.ui.dashboard.DashboardFragment;
 import com.example.queueskip.ui.home.HomeFragment;
@@ -29,6 +33,8 @@ public class MainActivity extends AppCompatActivity  {
     //private Button logout;
     BottomNavigationView navView;
     MenuItem logoutBtn;
+    Button okBtn,cancelBtn;
+    TextView dialogMsg;
 
 
     @Override
@@ -46,6 +52,8 @@ public class MainActivity extends AppCompatActivity  {
        // getSupportFragmentManager().beginTransaction().replace(R.id.container,new DashboardFragment()).commit();
 
         //.........
+
+
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                  R.id.navigation_cart,R.id.navigation_camera, R.id.navigation_logout)
@@ -127,6 +135,39 @@ public class MainActivity extends AppCompatActivity  {
 //    };
 //----------------------------------
 private void createDialog(){
+
+
+    final Dialog dialog = new Dialog(this);
+    dialog.setContentView(R.layout.logout_dialog);
+    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+    okBtn=dialog.findViewById(R.id.ok_btn_dialog);
+    cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
+    dialogMsg=dialog.findViewById(R.id.dialog_message);
+
+
+    dialogMsg.setText("Are you sure you want to log out?");
+
+    okBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                logout();
+                                }//end of onClick
+                            }//end of OnClickListener
+    );
+
+    cancelBtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        dialog.cancel();
+
+                                    }//end of onClick
+                                }//end of OnClickListener
+    );
+
+    dialog.show();
+
+        /*
     AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
     alertDialog.setMessage("Are you sure you want to logout?");
 
@@ -145,7 +186,7 @@ private void createDialog(){
             }//end of OnClickListener
     );
     alertDialog.show();
-
+*/
 }//end of createDialog
 
 }
