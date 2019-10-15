@@ -22,7 +22,13 @@ public interface CartDAO {
     List<Cart> getCartItemss(); //NEW NEW NEW ADDED
 
     @Query("SELECT * FROM CART WHERE id=:cartItemId")
-    Flowable<List<Cart>> getCartItemByID(int cartItemId);
+    Flowable<List<Cart>> getCartItemByID(String cartItemId);
+
+    @Query("SELECT amount FROM Cart WHERE id=:cartItemId")
+    int getamountItemByID(String cartItemId);
+
+    @Query( "UPDATE Cart SET amount= :namount WHERE id=:cartID " )
+    void updateAmount(int namount,String cartID );
 
     @Query("SELECT Count(*)  FROM CART")
     int countCartItems();

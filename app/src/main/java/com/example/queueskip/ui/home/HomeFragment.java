@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.queueskip.Adapter.CartAdapter;
 import com.example.queueskip.Database.DataSource.CartRepository;
 import com.example.queueskip.Database.Local.CartDataSource;
 import com.example.queueskip.Database.Local.CartDatabase;
@@ -42,6 +43,7 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.util.List;
 /*
 public class HomeFragment extends Fragment {
     private Button scan;
@@ -171,10 +173,12 @@ private HomeViewModel homeViewModel;
 
                           int   x=qrtext.indexOf( '-');
                           int y=qrtext.indexOf("-", x + 1);
+                          int z=qrtext.indexOf("-",y+1);
 
 
                             final String price = qrtext.substring(x+1, y );
                             final String name = qrtext.substring(0, x );
+                            final String qrId=qrtext.substring(z+1  );
                             productNameTxt.setText("Item: "+ qrtext.substring(0, x ));
                             productPriceTxt.setText("Price: "+ qrtext.substring(x+1, y )+" SR" );
 
@@ -189,22 +193,29 @@ private HomeViewModel homeViewModel;
                             addBTn.setOnClickListener( new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Cart cart=new Cart();
-                                    cart.setName(name);
-                                    cart.setPrice(Integer.parseInt( (String ) price  ));
-                                    cart.setAmount( 1 );
-
-                                    Common.cartRepository.insertToCart(cart); //?
+                                    int amount1 = 0;
+                                    if (isItemExist( qrId )) {
+                                        amount1 = Common.cartRepository.getamountItemByID( qrId );
+                                        Common.cartRepository.updateAmount( amount1, qrId );
 
 
+                                    } else {
+                                        Cart cart = new Cart();
+                                        cart.setId( qrId );
+                                        cart.setName( name );
+                                        cart.setPrice( Integer.parseInt( (String) price ) );
+                                        cart.setAmount( 1 );
 
-                                    Toast.makeText(getActivity(),"Item added successfully",Toast.LENGTH_SHORT).show();
-                                    dialog.dismiss();
+                                        Common.cartRepository.insertToCart( cart ); //?
+
+
+                                        Toast.makeText( getActivity(), "Item added successfully", Toast.LENGTH_SHORT ).show();
+                                        dialog.dismiss();
+                                    }
 
                                    /* int items1 = CartDatabase.getInstance(getActivity().getApplicationContext()).cartDAO().countCartItems();
                                     String items = String.valueOf(items1);
                                     Toast.makeText(getActivity(),"Items:" + items,Toast.LENGTH_SHORT).show();*/
-
 
 
                                 }
@@ -278,6 +289,18 @@ private HomeViewModel homeViewModel;
     private void iniDB(){
         Common.cartDatabase=CartDatabase.getInstance( mContext );
         Common.cartRepository= CartRepository.getInstance( CartDataSource.getInstance( Common.cartDatabase.cartDAO() ) );
+    }
+    private boolean isItemExist(String Id){
+boolean flag=false;
+        List<Cart> cartList=Common.cartRepository.getCartItemss();
+        for(int i=0;i< Common.cartRepository.countCartItems();i++){
+            if(cartList.get( i ).id==Id)
+                flag=true;
+
+
+
+        }
+        return flag;
     }
 }
 

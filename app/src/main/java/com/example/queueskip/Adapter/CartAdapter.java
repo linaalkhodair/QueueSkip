@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
     Context context;
-    List<Cart> cartList;
+   public  List<Cart> cartList;
     CartRepository cartRepository;
 
     public CartAdapter(Context context,List<Cart> cartList){

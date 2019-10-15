@@ -38,6 +38,7 @@ public class GenerateQRCode extends AppCompatActivity {
     DatabaseReference databaseItem;
     Bitmap bitmap;
     private ImageView logout;
+    String id;
    // private ImageView calendar;
     private FirebaseAuth firebaseAuth;
 
@@ -105,16 +106,18 @@ public class GenerateQRCode extends AppCompatActivity {
             public void onClick(View view) {
 
                 //text2QR = "Item:" + text.getText().toString().trim() + " " + "\n"+"Price" + textPrice.getText().toString().trim() + " SR " +"\n"+ "Expiration date" + textExpire.getText().toString().trim();
-                text2QR =text.getText().toString().trim()+"-" + textPrice.getText().toString().trim() + "-" + textExpire.getText().toString().trim();
+               // text2QR =text.getText().toString().trim()+"-" + textPrice.getText().toString().trim() + "-" + textExpire.getText().toString().trim();
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
                 if (validate()) {
                     try {
+                        addItem();
+                        text2QR =text.getText().toString().trim()+"-" + textPrice.getText().toString().trim() + "-" + textExpire.getText().toString().trim()+"-"+id;
                         BitMatrix bitMatrix = multiFormatWriter.encode(text2QR, BarcodeFormat.QR_CODE, 200, 200);
                         BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                         bitmap = barcodeEncoder.createBitmap(bitMatrix);
                         image.setImageBitmap(bitmap);
-                        addItem();
+
                         text.getText().clear();
                         textPrice.getText().clear();
                         textExpire.getText().clear();
@@ -157,7 +160,7 @@ public class GenerateQRCode extends AppCompatActivity {
         String expire=textExpire.getText().toString().trim();
 
         if((!TextUtils.isEmpty(name)) &&(! TextUtils.isEmpty(price))&&(! TextUtils.isEmpty(expire))){ //i think no need since we validate before
-            String id=databaseItem.push().getKey();
+             id=databaseItem.push().getKey();
             Items item=new Items(id,name,price,expire);
             databaseItem.child(id).setValue(item);
             Toast.makeText(this,"The item is added successfully ",Toast.LENGTH_LONG).show();
