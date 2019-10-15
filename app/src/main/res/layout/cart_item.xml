@@ -55,6 +55,12 @@
     android:layout_marginEnd="8dp"
     app:textColor="@color/colorBackground"
     ></com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:id="@+id/deleteItem"
+                android:src="@drawable/ic_delete_black_24dp"></ImageView>
+
         </LinearLayout>
 
     </LinearLayout>

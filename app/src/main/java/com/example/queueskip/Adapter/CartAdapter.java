@@ -3,6 +3,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     Context context;
     List<Cart> cartList;
     CartRepository cartRepository;
+    ImageView delete;
 
     public CartAdapter(Context context,List<Cart> cartList){
         this.context=context;
@@ -35,6 +37,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView= LayoutInflater.from(context).inflate(R.layout.cart_item,parent,false);
+
+        delete=itemView.findViewById(R.id.deleteItem);
 
         return new CartViewHolder(itemView);
     }
@@ -47,6 +51,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.txt_product_name.setText(cartList.get(position).name);
         Glide.with(context).load(cartList.get(position).link).into(holder.img_product);
 
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Common.cartRepository.deleteCartItem(cartList.get(position));
+            }
+        });
 
         //auto save item when user change amount
         holder.txt_amount.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
