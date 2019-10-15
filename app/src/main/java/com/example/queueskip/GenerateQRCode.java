@@ -72,7 +72,7 @@ public class GenerateQRCode extends AppCompatActivity {
     DataSnapshot dataSnapshot;
 
     //DatabaseReference mDatabase;
-    // private ImageView calendar;
+    private ImageView calendar;
 
 
     @Override
@@ -94,6 +94,7 @@ public class GenerateQRCode extends AppCompatActivity {
         img = (ImageView) findViewById(R.id.image);
       //  imageView = (ImageView) findViewById(R.id.myImage);
         logout = findViewById(R.id.admin_logout);
+        calendar =findViewById(R.id.calendar);
 
         //Database
       //  databaseItem = FirebaseDatabase.getInstance().getReference();//???????
@@ -137,12 +138,13 @@ public class GenerateQRCode extends AppCompatActivity {
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
                 textExpire.setText(sdf.format(myCalendar.getTime()));
+                textExpire.setEnabled(false);
             }
         };
 
         //Expire date event listener
 
-        textExpire.setOnClickListener(new View.OnClickListener() {
+        calendar.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -283,7 +285,7 @@ public class GenerateQRCode extends AppCompatActivity {
     public void saveToDatabase(String ImageLink){
 
         //Item Id
-        
+
        String itemId = databaseItem.push().getKey();
 
 
@@ -299,9 +301,12 @@ public class GenerateQRCode extends AppCompatActivity {
 
 
         //databaseItem.child("Items").child(itemId).setValue(hashMap); //duplicated id's
-        // databaseItem.push().setValue(hashMap); //two id's diff
+        databaseItem.setValue(hashMap); //two id's diff
 
-        databaseItem.setValue(hashMap); //pusj
+
+
+        //databaseItem.child("Items").child(itemId).push().setValue(hashMap); //??
+        //without push stores only one and overwrites
         //here the retrieve items code
 
         databaseItem.addValueEventListener(new ValueEventListener() {
