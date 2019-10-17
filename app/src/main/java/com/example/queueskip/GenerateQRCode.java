@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
@@ -20,9 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -100,7 +97,7 @@ public class GenerateQRCode extends AppCompatActivity {
         //Database
       //  databaseItem = FirebaseDatabase.getInstance().getReference();//???????
 
-        databaseItem = FirebaseDatabase.getInstance().getReference().child("Items");//???????
+        databaseItem = FirebaseDatabase.getInstance().getReference("items ");//???????
         firebaseAuth = FirebaseAuth.getInstance();
 
         //Storage for an image
@@ -289,14 +286,17 @@ public class GenerateQRCode extends AppCompatActivity {
 
         //Item Id
 
-       String itemId = databaseItem.push().getKey();
+        id = databaseItem.push().getKey();
 
 
         //put Item inside hash map
 
-        Items item=new Items(name,price,expire,ImageLink);
-        HashMap<String, Items> hashMap = new HashMap<>();
-        hashMap.put( itemId , item);
+        Items item=new Items(id,name,price,expire,ImageLink );
+        databaseItem.child( id ).setValue( item );
+
+       // Map<String, Items> m=item.toMap
+       // HashMap<String, Items> hashMap = new HashMap<>();
+       // hashMap.put( itemId , item);
 
        // databaseItem.child(itemId).setValue(hashMap);
 
@@ -304,7 +304,7 @@ public class GenerateQRCode extends AppCompatActivity {
 
 
         //databaseItem.child("Items").child(itemId).setValue(hashMap); //duplicated id's
-        databaseItem.setValue(hashMap); //two id's diff
+       // databaseItem.setValue(hashMap); //two id's diff
 
 
 

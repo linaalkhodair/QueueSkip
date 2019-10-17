@@ -7,15 +7,19 @@ public class Items implements Serializable {
     private String price;
     private String expire;
     private String photo;
+    private String id;
+
 
     public Items() {
     }
 
-    public Items(String name, String price, String expire,String photo) {
+    public Items(String id,String name, String price, String expire, String photo) {
         this.name = name;
         this.price = price;
         this.expire = expire;
         this.photo = photo;
+
+        this.id = id;
     }
 
     //getters
@@ -37,6 +41,8 @@ public class Items implements Serializable {
         return photo;
     }
 
+    public String getId(){return id;}
+
     //setters
 
     public void setName(String name) {
@@ -54,4 +60,7 @@ public class Items implements Serializable {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
+    public void swtId(String id){this.id=id;}
+
 }

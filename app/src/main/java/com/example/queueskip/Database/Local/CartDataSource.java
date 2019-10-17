@@ -41,10 +41,7 @@ public void updateAmount(int namount,String cartID ){
         cartDAO.updateAmount(namount,cartID  );
 }
     @Override
-    public void updateAmount(int namount,String cartID ){
-        cartDAO.updateAmount(namount,cartID  );
-    }
-    @Override
+
     public List<Cart> getCartItemss() {
         return cartDAO.getCartItemss();
     } //NEW NEW NEW //ADDED
