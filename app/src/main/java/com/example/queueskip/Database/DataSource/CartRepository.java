@@ -62,4 +62,13 @@ public class CartRepository implements ICartDataSource {
         iCartDataSource.deleteCartItem(cart);
 
     }
+
+    @Override
+    public int getamountItemByID(String id) {
+       return  iCartDataSource.getamountItemByID( id );
+    }
+@Override
+    public  void updateAmount(int namount,String cartID ){
+        iCartDataSource.updateAmount(namount, cartID );
+   }
 }
