@@ -62,6 +62,7 @@ public class GenerateQRCode extends AppCompatActivity {
     private ImageView logout;
     String temp;
     Uri filePath;
+    String id;
 
     private Button btn_upload, btn_choose;
     private ImageView imageView;
@@ -172,11 +173,13 @@ public class GenerateQRCode extends AppCompatActivity {
             public void onClick(View view) {
 
                 //text2QR = "Item:" + text.getText().toString().trim() + " " + "\n"+"Price" + textPrice.getText().toString().trim() + " SR " +"\n"+ "Expiration date" + textExpire.getText().toString().trim();
-                text2QR = text1.getText().toString().trim() + "-" + textPrice.getText().toString().trim() + "-" + textExpire.getText().toString().trim();//?
+               // text2QR = text1.getText().toString().trim() + "-" + textPrice.getText().toString().trim() + "-" + textExpire.getText().toString().trim();//?
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
                 if (validate()) {
                     try {
+                        ImageLink();
+                        text2QR =text1.getText().toString().trim()+"-" + textPrice.getText().toString().trim() + "-" + textExpire.getText().toString().trim()+"-"+id;
                         BitMatrix bitMatrix = multiFormatWriter.encode(text2QR, BarcodeFormat.QR_CODE, 200, 200);
                         BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                         bitmap = barcodeEncoder.createBitmap(bitMatrix);

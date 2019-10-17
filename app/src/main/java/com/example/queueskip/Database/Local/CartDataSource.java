@@ -29,10 +29,18 @@ public class CartDataSource implements ICartDataSource {
     }
 
     @Override
-    public Flowable<List<Cart>> getCartItemByID(int cartItemId) {
+    public Flowable<List<Cart>> getCartItemByID(String cartItemId) {
         return cartDAO.getCartItemByID(cartItemId);
     }
+    @Override
+    public int getamountItemByID(String id){
+        return  cartDAO.getamountItemByID( id );
+    }
 
+    @Override
+    public void updateAmount(int namount,String cartID ){
+        cartDAO.updateAmount(namount,cartID  );
+    }
     @Override
     public List<Cart> getCartItemss() {
         return cartDAO.getCartItemss();

@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey;
 @Entity (tableName = "Cart")
 public class Cart {
     @NonNull
-    @PrimaryKey (autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo (name="id")
-    public int id;
+    public String id;
 
     @ColumnInfo (name="name")
     public String name;
@@ -30,7 +30,7 @@ public class Cart {
         this.amount = amount;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
