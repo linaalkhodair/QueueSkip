@@ -112,7 +112,7 @@ private HomeViewModel homeViewModel;
         cameraPreview = (SurfaceView)view.findViewById(R.id.cameraPreview);
         txtResult= (TextView)view.findViewById(R.id.txtResult);
 
-        reff= FirebaseDatabase.getInstance().getReference().child("Items");
+        reff= FirebaseDatabase.getInstance().getReference().child("items");
 //        dataSnapshot.child("Items").getValue();
 
 
@@ -188,8 +188,6 @@ private HomeViewModel homeViewModel;
                             addBTn=dialog.findViewById( R.id.Add);
                             productImg=dialog.findViewById(R.id.product_img_dialog);
 
-
-
                             String qrtext=(qrcodes.valueAt(0).displayValue);
 
                            // productNameTxt=qrtext.
@@ -205,14 +203,21 @@ private HomeViewModel homeViewModel;
                            // String itemId = reff.push().getKey();
                           //  reff= FirebaseDatabase.getInstance().getReference().child("Items");///?!?!???!?!??!
 
+                           // reff.child( id ).setValue( item );
+
                             reff.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                         Items item = snapshot.getValue(Items.class);
+                                       // Toast.makeText(getActivity(),item.getName(),Toast.LENGTH_SHORT).show();
+
                                         if(item.getName().equals(name)){
                                              photo = item.getPhoto();
-                                            Glide.with(getActivity().getApplicationContext()).load(photo).into(productImg);
+
+
+                                            Glide.with(mContext).load(photo).into(productImg);
                                         }
 
                                         //just for testing retrieving data

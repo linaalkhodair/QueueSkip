@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.se.omapi.Session;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity  {
     MenuItem logoutBtn;
     Button okBtn,cancelBtn;
     TextView dialogMsg;
+    Dialog dialog;
 
 
     @Override
@@ -87,8 +89,12 @@ public class MainActivity extends AppCompatActivity  {
 
     public void logout(){
         firebaseAuth.signOut();
-        finish();
+        //finish();
+        dialog.dismiss();
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
+
+
+
     }
 
 //
@@ -137,7 +143,7 @@ public class MainActivity extends AppCompatActivity  {
 private void createDialog(){
 
 
-    final Dialog dialog = new Dialog(this);
+     dialog = new Dialog(this);
     dialog.setContentView(R.layout.logout_dialog);
     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -147,6 +153,8 @@ private void createDialog(){
 
 
     dialogMsg.setText("Are you sure you want to log out?");
+
+    dialog.show();
 
     okBtn.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -165,7 +173,6 @@ private void createDialog(){
                                 }//end of OnClickListener
     );
 
-    dialog.show();
 
         /*
     AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
@@ -188,5 +195,6 @@ private void createDialog(){
     alertDialog.show();
 */
 }//end of createDialog
+
 
 }
