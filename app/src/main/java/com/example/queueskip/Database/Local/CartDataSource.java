@@ -1,7 +1,6 @@
 package com.example.queueskip.Database.Local;
 
 import com.example.queueskip.Database.DataSource.ICartDataSource;
-import com.example.queueskip.Database.Local.CartDAO;
 import com.example.queueskip.Database.ModelDB.Cart;
 
 import java.util.List;
@@ -29,14 +28,25 @@ public class CartDataSource implements ICartDataSource {
     }
 
     @Override
-    public Flowable<List<Cart>> getCartItemByID(int cartItemId) {
+    public Flowable<List<Cart>> getCartItemByID(String cartItemId) {
         return cartDAO.getCartItemByID(cartItemId);
     }
-
     @Override
+    public int getamountItemByID(String id){
+        return  cartDAO.getamountItemByID( id );
+    }
+
+@Override
+public void updateAmount(int namount,String cartID ){
+        cartDAO.updateAmount(namount,cartID  );
+}
+    @Override
+
     public List<Cart> getCartItemss() {
         return cartDAO.getCartItemss();
     } //NEW NEW NEW //ADDED
+
+
 
     @Override
     public int countCartItems() {

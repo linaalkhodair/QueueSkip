@@ -31,7 +31,7 @@ public class CartRepository implements ICartDataSource {
     } //NEW NEW NEW ADDED ADDED
 
     @Override
-    public Flowable<List<Cart>> getCartItemByID(int cartItemId) {
+    public Flowable<List<Cart>> getCartItemByID(String cartItemId) {
         return iCartDataSource.getCartItemByID(cartItemId);
     }
 
@@ -60,6 +60,17 @@ public class CartRepository implements ICartDataSource {
     @Override
     public void deleteCartItem(Cart cart) {
         iCartDataSource.deleteCartItem(cart);
+
+    }
+
+    @Override
+    public int getamountItemByID(String id) {
+        return iCartDataSource.getamountItemByID( id );
+    }
+
+    @Override
+    public void updateAmount(int namount, String cartID) {
+        iCartDataSource.updateAmount(namount, cartID );
 
     }
 }
