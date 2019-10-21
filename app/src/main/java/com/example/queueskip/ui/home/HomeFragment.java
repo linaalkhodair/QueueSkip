@@ -97,6 +97,9 @@ private HomeViewModel homeViewModel;
     DataSnapshot dataSnapshot; //?
     private String photo;
 
+    String price="";
+    String name="";
+
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
@@ -195,10 +198,17 @@ private HomeViewModel homeViewModel;
                           int   x=qrtext.indexOf( '-');
                           int y=qrtext.indexOf("-", x + 1);
 
-                            final String price = qrtext.substring(x+1, y );
-                            final String name = qrtext.substring(0, x );
-                            productNameTxt.setText("Item: "+ qrtext.substring(0, x ));
-                            productPriceTxt.setText("Price: "+ qrtext.substring(x+1, y )+" SR" );
+                          try {
+
+                              price = qrtext.substring(x + 1, y);
+                              name = qrtext.substring(0, x);
+                              productNameTxt.setText("Item: " + qrtext.substring(0, x));
+                              productPriceTxt.setText("Price: " + qrtext.substring(x + 1, y) + " SR");
+                          }catch (StringIndexOutOfBoundsException e){
+                              productNameTxt.setText("This QR Code doesn't exist");
+                              addBTn.setVisibility(View.INVISIBLE);
+                          }
+
 
                            // String itemId = reff.push().getKey();
                           //  reff= FirebaseDatabase.getInstance().getReference().child("Items");///?!?!???!?!??!

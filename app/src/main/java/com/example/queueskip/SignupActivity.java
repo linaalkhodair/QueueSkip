@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -124,7 +125,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                             throw task.getException();
                         }catch (FirebaseAuthUserCollisionException e){
                             createDialog(getResources().getString(R.string.already_registered));
-                        }catch (Exception e){
+                        }catch (FirebaseAuthWeakPasswordException e){
+                            createDialog("Password should be at least 6 characters");
+                        }
+                        catch (Exception e){
                             e.printStackTrace();
                         }
 

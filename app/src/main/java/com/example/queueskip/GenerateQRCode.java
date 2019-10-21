@@ -326,7 +326,7 @@ public class GenerateQRCode extends AppCompatActivity {
                        Items item = snapshot.getValue(Items.class);
                         //just for testing retrieving data
 
-                        text1.setText(item.getName() + " Item retrieved successfully :)");
+                       // text1.setText(item.getName() + " Item retrieved successfully :)"); //TESTING PURPOSES
                 }
             }
 
