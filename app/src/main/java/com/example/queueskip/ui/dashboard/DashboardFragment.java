@@ -16,11 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.queueskip.Adapter.CartAdapter;
+import com.example.queueskip.CheckoutActivity;
 import com.example.queueskip.Database.ModelDB.Cart;
 import com.example.queueskip.R;
 import com.example.queueskip.utliz.Common;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -75,6 +74,13 @@ public class DashboardFragment extends Fragment {
 
         btn_place_order = (Button) view.findViewById( R.id.btn_place_order );
         loadCartItems(); //it was a comment!!!!!
+        btn_place_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), CheckoutActivity.class));
+
+            }
+        });
         return view;
     }
 
