@@ -34,6 +34,16 @@
         android:background="@drawable/round_shape_btn"
         android:textColor="@android:color/white"
          />
+    <Button
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/round_shape_btn"
+        android:textColor="@android:color/white"
+        android:id="@+id/clear"
+        />
 
 
 </LinearLayout>
