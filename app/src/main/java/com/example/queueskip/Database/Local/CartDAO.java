@@ -21,10 +21,10 @@ public interface CartDAO {
     @Query("SELECT * FROM Cart")
     List<Cart> getCartItemss(); //NEW NEW NEW ADDED
 
-    @Query("SELECT * FROM CART WHERE id=:cartItemId")
+    @Query("SELECT * FROM Cart WHERE id=:cartItemId")
     Flowable<List<Cart>> getCartItemByID(String cartItemId);
 
-    @Query("SELECT Count(*)  FROM CART")
+    @Query("SELECT Count(*)  FROM Cart")
     int countCartItems();
     @Query("SELECT amount FROM Cart WHERE id=:cartItemId")
     int getamountItemByID(String cartItemId);
