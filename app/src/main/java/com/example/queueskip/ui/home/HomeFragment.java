@@ -270,6 +270,8 @@ private HomeViewModel homeViewModel;
                                     if (isItemExist( qrId )) {
                                         amount1 = Common.cartRepository.getamountItemByID( qrId )+1;
                                         Common.cartRepository.updateAmount( amount1, qrId );
+                                        Toast.makeText( getActivity(), "Item added successfully", Toast.LENGTH_SHORT ).show();
+                                        dialog.dismiss();
 
 
                                     }else {
@@ -370,7 +372,7 @@ private HomeViewModel homeViewModel;
         boolean flag=false;
         List<Cart> cartList=Common.cartRepository.getCartItemss();
         for(int i=0;i< Common.cartRepository.countCartItems();i++){
-            if(cartList.get( i ).id==Id)
+            if(cartList.get( i ).id.equals(Id))
                 flag=true;
 
 
