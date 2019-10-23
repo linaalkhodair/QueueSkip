@@ -1,6 +1,6 @@
 package com.example.queueskip;
 
 public class PaypalConfig {
-    public static final String PAYPAL_CLIENT_ID = "AQQ7DJA5tqdMOUD2Jhv4_8JovYDjDk6yguTw_w6fKryFcf-eX8fSLNgJVjqjHxFxYi_iCyXAci-fJdMT";
+    public static final String PAYPAL_CLIENT_ID = "AQysH-xGu_Fy64qLyFpuChCpK_kbRyWwQtbqDpYDIH_ADneSD0erxFaTXhF2FMXDoh95csrE-fSVT957";
 
 }

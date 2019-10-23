@@ -43,7 +43,9 @@
 
         </activity>
         <activity android:name=".GenerateQRCode" />
+        <activity android:name=".SuccessActivity">
 
+        </activity>
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
             android:value="barcode" />
