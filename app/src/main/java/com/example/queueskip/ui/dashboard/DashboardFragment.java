@@ -41,7 +41,7 @@ public class DashboardFragment extends Fragment {
     CompositeDisposable compositionDisposable;
     Button clear_btn;
     CartAdapter cartAdapter;
-    public  static int totalAmount = 0;
+    public static int totalAmount = 0;
     private Button checkoutBtnDialog;
     private TextView totalPriceDialog;
     private Button closeBtn;
@@ -79,9 +79,6 @@ public class DashboardFragment extends Fragment {
         recycler_cart.setHasFixedSize( true );
 
        // total= view.findViewById(R.id.total);
-
-
-
 
         btn_place_order = (Button) view.findViewById( R.id.btn_place_order );
         loadCartItems(); //it was a comment!!!!!
@@ -175,6 +172,7 @@ public class DashboardFragment extends Fragment {
 
     @Override
     public void onDestroy() {
+        totalAmount=0;
         compositionDisposable.clear();
         super.onDestroy();
     }
@@ -204,11 +202,11 @@ public class DashboardFragment extends Fragment {
         totalAmount(carts);
     }
 
-    private void totalAmount(List<Cart> cartList){
+    public static void totalAmount(List<Cart> cartList){
 //        int totalAmount = 0;
         int price;
         int amount;
-
+        totalAmount=0;
         for(int i=0; i<cartList.size(); i++){
             //elegantNumberButton.setNumber(String.valueOf(cartList.get(i).amount));
 

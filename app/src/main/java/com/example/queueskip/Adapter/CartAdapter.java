@@ -14,6 +14,7 @@ import com.example.queueskip.Database.Local.CartDataSource;
 import com.example.queueskip.Database.Local.CartDatabase;
 import com.example.queueskip.Database.ModelDB.Cart;
 import com.example.queueskip.R;
+import com.example.queueskip.ui.dashboard.DashboardFragment;
 import com.example.queueskip.utliz.Common;
 import com.squareup.picasso.Picasso;
 
@@ -66,6 +67,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
                 Cart cart=cartList.get(position);
                 cart.amount=newValue;
+                totalAmount=0;
+                DashboardFragment.totalAmount(cartList);
                // cartRepository.updateCart(cart);
                 Common.cartRepository.updateCart(cart);
 
