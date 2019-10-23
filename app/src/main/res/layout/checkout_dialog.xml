@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/round_shape_dialog"
+    android:orientation="vertical">
+
+
+
+
+    <Button
+        android:id="@+id/button_close"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/x_icon"
+        android:layout_marginStart="250dp"
+        android:layout_marginEnd="10dp"/>
+
+
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Are you sure you want to checkout?"
+    android:padding="@dimen/padd_10"
+    android:layout_marginTop="10dp"
+    android:textColor="@color/colorPrimary"
+    android:textAlignment="center"
+    android:textStyle="bold"
+    ></TextView>
+
+
+    <TextView
+        android:id="@+id/checkout_dialog_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:padding="@dimen/padd_10"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        ></TextView>
+
+
+    <Button
+        android:id="@+id/checkout_btn_dialog"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/round_shape_btn_orange"
+        android:text="checkout"
+        android:layout_gravity="center"
+        android:textColor="@color/colorBackground" />
+
+</LinearLayout>
