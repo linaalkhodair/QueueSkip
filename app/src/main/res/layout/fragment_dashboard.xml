@@ -10,17 +10,28 @@
     android:background="@color/colorBackground"
 
    >
+    <Button
+        android:id="@+id/clear"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="end"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/round_shape_btn"
+        android:textColor="@android:color/white"
+        android:text="Clear cart"
+        />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="430dp"
+        android:layout_height="388dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="8dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_cart"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="310dp"
             android:layout_above="@+id/btn_place_order"
             tools:ignore="ExtraText"></androidx.recyclerview.widget.RecyclerView>
     </androidx.core.widget.NestedScrollView>
@@ -34,16 +45,6 @@
         android:background="@drawable/round_shape_btn"
         android:textColor="@android:color/white"
          />
-    <Button
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/round_shape_btn"
-        android:textColor="@android:color/white"
-        android:id="@+id/clear"
-        />
 
 
 </LinearLayout>

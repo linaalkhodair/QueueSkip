@@ -83,6 +83,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             if (size > 0) {
                 for (int i = 0; i < size; i++) {
                     cartList.remove(0);
+                    Common.cartRepository.emptyCart(); //CHANGED
                 }
 
                 notifyItemRangeRemoved(0, size);

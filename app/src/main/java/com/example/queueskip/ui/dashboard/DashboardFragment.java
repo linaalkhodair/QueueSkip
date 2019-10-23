@@ -88,6 +88,7 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 cartAdapter.clear();
+                btn_place_order.setText("Check out"+"     Total price: "+0+"SR"); //???
 
                 // then reload the data
 
