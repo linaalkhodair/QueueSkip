@@ -4,13 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SuccessActivity">
+    tools:context=".SuccessActivity"
+    android:background="@color/colorBackground"><![CDATA[>
 
+
+
+
+
+    ]]>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_above="@+id/button2"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="119dp"
+        android:layout_marginBottom="88dp"
+        android:src="@drawable/check_icon_two"></ImageView>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="succefully payed">
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-    </TextView>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="82dp"
+        android:layout_marginTop="102dp"
+        android:layout_marginEnd="-82dp"
+        android:layout_marginBottom="354dp"
+        android:text="You have successfully payed"
+        android:textSize="20dp"
+        android:textStyle="normal" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="120dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginBottom="278dp"
+        android:background="@drawable/round_shape_btn"
+        android:text="Return to home page"
+        android:textColor="@color/colorBackground"
+        />
+
+
 </RelativeLayout>
