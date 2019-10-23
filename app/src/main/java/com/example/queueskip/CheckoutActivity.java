@@ -71,7 +71,7 @@ public class CheckoutActivity extends AppCompatActivity {
         getPayment();
     }
 
-    private void subscribe() {
+    /*private void subscribe() {
 
         final Dialog dialog = new Dialog(this);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -137,10 +137,10 @@ public class CheckoutActivity extends AppCompatActivity {
         dialog.setContentView(layout);
         dialog.show();
     }
-
+*/
     private void getPayment() {
 
-        paymentAmount="1";
+
 
         //Creating a paypalpayment
         PayPalPayment payment = new PayPalPayment(new
