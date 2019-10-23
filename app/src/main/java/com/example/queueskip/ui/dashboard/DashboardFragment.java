@@ -36,6 +36,8 @@ public class DashboardFragment extends Fragment {
     Button btn_place_order;
     TextView total;
     CompositeDisposable compositionDisposable;
+    Button clear_btn;
+    CartAdapter cartAdapter;
 
     private DashboardViewModel dashboardViewModel;
 
@@ -81,6 +83,16 @@ public class DashboardFragment extends Fragment {
 
             }
         });
+        clear_btn=(Button) view.findViewById( R.id.clear );
+        clear_btn.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cartAdapter.clear();
+
+                // then reload the data
+
+            }
+        } );
         return view;
     }
 
@@ -89,6 +101,7 @@ public class DashboardFragment extends Fragment {
         compositionDisposable.clear();
         super.onStop();
     }
+
 
     @Override
     public void onDestroy() {
@@ -116,7 +129,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void displayCartItem(List<Cart> carts){
-        CartAdapter cartAdapter=new CartAdapter(getContext(),carts);
+        cartAdapter=new CartAdapter(getContext(),carts);
         recycler_cart.setAdapter(cartAdapter);
         totalAmount(carts);
     }
