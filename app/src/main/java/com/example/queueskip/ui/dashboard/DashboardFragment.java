@@ -124,6 +124,7 @@ public class DashboardFragment extends Fragment {
                                      public void onClick(View view) {
                                          startActivity(
                                                  new Intent(getContext(), CheckoutActivity.class));
+                                         cartAdapter.clear();
                                      }//end of onClick
                                  }//end of OnClickListener
         );
