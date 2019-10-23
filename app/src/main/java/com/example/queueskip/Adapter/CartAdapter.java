@@ -1,5 +1,8 @@
 package com.example.queueskip.Adapter;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
    public  List<Cart> cartList;
     CartRepository cartRepository;
     ImageView delete;
+    private Button okBtn, cancelBtn;
+    private TextView dialogMsg;
 
     public CartAdapter(Context context,List<Cart> cartList){
         this.context=context;
@@ -54,10 +59,36 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.txt_product_name.setText(cartList.get(position).name);
         Glide.with(context).load(cartList.get(position).link).into(holder.img_product);
 
+        //dialog
+
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.logout_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        okBtn=dialog.findViewById(R.id.ok_btn_dialog);
+        cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
+        dialogMsg=dialog.findViewById(R.id.dialog_message);
+        dialogMsg.setText("Are you sure you want to delete item from cart?");
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View view) {
+                                             dialog.cancel();
+
+                                         }//end of onClick
+                                     }//end of OnClickListener
+        );
+
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Common.cartRepository.deleteCartItem(cartList.get(position));
+                dialog.show();
+                okBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Common.cartRepository.deleteCartItem(cartList.get(position));
+                        dialog.cancel();
+                    }
+                });
+               // Common.cartRepository.deleteCartItem(cartList.get(position));
             }
         });
 
