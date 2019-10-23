@@ -149,7 +149,7 @@ public class CheckoutActivity extends AppCompatActivity {
         //putting the paypal configuration to the intent
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         //invoice number
-        payment.invoiceNumber("321");
+        //payment.invoiceNumber("321"); //deleted because of duplicated...
 
         //Puting paypal payment to the intent
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
