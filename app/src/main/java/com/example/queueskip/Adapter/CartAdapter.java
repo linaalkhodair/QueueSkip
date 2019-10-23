@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
     Context context;
-   public static List<Cart> cartList;
+   public  List<Cart> cartList;
     CartRepository cartRepository;
     ImageView delete;
 
