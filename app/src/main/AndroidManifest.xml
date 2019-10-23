@@ -30,7 +30,6 @@
         <activity android:name=".LoginActivity" />
 
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".MainActivity"
             android:label="@string/app_name">
             <intent-filter>
@@ -44,9 +43,7 @@
 
         </activity>
         <activity android:name=".GenerateQRCode" />
-        <activity android:name=".SuccessActivity">
 
-        </activity>
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
             android:value="barcode" />

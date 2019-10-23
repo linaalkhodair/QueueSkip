@@ -1,6 +1,9 @@
 package com.example.queueskip.ui.dashboard;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +42,9 @@ public class DashboardFragment extends Fragment {
     Button clear_btn;
     CartAdapter cartAdapter;
     public  static int totalAmount = 0;
+    private Button checkoutBtnDialog;
+    private TextView totalPriceDialog;
+    private Button closeBtn;
 
     private DashboardViewModel dashboardViewModel;
 
@@ -80,7 +86,9 @@ public class DashboardFragment extends Fragment {
         btn_place_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), CheckoutActivity.class));
+                createDialog();
+
+              //  startActivity(new Intent(getContext(), CheckoutActivity.class));
 
             }
         });
@@ -89,13 +97,45 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 cartAdapter.clear();
-                btn_place_order.setText("Check out"+"     Total price: "+0+"SR"); //???
+                btn_place_order.setText("Checkout"+"     Total price: "+0+"SR"); //???
 
                 // then reload the data
 
             }
         } );
         return view;
+    }
+
+    private void createDialog() {
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.checkout_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        checkoutBtnDialog=dialog.findViewById(R.id.checkout_btn_dialog);
+        totalPriceDialog=dialog.findViewById(R.id.checkout_dialog_amount);
+        closeBtn=dialog.findViewById(R.id.button_close);
+
+        totalPriceDialog.setText("Total price: "+totalAmount+" SR");
+
+        dialog.show();
+
+        checkoutBtnDialog.setOnClickListener(new View.OnClickListener() {
+                                     @Override
+                                     public void onClick(View view) {
+                                         startActivity(
+                                                 new Intent(getContext(), CheckoutActivity.class));
+                                     }//end of onClick
+                                 }//end of OnClickListener
+        );
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View view) {
+                                             dialog.cancel();
+
+                                         }//end of onClick
+                                     }//end of OnClickListener
+        );
+
     }
 
     @Override
