@@ -77,6 +77,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         return cartList.size();
     }
 
+    public void clear() {
+
+            int size = cartList.size();
+            if (size > 0) {
+                for (int i = 0; i < size; i++) {
+                    cartList.remove(0);
+                    Common.cartRepository.emptyCart(); //CHANGED
+                }
+
+                notifyItemRangeRemoved(0, size);
+            }
+
+    }
+
     class CartViewHolder extends RecyclerView.ViewHolder{
         ImageView img_product;
         TextView txt_product_name,txt_sugar_ice,txt_price;
@@ -92,5 +106,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
            // txt_amount=(ElegantNumberButton) itemView.findViewById(R.id.txt_amount);
 
         }
+
     }
 }

@@ -19,6 +19,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".CheckoutActivity"></activity>
+        <activity android:name=".SuccessActivity"></activity>
         <!--
                 <activity android:name=".cartActivity"></activity>
         <activity android:name=".PasswordActivity" />
