@@ -36,7 +36,7 @@ public class DashboardFragment extends Fragment {
 //private TextView testText;
     private ElegantNumberButton elegantNumberButton;
     RecyclerView recycler_cart;
-    Button btn_place_order;
+    public static Button btn_place_order;
     TextView total;
     CompositeDisposable compositionDisposable;
     Button clear_btn;
