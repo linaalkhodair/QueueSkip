@@ -22,6 +22,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.example.queueskip.ui.dashboard.DashboardFragment.totalAmount;
+
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
     Context context;
    public  List<Cart> cartList;
@@ -85,7 +87,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     cartList.remove(0);
                     Common.cartRepository.emptyCart(); //CHANGED
                 }
-
+                totalAmount=0;
                 notifyItemRangeRemoved(0, size);
             }
 

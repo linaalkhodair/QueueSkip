@@ -45,6 +45,8 @@ public class DashboardFragment extends Fragment {
     private Button checkoutBtnDialog;
     private TextView totalPriceDialog;
     private Button closeBtn;
+    private Button okBtn, cancelBtn;
+    private TextView dialogMsg;
 
     private DashboardViewModel dashboardViewModel;
 
@@ -92,12 +94,37 @@ public class DashboardFragment extends Fragment {
 
             }
         });
+
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.logout_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        okBtn=dialog.findViewById(R.id.ok_btn_dialog);
+        cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
+        dialogMsg=dialog.findViewById(R.id.dialog_message);
+        dialogMsg.setText("Are you sure you want to clear cart?");
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View view) {
+                                             dialog.cancel();
+
+                                         }//end of onClick
+                                     }//end of OnClickListener
+        );
+
         clear_btn=(Button) view.findViewById( R.id.clear );
         clear_btn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cartAdapter.clear();
-                btn_place_order.setText("Checkout"+"     Total price: "+0+"SR"); //???
+                dialog.show();
+                okBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        cartAdapter.clear();
+                        btn_place_order.setText("Checkout"+"     Total price: "+0+"SR");
+                        dialog.cancel();
+                    }
+                });
+
 
                 // then reload the data
 
