@@ -38,6 +38,7 @@ public class DashboardFragment extends Fragment {
     CompositeDisposable compositionDisposable;
     Button clear_btn;
     CartAdapter cartAdapter;
+    public  static int totalAmount = 0;
 
     private DashboardViewModel dashboardViewModel;
 
@@ -136,7 +137,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void totalAmount(List<Cart> cartList){
-        int totalAmount = 0;
+//        int totalAmount = 0;
         int price;
         int amount;
 

@@ -32,6 +32,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 
+import static com.example.queueskip.ui.dashboard.DashboardFragment.totalAmount;
+
 
 public class CheckoutActivity extends AppCompatActivity {
 
@@ -142,7 +144,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
         //Creating a paypalpayment
         PayPalPayment payment = new PayPalPayment(new
-                BigDecimal(paymentAmount),"USD","Test",PayPalPayment.PAYMENT_INTENT_SALE);
+                BigDecimal(totalAmount/3.75),"USD","Total Amount:",PayPalPayment.PAYMENT_INTENT_SALE);
 
         //Creating Paypal Payment activity intent
         Intent intent = new Intent(CheckoutActivity.this, PaymentActivity.class);
