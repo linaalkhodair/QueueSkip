@@ -16,7 +16,7 @@ import static com.example.queueskip.ui.dashboard.DashboardFragment.btn_place_ord
 public class SuccessActivity extends AppCompatActivity {
 
     private Button button2;
-    CartAdapter cartAdapter;//added
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +26,7 @@ public class SuccessActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               cartAdapter.clear();//added
-               btn_place_order.setText("Check out"+"     Total price: "+0+"SR");//added
+
                 startActivity(new Intent(SuccessActivity.this, MainActivity.class));
 
             }
