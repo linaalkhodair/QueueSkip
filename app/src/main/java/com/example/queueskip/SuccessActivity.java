@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.queueskip.Adapter.CartAdapter;
 import com.example.queueskip.ui.home.HomeFragment;
+import com.example.queueskip.utliz.Common;
 
 import static com.example.queueskip.ui.dashboard.DashboardFragment.btn_place_order;
 
@@ -22,7 +23,12 @@ public class SuccessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_success);
 
-      button2=findViewById(R.id.button2);
+        button2=findViewById(R.id.button2);
+
+        //clear cart
+        Common.cartRepository.emptyCart();
+
+
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
