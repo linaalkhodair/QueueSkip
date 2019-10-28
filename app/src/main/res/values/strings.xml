@@ -3,6 +3,7 @@
     <string name="title_camera">Camera</string>
     <string name="title_cart">Cart</string>
     <string name="title_logout">Log out</string>
+    <string name="title_profile">Profile</string>
     <string name="sign_up_name_hint"><font size="10">Name</font></string>
     <string name="login_email_hint"><font size="10"> Email address</font></string>
     <string name="login_pass_hint"><font size="10"> Password</font></string>
@@ -19,6 +20,7 @@
     <string name="network_failed">Network Failed</string>
     <string name="result_text_default">please focus camera to QR code</string>
     <string name="forgot_pass">Reset password</string>
+
 
 
 </resources>

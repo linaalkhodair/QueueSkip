@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
          navView = findViewById(R.id.nav_view);
-         logoutBtn=navView.getMenu().getItem(2);
+         logoutBtn=navView.getMenu().getItem(3);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity  {
 
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                 R.id.navigation_cart,R.id.navigation_camera, R.id.navigation_logout)
+                 R.id.navigation_cart,R.id.navigation_camera,R.id.navigation_profile,
+                R.id.navigation_logout)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -92,8 +93,6 @@ public class MainActivity extends AppCompatActivity  {
         //finish();
         dialog.dismiss();
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
-
-
 
     }
 
