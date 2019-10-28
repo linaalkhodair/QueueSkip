@@ -8,7 +8,6 @@
     android:padding="8dp"
     android:orientation="vertical"
     android:background="@color/colorBackground"
-
    >
     <Button
         android:id="@+id/clear"

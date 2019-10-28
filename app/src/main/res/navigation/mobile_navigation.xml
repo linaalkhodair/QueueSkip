@@ -8,18 +8,19 @@
     <fragment
         android:id="@+id/navigation_camera"
         android:name="com.example.queueskip.ui.home.HomeFragment"
-        android:label="@string/title_camera"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_cart"
         android:name="com.example.queueskip.ui.dashboard.DashboardFragment"
-        android:label="@string/title_cart"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_logout"
         android:name="com.example.queueskip.ui.notifications.NotificationsFragment"
-        android:label="@string/title_logout"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.queueskip.ui.profile.profile_fragment"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
