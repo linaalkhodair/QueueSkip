@@ -144,7 +144,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
         //Creating a paypalpayment
         PayPalPayment payment = new PayPalPayment(new
-                BigDecimal(totalAmount/3.75),"USD","Total Amount:",PayPalPayment.PAYMENT_INTENT_SALE);
+                BigDecimal(totalAmount /3.75),"USD","Total Amount:",PayPalPayment.PAYMENT_INTENT_SALE);
 
         //Creating Paypal Payment activity intent
         Intent intent = new Intent(CheckoutActivity.this, PaymentActivity.class);
@@ -201,6 +201,7 @@ public class CheckoutActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         stopService(new Intent(this, PayPalService.class));
+        totalAmount=0;
         super.onDestroy();
     }
 }

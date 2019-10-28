@@ -41,10 +41,12 @@ public class DashboardFragment extends Fragment {
     CompositeDisposable compositionDisposable;
     Button clear_btn;
     CartAdapter cartAdapter;
-    public  static int totalAmount = 0;
+    public static int totalAmount = 0;
     private Button checkoutBtnDialog;
     private TextView totalPriceDialog;
     private Button closeBtn;
+    private Button okBtn, cancelBtn;
+    private TextView dialogMsg;
 
     private DashboardViewModel dashboardViewModel;
 
@@ -78,9 +80,6 @@ public class DashboardFragment extends Fragment {
 
        // total= view.findViewById(R.id.total);
 
-
-
-
         btn_place_order = (Button) view.findViewById( R.id.btn_place_order );
         loadCartItems(); //it was a comment!!!!!
         btn_place_order.setOnClickListener(new View.OnClickListener() {
@@ -92,12 +91,37 @@ public class DashboardFragment extends Fragment {
 
             }
         });
+
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.logout_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        okBtn=dialog.findViewById(R.id.ok_btn_dialog);
+        cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
+        dialogMsg=dialog.findViewById(R.id.dialog_message);
+        dialogMsg.setText("Are you sure you want to clear cart?");
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View view) {
+                                             dialog.cancel();
+
+                                         }//end of onClick
+                                     }//end of OnClickListener
+        );
+
         clear_btn=(Button) view.findViewById( R.id.clear );
         clear_btn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cartAdapter.clear();
-                btn_place_order.setText("Checkout"+"     Total price: "+0+"SR"); //???
+                dialog.show();
+                okBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        cartAdapter.clear();
+                        btn_place_order.setText("Checkout"+"     Total price: "+0+"SR");
+                        dialog.cancel();
+                    }
+                });
+
 
                 // then reload the data
 
@@ -124,6 +148,7 @@ public class DashboardFragment extends Fragment {
                                      public void onClick(View view) {
                                          startActivity(
                                                  new Intent(getContext(), CheckoutActivity.class));
+                                         cartAdapter.clear();
                                      }//end of onClick
                                  }//end of OnClickListener
         );
@@ -147,6 +172,7 @@ public class DashboardFragment extends Fragment {
 
     @Override
     public void onDestroy() {
+        totalAmount=0;
         compositionDisposable.clear();
         super.onDestroy();
     }
@@ -176,11 +202,11 @@ public class DashboardFragment extends Fragment {
         totalAmount(carts);
     }
 
-    private void totalAmount(List<Cart> cartList){
+    public static void totalAmount(List<Cart> cartList){
 //        int totalAmount = 0;
         int price;
         int amount;
-
+        totalAmount=0;
         for(int i=0; i<cartList.size(); i++){
             //elegantNumberButton.setNumber(String.valueOf(cartList.get(i).amount));
 
