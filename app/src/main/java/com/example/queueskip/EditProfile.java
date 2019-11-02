@@ -1,0 +1,127 @@
+package com.example.queueskip;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+public class EditProfile extends AppCompatActivity {
+
+    private FirebaseAuth firebaseAuth;
+    DatabaseReference ref;
+    private EditText editEmail;
+    private EditText editUsername;
+    private EditText editPass;
+    private Button save;
+    private Button cancel;
+    String email;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_edit_profile);
+
+        ref= FirebaseDatabase.getInstance().getReference("User");
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        editEmail = findViewById(R.id.editEmail);
+        editPass = findViewById(R.id.editPass);
+        editUsername = findViewById(R.id.editUser);
+        save = findViewById(R.id.saveBtn);
+        cancel = findViewById(R.id.cancelBtn);
+
+        editEmail.setText(user.getEmail());
+        email = user.getEmail();
+        final String id = user.getUid();
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
+
+                    if(user.getEmail().equals(email)){
+                        editPass.setText(user.getPassword());
+                        editUsername.setText(user.getUsername());
+                    }
+                    Toast.makeText(EditProfile.this,"SUCCESSFULL EDIT", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //updating in Auth
+//                user.updateEmail(editEmail.getText().toString());
+//                user.updatePassword(editPass.getText().toString());
+
+                AuthCredential authCredential = EmailAuthProvider.getCredential(editEmail.getText().toString(), editPass.getText().toString());
+                user.reauthenticate(authCredential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        FirebaseUser user2 = FirebaseAuth.getInstance().getCurrentUser();
+                        user2.updateEmail(editEmail.getText().toString());
+                        user2.updatePassword(editPass.getText().toString());
+                    }
+                });
+
+                //update in DB
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            User userDB = snapshot.getValue(User.class);
+
+                            if(userDB.getEmail().equals(email)){
+
+                                ref.child(snapshot.getKey()).child("email").setValue(editEmail.getText().toString());
+                                ref.child(snapshot.getKey()).child("password").setValue(editPass.getText().toString());
+                                ref.child(snapshot.getKey()).child("username").setValue(editUsername.getText().toString());
+
+                            }
+                            Toast.makeText(EditProfile.this,"SUCCESSFULL SAVE", Toast.LENGTH_LONG).show();
+                        }
+                    } //end onDataChange
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                //end of DB save
+            } // end onClick
+        }); //end SetOnClickListner
+
+
+
+    } //end onCreate
+} //end class
