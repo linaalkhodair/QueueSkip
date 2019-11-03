@@ -40,6 +40,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         this.context=context;
         this.cartList=cartList;
     }
+    
 
     @NonNull
     @Override
@@ -140,7 +141,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             txt_price=(TextView) itemView.findViewById(R.id.txt_price);
 
            // txt_amount=(ElegantNumberButton) itemView.findViewById(R.id.txt_amount);
-
         }
 
     }

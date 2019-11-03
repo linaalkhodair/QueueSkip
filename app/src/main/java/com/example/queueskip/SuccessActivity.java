@@ -31,6 +31,8 @@ public class SuccessActivity extends AppCompatActivity {
 
       button2=findViewById(R.id.button2);
 
+         Common.cartRepository.emptyCart();
+
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
