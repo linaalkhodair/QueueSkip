@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBackground"
+    tools:context=".EditProfile">
+
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/logo" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        app:errorEnabled="true"
+        >
+
+        <EditText
+            android:id="@+id/editUser"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="Enter new username"
+            android:textSize="15dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/round_shape"
+            android:padding="8dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        app:errorEnabled="true"
+        android:layout_marginTop="15dp"
+        >
+
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:textSize="15dp"
+            android:hint="Enter new email address"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/round_shape"
+            android:padding="8dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:passwordToggleEnabled="true"
+        android:layout_marginTop="15dp"
+        >
+
+        <EditText
+            android:id="@+id/editPass"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="Enter new password"
+            android:textSize="15dp"
+            android:inputType="textPassword"
+            android:background="@drawable/round_shape"
+            android:padding="8dp"
+            android:textColor="@color/colorPrimaryDark" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/saveBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/round_shape_btn"
+        android:text="Save"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/cancelBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/round_shape_btn"
+        android:text="cancel"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+</LinearLayout>

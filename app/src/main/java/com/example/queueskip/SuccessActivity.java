@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.queueskip.Adapter.CartAdapter;
 import com.example.queueskip.ui.home.HomeFragment;
@@ -19,17 +17,16 @@ import static com.example.queueskip.ui.dashboard.DashboardFragment.btn_place_ord
 public class SuccessActivity extends AppCompatActivity {
 
     private Button button2;
-    RecyclerView recycler_cart;
-    CartAdapter cartAdapter;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_success);
 
-      button2=findViewById(R.id.button2);
+        button2=findViewById(R.id.button2);
+
+        //clear cart
+        Common.cartRepository.emptyCart();
 
          Common.cartRepository.emptyCart();
 
@@ -44,7 +41,5 @@ public class SuccessActivity extends AppCompatActivity {
         });
 
     }
-
-
 
 }
