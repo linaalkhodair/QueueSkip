@@ -4,11 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +28,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.regex.Matcher;
+
+import static com.example.queueskip.SignupActivity.VALID_EMAIL_ADDRESS_REGEX;
+
 public class EditProfile extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
@@ -34,6 +42,9 @@ public class EditProfile extends AppCompatActivity {
     private Button save;
     private Button cancel;
     String email;
+    Button okBtn,cancelBtn;
+    TextView dialogMsg;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,49 +90,135 @@ public class EditProfile extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //updating in Auth
+                if(validate()) {
+
+                    //updating in Auth
 //                user.updateEmail(editEmail.getText().toString());
 //                user.updatePassword(editPass.getText().toString());
 
-                AuthCredential authCredential = EmailAuthProvider.getCredential(editEmail.getText().toString(), editPass.getText().toString());
-                user.reauthenticate(authCredential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        FirebaseUser user2 = FirebaseAuth.getInstance().getCurrentUser();
-                        user2.updateEmail(editEmail.getText().toString());
-                        user2.updatePassword(editPass.getText().toString());
-                    }
-                });
-
-                //update in DB
-                ref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            User userDB = snapshot.getValue(User.class);
-
-                            if(userDB.getEmail().equals(email)){
-
-                                ref.child(snapshot.getKey()).child("email").setValue(editEmail.getText().toString());
-                                ref.child(snapshot.getKey()).child("password").setValue(editPass.getText().toString());
-                                ref.child(snapshot.getKey()).child("username").setValue(editUsername.getText().toString());
-
-                            }
-                            Toast.makeText(EditProfile.this,"SUCCESSFULL SAVE", Toast.LENGTH_LONG).show();
+                    AuthCredential authCredential = EmailAuthProvider.getCredential(editEmail.getText().toString(), editPass.getText().toString());
+                    user.reauthenticate(authCredential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            FirebaseUser user2 = FirebaseAuth.getInstance().getCurrentUser();
+                            user2.updateEmail(editEmail.getText().toString());
+                            user2.updatePassword(editPass.getText().toString());
                         }
-                    } //end onDataChange
+                    });
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    //update in DB
+                    ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    }
-                });
-                //end of DB save
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                User userDB = snapshot.getValue(User.class);
+
+                                if (userDB.getEmail().equals(email)) {
+
+                                    ref.child(snapshot.getKey()).child("email").setValue(editEmail.getText().toString());
+                                    ref.child(snapshot.getKey()).child("password").setValue(editPass.getText().toString());
+                                    ref.child(snapshot.getKey()).child("username").setValue(editUsername.getText().toString());
+
+                                }
+                                Toast.makeText(EditProfile.this, "SUCCESSFULL SAVE", Toast.LENGTH_LONG).show();
+                            }
+                        } //end onDataChange
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    //end of DB save
+                }//end of ifValidate()
             } // end onClick
         }); //end SetOnClickListner
 
 
 
     } //end onCreate
-} //end class
+
+
+    private boolean validate() {
+
+        String nameInput = editUsername.getText().toString();
+        String emailInput = editEmail.getText().toString();
+        String passInput = editPass.getText().toString();
+        //confPassInput = editConfPass.getText().toString();
+
+
+        //if(nameInput.isEmpty()||emailInput.isEmpty()||passInput.isEmpty()||confPassInput.isEmpty()){
+        if(nameInput.isEmpty()||emailInput.isEmpty()||passInput.isEmpty()){
+            createDialog(getResources().getString(R.string.fill_required_fields));
+            return false;
+
+        }
+        else
+        if(!emailValidator(emailInput)) {
+            createDialog(getResources().getString(R.string.invalid_email_address));
+            return false;
+        }
+        /*
+        else
+        if(!passInput.equals(confPassInput)){
+            createDialog(getResources().getString(R.string.passwords_do_not_match));
+            return false;
+
+        }
+        */
+     /*else
+          if(!checkEmailExistsOrNot()){
+            createDialog(getResources().getString(R.string.already_registered));
+            return false;
+     }
+        */
+
+
+
+        //when all validations pass
+        return true;
+
+    }//end of validate
+
+    private void createDialog(String message){
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.logout_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        okBtn=dialog.findViewById(R.id.ok_btn_dialog);
+        cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
+        dialogMsg=dialog.findViewById(R.id.dialog_message);
+
+
+        dialogMsg.setText(message);
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+                                     @Override
+                                     public void onClick(View view) {
+                                         dialog.cancel();
+                                     }//end of onClick
+                                 }//end of OnClickListener
+        );
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View view) {
+                                             dialog.cancel();
+
+                                         }//end of onClick
+                                     }//end of OnClickListener
+        );
+        cancelBtn.setVisibility(View.INVISIBLE);
+        //  cancelBtn.setText("OK");
+
+        dialog.show();
+
+    }//end of createDialog
+
+    public static boolean emailValidator(String emailStr) {
+
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        return matcher.find();
+    }//end of emailValidator
+    } //end class
