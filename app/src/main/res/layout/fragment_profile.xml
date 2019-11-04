@@ -6,12 +6,20 @@
     android:background="@color/colorBackground">
 
 
+    <ImageView
+        android:layout_width="450dp"
+        android:layout_height="170dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_account_circle_black_24dp"></ImageView>
+
     <TextView
         android:id="@+id/usernameProf"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="50dp"
         android:text="Lina"
         android:textColor="@color/colorAccent"
         android:textSize="21sp"
