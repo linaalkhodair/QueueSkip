@@ -18,8 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CheckoutActivity"></activity>
-        <activity android:name=".SuccessActivity"></activity>
+        <activity android:name=".EditProfile"></activity>
+        <activity android:name=".CheckoutActivity" />
+        <activity android:name=".SuccessActivity" />
         <!--
                 <activity android:name=".cartActivity"></activity>
         <activity android:name=".PasswordActivity" />
