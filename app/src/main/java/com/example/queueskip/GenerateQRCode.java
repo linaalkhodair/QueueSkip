@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,8 +52,10 @@ import java.util.Locale;
 import java.util.UUID;
 import java.util.HashMap;
 
+import static android.app.Activity.RESULT_OK;
 
-public class GenerateQRCode extends AppCompatActivity {
+
+public class GenerateQRCode extends Fragment {
     EditText text1;
     Button sub_btn;
     String text2QR, name, price, expire;
@@ -75,30 +80,24 @@ public class GenerateQRCode extends AppCompatActivity {
     //DatabaseReference mDatabase;
     private ImageView calendar;
 
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-
-        //you need to chang it
-
-        setContentView(R.layout.activity_generate_qr_code);
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_generate_qr_code, container, false);
         //Find views By ID
 
-        text1 = (EditText) findViewById(R.id.text1);
-        sub_btn = (Button) findViewById(R.id.sub_btn);
-        textPrice = (EditText) findViewById(R.id.text2);
-        textExpire = (EditText) findViewById(R.id.text3);
-        btn_choose = (Button) findViewById(R.id.btn_choose);
-        img = (ImageView) findViewById(R.id.image);
-      //  imageView = (ImageView) findViewById(R.id.myImage);
-        logout = findViewById(R.id.admin_logout);
-        calendar =findViewById(R.id.calendar);
+        text1 = (EditText)view.findViewById(R.id.text1);
+        sub_btn = (Button) view.findViewById(R.id.sub_btn);
+        textPrice = (EditText) view.findViewById(R.id.text2);
+        textExpire = (EditText) view.findViewById(R.id.text3);
+        btn_choose = (Button) view.findViewById(R.id.btn_choose);
+        img = (ImageView) view.findViewById(R.id.image);
+        //  imageView = (ImageView) findViewById(R.id.myImage);
+        logout = view.findViewById(R.id.admin_logout);
+        calendar =view.findViewById(R.id.calendar);
 
         //Database
-      //  databaseItem = FirebaseDatabase.getInstance().getReference();//???????
+        //  databaseItem = FirebaseDatabase.getInstance().getReference();//???????
 
         databaseItem = FirebaseDatabase.getInstance().getReference("items");//???????
         firebaseAuth = FirebaseAuth.getInstance();
@@ -150,7 +149,7 @@ public class GenerateQRCode extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                new DatePickerDialog(GenerateQRCode.this, date, myCalendar
+                new DatePickerDialog(getContext(), date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -161,7 +160,7 @@ public class GenerateQRCode extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                logout();
+                //logout();
             }
         });
 
@@ -173,7 +172,7 @@ public class GenerateQRCode extends AppCompatActivity {
             public void onClick(View view) {
 
                 //text2QR = "Item:" + text.getText().toString().trim() + " " + "\n"+"Price" + textPrice.getText().toString().trim() + " SR " +"\n"+ "Expiration date" + textExpire.getText().toString().trim();
-               // text2QR = text1.getText().toString().trim() + "-" + textPrice.getText().toString().trim() + "-" + textExpire.getText().toString().trim();//?
+                // text2QR = text1.getText().toString().trim() + "-" + textPrice.getText().toString().trim() + "-" + textExpire.getText().toString().trim();//?
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
                 if (validate()) {
@@ -185,7 +184,7 @@ public class GenerateQRCode extends AppCompatActivity {
                         bitmap = barcodeEncoder.createBitmap(bitMatrix);
                         img.setImageBitmap(bitmap);
                         //
-                      //  ImageLink();
+                        //  ImageLink();
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -194,7 +193,131 @@ public class GenerateQRCode extends AppCompatActivity {
             }
         });
 
-    } //end onCreate method
+
+
+        return view;
+
+    }
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//
+//        super.onCreate(savedInstanceState);
+//
+//        //you need to chang it
+//
+//        setContentView(R.layout.activity_generate_qr_code);
+//
+//        //Find views By ID
+//
+//        text1 = (EditText) findViewById(R.id.text1);
+//        sub_btn = (Button) findViewById(R.id.sub_btn);
+//        textPrice = (EditText) findViewById(R.id.text2);
+//        textExpire = (EditText) findViewById(R.id.text3);
+//        btn_choose = (Button) findViewById(R.id.btn_choose);
+//        img = (ImageView) findViewById(R.id.image);
+//      //  imageView = (ImageView) findViewById(R.id.myImage);
+//        logout = findViewById(R.id.admin_logout);
+//        calendar =findViewById(R.id.calendar);
+//
+//        //Database
+//      //  databaseItem = FirebaseDatabase.getInstance().getReference();//???????
+//
+//        databaseItem = FirebaseDatabase.getInstance().getReference("items");//???????
+//        firebaseAuth = FirebaseAuth.getInstance();
+//
+//        //Storage for an image
+//
+//        storage = FirebaseStorage.getInstance();
+//        storageReference = storage.getReference();
+//
+//        //choose image event listener
+//
+//        btn_choose.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= new Intent();
+//                intent.setType("image/*");
+//                intent.setAction(intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent,"select image"),1);
+//            }
+//        });
+//
+//        //Calendar settings
+//
+//        final Calendar myCalendar = Calendar.getInstance();
+//        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                // TODO Auto-generated method stub
+//                myCalendar.set(Calendar.YEAR, year);
+//                myCalendar.set(Calendar.MONTH, monthOfYear);
+//                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                updateLabel();
+//            }
+//
+//            private void updateLabel() {
+//                String myFormat = "MM/dd/yy"; //In which you need put here
+//                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+//
+//                textExpire.setText(sdf.format(myCalendar.getTime()));
+//                textExpire.setEnabled(false);
+//            }
+//        };
+//
+//        //Expire date event listener
+//
+//        calendar.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                new DatePickerDialog(GenerateQRCode.this, date, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//            }
+//        });
+//
+//        //Logout event listener
+//
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                logout();
+//            }
+//        });
+//
+//        //Add Item event listener
+//
+//        sub_btn.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//
+//                //text2QR = "Item:" + text.getText().toString().trim() + " " + "\n"+"Price" + textPrice.getText().toString().trim() + " SR " +"\n"+ "Expiration date" + textExpire.getText().toString().trim();
+//               // text2QR = text1.getText().toString().trim() + "-" + textPrice.getText().toString().trim() + "-" + textExpire.getText().toString().trim();//?
+//                MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+//
+//                if (validate()) {
+//                    try {
+//                        ImageLink();
+//                        text2QR =text1.getText().toString().trim()+"-" + textPrice.getText().toString().trim() + "-" + textExpire.getText().toString().trim()+"-"+id;
+//                        BitMatrix bitMatrix = multiFormatWriter.encode(text2QR, BarcodeFormat.QR_CODE, 200, 200);
+//                        BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+//                        bitmap = barcodeEncoder.createBitmap(bitMatrix);
+//                        img.setImageBitmap(bitmap);
+//                        //
+//                      //  ImageLink();
+//
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }//end if validated
+//            }
+//        });
+//
+//    } //end onCreate method
 
 
     //Validate method
@@ -204,10 +327,10 @@ public class GenerateQRCode extends AppCompatActivity {
         price = textPrice.getText().toString().trim();
         expire = textExpire.getText().toString().trim();
         if ((TextUtils.isEmpty(name)) || (TextUtils.isEmpty(price)) || (TextUtils.isEmpty(expire))) {
-            Toast.makeText(this, "Please fill in all required fields", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Please fill in all required fields", Toast.LENGTH_LONG).show();
             return false;
         } else if (!TextUtils.isDigitsOnly(price)) {
-            Toast.makeText(this, "Price should be digits only", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Price should be digits only", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
@@ -215,12 +338,12 @@ public class GenerateQRCode extends AppCompatActivity {
 
     //Logout method
 
-    public void logout() {
-        firebaseAuth.signOut();
-        finish();
-        startActivity(new Intent(this, LoginActivity.class));
-        // getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
-    }
+//    public void logout() {
+//        firebaseAuth.signOut();
+//        finish();
+//        startActivity(new Intent(this, LoginActivity.class));
+//        // getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+//    }
 
     //IDK :)
 
@@ -235,7 +358,7 @@ public class GenerateQRCode extends AppCompatActivity {
     //On choosing an image
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode==1 && resultCode== RESULT_OK && data!=null && data.getData() !=null){
@@ -251,7 +374,7 @@ public class GenerateQRCode extends AppCompatActivity {
     private void ImageLink() {
 
         if(filepath!=null){
-             final ProgressDialog progressDialog = new ProgressDialog(GenerateQRCode.this);
+             final ProgressDialog progressDialog = new ProgressDialog(getContext());
             progressDialog.setTitle("Image uploaded");
             progressDialog.show();
 

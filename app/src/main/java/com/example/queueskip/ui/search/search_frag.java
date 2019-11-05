@@ -1,6 +1,7 @@
 package com.example.queueskip.ui.search;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,10 +47,17 @@ public class search_frag extends Fragment {
     private searchViewModel searchviewmodel;
     DatabaseReference reff;
     private RecyclerView recyclerView;
-   private List<Items>  productList=new ArrayList<>( );
-   private SearchAdapter productAdapter;
-SearchView searchView;
+    private List<Items>  productList=new ArrayList<>( );
+    private SearchAdapter productAdapter;
+    SearchView searchView;
     View view;
+    Context mContext;
+
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState){
 
@@ -66,7 +74,7 @@ SearchView searchView;
         //navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         Toolbar toolbar=view.findViewById(R.id.toolbar);
 
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)mContext).setSupportActionBar(toolbar);
        // setTitle("Search");
       //  Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.filter_2);
 //        drawable.setBounds(0, 0, 50, 50);

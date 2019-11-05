@@ -18,7 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".EditProfile"></activity>
+        <activity android:name=".AdminMainActivity"
+            ></activity>
+        <activity android:name=".EditProfile" />
         <activity android:name=".CheckoutActivity" />
         <activity android:name=".SuccessActivity" />
         <!--
@@ -29,21 +31,18 @@
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginActivity" />
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
+
+        </activity>
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".SplashActivity">
-
-        </activity>
-        <activity android:name=".GenerateQRCode" />
 
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"

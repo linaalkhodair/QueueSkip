@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         if(user!=null &&user.getEmail().equals("queueskipad1@outlook.com")){
             finish();
 
-            startActivity(new Intent(LoginActivity.this, GenerateQRCode.class));
+            startActivity(new Intent(LoginActivity.this, AdminMainActivity.class));
 
         }
         else
@@ -176,7 +176,8 @@ public class LoginActivity extends AppCompatActivity {
                         //startActivity(new Intent(LoginActivity.this,MainActivity.class) );
                         if(name.equals("queueskipad1@outlook.com")){
                             finish();
-                            startActivity(new Intent(LoginActivity.this, GenerateQRCode.class));
+                            startActivity(new Intent(LoginActivity.this, AdminMainActivity.class));
+
                         }
                         else
                         checkEmailVerification();
