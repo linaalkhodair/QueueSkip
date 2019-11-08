@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.queueskip.ui.search.search_frag;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -68,7 +69,7 @@ public class GenerateQRCode extends Fragment {
     String temp;
     Uri filePath;
 
-    private Button btn_upload, btn_choose;
+    private Button btn_upload, btn_choose,sear_btn;
     private ImageView imageView;
     private Uri filepath;
     private FirebaseStorage storage;
@@ -76,6 +77,7 @@ public class GenerateQRCode extends Fragment {
     private FirebaseAuth firebaseAuth;
     DataSnapshot dataSnapshot;
     String id;
+
 
     //DatabaseReference mDatabase;
     private ImageView calendar;
@@ -95,6 +97,7 @@ public class GenerateQRCode extends Fragment {
         //  imageView = (ImageView) findViewById(R.id.myImage);
         logout = view.findViewById(R.id.admin_logout);
         calendar =view.findViewById(R.id.calendar);
+        sear_btn=view.findViewById(R.id.sear_btn);
 
         //Database
         //  databaseItem = FirebaseDatabase.getInstance().getReference();//???????
@@ -163,6 +166,14 @@ public class GenerateQRCode extends Fragment {
                 //logout();
             }
         });
+        sear_btn.setOnClickListener( new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent =new Intent( getContext(), search_frag.class );
+                startActivity(intent);
+
+            }
+        } );
 
         //Add Item event listener
 

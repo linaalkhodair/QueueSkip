@@ -131,6 +131,17 @@
         tools:ignore="MissingConstraints"
         android:background="@drawable/round_shape_btn"
         android:textColor="@color/colorBackground"/>
+    <Button
+        android:id="@+id/sear_btn"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:text="GO"
+        tools:ignore="MissingConstraints"
+        android:background="@drawable/round_shape_btn"
+        android:textColor="@color/colorBackground"/>
+        />
 
     <ImageView
         android:id="@+id/image"
