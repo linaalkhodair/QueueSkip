@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,7 +46,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private String passInput;
     private String confPassInput;
     private TextView login;
-
+    private String uid;
     Button okBtn,cancelBtn;
     TextView dialogMsg;
 
@@ -56,6 +57,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        reff= FirebaseDatabase.getInstance().getReference().child("User");
+        uid = reff.push().getKey();
 
 
         //set toolbar
@@ -72,7 +76,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         registerBtn=findViewById(R.id.registerBtn);
        login=findViewById(R.id.login);
 
-        reff= FirebaseDatabase.getInstance().getReference().child("User");
+
 
         // Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
@@ -110,14 +114,27 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                             "inside onComplete",
                             Toast.LENGTH_SHORT).show();
 
+//                         ArrayList transList = new ArrayList<Double>(6);
+//
+//                         Trans t = new Trans();
+//                         t.setTransAmount(5);
+//
+//                         double hi = 5;
+                       //  transList.set(0,hi);
+//                        transList.add(t);
+//                        transList.add(hi);
                         //create user in realtime DB
                         user = new User();
                         user.setUsername(nameInput);
                         user.setEmail(emailInput);
                         user.setPassword(passInput);
-                        reff.push().setValue(user);
+                        user.setId(uid);
+                        user.setTrans1(0);
+                        user.setTrans2(0);
+                        user.setTrans3(0);
+                        reff.child(uid).setValue(user);
 
-                        startActivity(new Intent(SignupActivity.this,MainActivity.class));
+                        startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                     }
                     else{
                         //MAYBE
