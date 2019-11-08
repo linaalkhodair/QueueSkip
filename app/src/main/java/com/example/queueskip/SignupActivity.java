@@ -183,6 +183,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
          return false;
 
      }
+     else
+     if(passInput.length()<6){
+         createDialog(getResources().getString(R.string.invalid_pass_length));
+         return false;
+     }
 
      /*else
           if(!checkEmailExistsOrNot()){

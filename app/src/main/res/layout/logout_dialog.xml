@@ -34,7 +34,7 @@
             android:visibility="visible"
             android:textColor="@color/colorPrimary"
             android:background="@drawable/round_shape"
-            android:text="Cancel"
+            android:text="No"
 
             ></Button>
         <Button
@@ -42,7 +42,7 @@
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="OK"
+            android:text="Yes"
             android:background="@drawable/round_shape"
             android:textColor="@color/colorPrimary"></Button>
 

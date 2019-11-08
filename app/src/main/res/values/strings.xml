@@ -20,7 +20,7 @@
     <string name="network_failed">Network Failed</string>
     <string name="result_text_default">please focus camera to QR code</string>
     <string name="forgot_pass">Reset password</string>
-
+    <string name="invalid_pass_length">Password must be at least 6 characters</string>
 
 
 </resources>
