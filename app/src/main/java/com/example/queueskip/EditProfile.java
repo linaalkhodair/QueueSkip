@@ -159,11 +159,6 @@ public class EditProfile extends AppCompatActivity {
             createDialog(getResources().getString(R.string.invalid_email_address));
             return false;
         }
-        else
-            if(passInput.length()<6){
-                createDialog(getResources().getString(R.string.invalid_pass_length));
-                return false;
-            }
         /*
         else
         if(!passInput.equals(confPassInput)){
