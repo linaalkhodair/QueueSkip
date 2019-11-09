@@ -142,25 +142,25 @@ public class search_frag extends AppCompatActivity implements SearchAdapter.OnIt
     }
 
 
-    public boolean onOptionsItemSelected( MenuItem item){
-        productAdapter.notifyDataSetChanged();
-        if(item.getItemId()==R.id.action_search){
-            searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false; }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    productAdapter.getFilter().filter(newText);
-                    return false;
-                }
-            });
-        }
-        return true;
-
-    }
+//    public boolean onOptionsItemSelected( MenuItem item){
+//        productAdapter.notifyDataSetChanged();
+//        if(item.getItemId()==R.id.action_search){
+//            searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+//            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//                @Override
+//                public boolean onQueryTextSubmit(String query) {
+//                    return false; }
+//
+//                @Override
+//                public boolean onQueryTextChange(String newText) {
+//                    productAdapter.getFilter().filter(newText);
+//                    return false;
+//                }
+//            });
+//        }
+//        return true;
+//
+//    }
 
 
     @Override
