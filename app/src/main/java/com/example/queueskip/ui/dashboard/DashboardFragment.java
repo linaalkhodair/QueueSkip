@@ -25,7 +25,7 @@ import com.example.queueskip.CheckoutActivity;
 import com.example.queueskip.Database.ModelDB.Cart;
 import com.example.queueskip.R;
 import com.example.queueskip.SuccessActivity;
-import com.example.queueskip.Trans;
+//import com.example.queueskip.Trans;
 import com.example.queueskip.User;
 import com.example.queueskip.utliz.Common;
 import com.google.firebase.auth.FirebaseAuth;

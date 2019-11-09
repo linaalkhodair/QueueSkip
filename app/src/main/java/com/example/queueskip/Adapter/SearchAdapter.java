@@ -23,6 +23,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
     private List<Items> productList_full;
     private List<Items> itemList;
+    private Context context;
+
+
+
 
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -30,7 +34,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         public ImageView product_img;
         public RelativeLayout viewForeground;
 
-        public MyViewHolder(View view) {
+        public MyViewHolder (View view) {
             super(view);
 
             product_name = (TextView) view.findViewById( R.id.product_name);
@@ -39,7 +43,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
             product_expire=(TextView) view.findViewById(R.id.product_expire);
             product_img=(ImageView) view.findViewById(R.id.product_img);
 
-          //  viewForeground = view.findViewById(R.id.view_foregroundSearch);
+            //  viewForeground = view.findViewById(R.id.view_foregroundSearch);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,13 +77,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     public void onBindViewHolder(@NonNull SearchAdapter.MyViewHolder holder, int position) {
         Items product = itemList.get(position);
 
-       // Pharmacy pharmacy= product.getPharmacy();
+        // Pharmacy pharmacy= product.getPharmacy();
         holder.product_name.setText(product.getName());
         holder.product_price.setText(product.getPrice());
         holder.product_expire.setText( product.getExpire() );
         //holder.product_img.setImageResource(product.getPhoto());
-       // holder.distance.setText(pharmacy.getDistance());
-       // holder.productImg.setImageResource(product.getImgId());
+        // holder.distance.setText(pharmacy.getDistance());
+        // holder.productImg.setImageResource(product.getImgId());
 
      /*   if(product.isAvaliable()) {
             holder.availablity.setText("Available");
@@ -105,7 +109,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         return exampleFilter;
     }
 
-   private Filter exampleFilter = new Filter() {
+    private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Items> filteredList = new ArrayList<>();
