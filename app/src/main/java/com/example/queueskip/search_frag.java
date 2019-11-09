@@ -62,11 +62,11 @@ public class search_frag extends AppCompatActivity implements SearchAdapter.OnIt
        //---- setTitle("Search");
         // setTitle("Search");
         //  Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.filter_2);
-//        drawable.setBounds(0, 0, 50, 50);
+        // drawable.setBounds(0, 0, 50, 50);
         //  navView.getMenu().getItem(1).setChecked(true);
         // toolbar.setOverflowIcon(drawable);
         // setTitle("Search");
-//navView.getMenu().getItem( 1 ).setChecked( true );
+    //navView.getMenu().getItem( 1 ).setChecked( true );
         prepareProductLists();
         setUpRecyclerView();
 
@@ -142,25 +142,25 @@ public class search_frag extends AppCompatActivity implements SearchAdapter.OnIt
     }
 
 
-//    public boolean onOptionsItemSelected( MenuItem item){
-//        productAdapter.notifyDataSetChanged();
-//        if(item.getItemId()==R.id.action_search){
-//            searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-//            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//                @Override
-//                public boolean onQueryTextSubmit(String query) {
-//                    return false; }
-//
-//                @Override
-//                public boolean onQueryTextChange(String newText) {
-//                    productAdapter.getFilter().filter(newText);
-//                    return false;
-//                }
-//            });
-//        }
-//        return true;
-//
-//    }
+    public boolean onOptionsItemSelected( MenuItem item){
+        productAdapter.notifyDataSetChanged();
+        if(item.getItemId()==R.id.action_search){
+            searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false; }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    productAdapter.getFilter().filter(newText);
+                    return false;
+                }
+            });
+        }
+        return true;
+
+    }
 
 
     @Override

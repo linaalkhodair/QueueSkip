@@ -51,7 +51,7 @@
             android:layout_marginTop="20dp"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="105dp"
             android:layout_below="@+id/product_expire"
             android:maxLines="1"
             android:textColor="@color/colorPrimary"
