@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,9 +24,20 @@ import com.example.queueskip.Adapter.CartAdapter;
 import com.example.queueskip.CheckoutActivity;
 import com.example.queueskip.Database.ModelDB.Cart;
 import com.example.queueskip.R;
+import com.example.queueskip.SuccessActivity;
+import com.example.queueskip.Trans;
+import com.example.queueskip.User;
 import com.example.queueskip.utliz.Common;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -47,6 +60,17 @@ public class DashboardFragment extends Fragment {
     private Button closeBtn;
     private Button okBtn, cancelBtn;
     private TextView dialogMsg;
+    DatabaseReference ref;
+    String email;
+    private static TextView totalP;
+    private static TextView vat;
+    private static TextView totalPay;
+    private FirebaseAuth firebaseAuth;
+    String uid;
+    int trans1=0;
+    int trans2=0;
+    int trans3=0;
+
 
     private DashboardViewModel dashboardViewModel;
 
@@ -57,7 +81,12 @@ public class DashboardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         elegantNumberButton=view.findViewById(R.id.txt_amount);
 
-//        cartBut = (Button)view.findViewById(R.id.cartAct); //new new new added
+        firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+//        uid= user.getUid();
+        email=user.getEmail();
+
+        //        cartBut = (Button)view.findViewById(R.id.cartAct); //new new new added
 //        testText = view.findViewById(R.id.testText); //??new new added
 //
 //        cartBut.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +110,11 @@ public class DashboardFragment extends Fragment {
        // total= view.findViewById(R.id.total);
 
         btn_place_order = (Button) view.findViewById( R.id.btn_place_order );
+
+//        totalP = view.findViewById(R.id.totalP);
+//        vat = view.findViewById(R.id.vat);
+//        totalPay = view.findViewById(R.id.totalPay);
+
         loadCartItems(); //it was a comment!!!!!
         btn_place_order.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,9 +177,49 @@ public class DashboardFragment extends Fragment {
 
         dialog.show();
 
+
         checkoutBtnDialog.setOnClickListener(new View.OnClickListener() {
                                      @Override
                                      public void onClick(View view) {
+
+//                                         firebaseAuth = FirebaseAuth.getInstance();
+//                                         final FirebaseUser user = firebaseAuth.getCurrentUser();
+//                                         Log.d("here", "hi, "+user.getUid());
+//                                             String id=user.getUid();
+//                                        email = user.getEmail();
+                                        //uid
+
+                                         ref= FirebaseDatabase.getInstance().getReference().child("User");
+
+
+//                                         ref= FirebaseDatabase.getInstance().getReference("User").child(uid).child("transList");
+//                                         double hi = 90;
+//                                         ref.push().setValue(hi);
+                                         ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                             @Override
+                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                     User userDB = snapshot.getValue(User.class);
+//                                                     Trans t = new Trans();
+//                                                     t.setTransAmount(90);
+//                                                     //double hi =90;
+                                                     if(userDB.getEmail().equals(email)){
+                                                        transHistory(userDB);
+
+
+//
+
+                                                     } //end if
+                                                    // ref.child(snapshot.getKey()).child("transList").push().setValue(90);
+                                                 }//end for
+                                             }
+
+                                             @Override
+                                             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                             }
+                                         });
+
                                          startActivity(
                                                  new Intent(getContext(), CheckoutActivity.class));
                                       //cartAdapter.clear();
@@ -175,6 +249,39 @@ public class DashboardFragment extends Fragment {
         totalAmount=0;
         compositionDisposable.clear();
         super.onDestroy();
+    }
+
+    private void transHistory(User userDB){
+
+        if(userDB.getTrans1()!=0&&userDB.getTrans2()!=0&&userDB.getTrans3()!=0) {
+
+            ref.child(userDB.getId()).child("trans1").setValue(0);
+            ref.child(userDB.getId()).child("trans2").setValue(0);
+            ref.child(userDB.getId()).child("trans3").setValue(0);
+        }
+//
+
+
+        if(userDB.getTrans1()==0){
+            ref.child(userDB.getId()).child("trans1").setValue(90);
+//
+        }
+
+        else if (userDB.getTrans2()==0){
+            ref.child(userDB.getId()).child("trans2").setValue(100);
+
+//
+        }
+        else if (userDB.getTrans3()==0){
+            ref.child(userDB.getId()).child("trans3").setValue(110);
+
+//
+        }
+
+
+
+
+
     }
     private void loadCartItems() {
 
@@ -214,7 +321,11 @@ public class DashboardFragment extends Fragment {
             amount= cartList.get(i).amount;
             totalAmount+=  price*amount;
         }
-        btn_place_order.setText("Check out"+"     Total price: "+totalAmount+"SR");
+        double vat1 =totalAmount*0.05;
+        btn_place_order.setText("Check out");
+//        totalP.setText(totalAmount+"SR");
+//        vat.setText(vat1+"SR");
+//        totalPay.setText(totalAmount+vat1+"SR");
 
        // total.setText(""+totalAmount);
         //return totalAmount;

@@ -1,6 +1,7 @@
 package com.example.queueskip.ui.profile;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.queueskip.EditProfile;
+import com.example.queueskip.HistoryActivity;
 import com.example.queueskip.Items;
 import com.example.queueskip.R;
 import com.example.queueskip.User;
@@ -39,6 +41,7 @@ public class profile_fragment extends Fragment {
     private TextView username;
     private FirebaseAuth firebaseAuth;
     private Button edit;
+    private ImageView history;
 
 
     String email2;
@@ -59,6 +62,7 @@ public class profile_fragment extends Fragment {
         email = view.findViewById(R.id.emailProf);
         pass = view.findViewById(R.id.passProf);
         username = view.findViewById(R.id.usernameProf);
+        history = view.findViewById(R.id.historyIc);
 
         //edit Button
         edit = view.findViewById(R.id.editBtn);
@@ -79,7 +83,7 @@ public class profile_fragment extends Fragment {
                        email.setText(userDB.getEmail());
                        username.setText("Hello, "+userDB.getUsername());
                    }
-                    Toast.makeText(getActivity(),"SUCCESSFULL PROFILE", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity(),"SUCCESSFULL PROFILE", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -93,6 +97,13 @@ public class profile_fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), EditProfile.class));
+            }
+        });
+
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), HistoryActivity.class));
             }
         });
 

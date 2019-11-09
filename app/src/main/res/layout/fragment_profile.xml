@@ -7,24 +7,48 @@
 
 
     <ImageView
-        android:layout_width="450dp"
-        android:layout_height="170dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/ic_account_circle_black_24dp"></ImageView>
-
+        android:layout_marginTop="25dp"
+        android:src="@drawable/ic_account_circle_black_24dp" />
     <TextView
         android:id="@+id/usernameProf"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
         android:text="Lina"
         android:textColor="@color/colorAccent"
         android:textSize="21sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"/>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/profile"
+        android:background="@drawable/round_shape_btn"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:id="@+id/historyIc"
+            android:layout_marginRight="107dp"
+            android:layout_marginLeft="105dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_history_black_24dp"></ImageView>
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+
+            android:src="@drawable/ic_favorite_black_24dp"></ImageView>
+    </LinearLayout>
 
     <LinearLayout
     android:layout_width="360dp"
@@ -64,6 +88,8 @@
             android:layout_height="36dp"
             android:src="@drawable/ic_lock_black_24dp"
             />
+
+
         <TextView
             android:textStyle="bold"
 

@@ -22,8 +22,8 @@
         />
 
     <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="388dp"
+        android:layout_width="411dp"
+        android:layout_height="272dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="8dp">
 
@@ -34,11 +34,83 @@
             android:layout_above="@+id/btn_place_order"
             tools:ignore="ExtraText"></androidx.recyclerview.widget.RecyclerView>
     </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></RelativeLayout>
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="WE ACCEPT "-->
+<!--        android:id="@+id/accept">-->
+
+<!--    </TextView>-->
+
+<!--    <ImageView-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:src="@drawable/paypalicon"></ImageView>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Total price"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--       >-->
+
+<!--    </TextView>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/totalP"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="end"-->
+<!--        android:text="30$">-->
+
+<!--    </TextView>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:text="VAT 5%">-->
+
+<!--    </TextView>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="2$"-->
+<!--        android:layout_gravity="end"-->
+<!--        android:id="@+id/vat">-->
+
+<!--    </TextView>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Total to pay"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:textColor="@color/colorAccent"-->
+<!--        android:id="@+id/TotalPrice">-->
+
+<!--    </TextView>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="32$"-->
+<!--        android:layout_gravity="end"-->
+<!--        android:id="@+id/totalPay">-->
+
+<!--    </TextView>-->
+
     <Button
         android:id="@+id/btn_place_order"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="40dp"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
         android:background="@drawable/round_shape_btn"
