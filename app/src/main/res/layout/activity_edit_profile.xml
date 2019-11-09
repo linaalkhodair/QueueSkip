@@ -9,14 +9,6 @@
     tools:context=".EditProfile">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/editProfiletooolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        app:titleTextColor="@android:color/white"
-        ></androidx.appcompat.widget.Toolbar>
-
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
