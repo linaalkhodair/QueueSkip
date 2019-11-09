@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.queueskip.Items;
 import com.example.queueskip.R;
 
@@ -52,6 +53,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         holder.product_name.setText(product.getName());
         holder.product_price.setText(product.getPrice());
         holder.product_expire.setText( product.getExpire() );
+        Glide.with(context).load(product.getPhoto()).into(holder.product_img); //?? here
+
         //holder.product_img.setImageResource(product.getPhoto());
         // holder.distance.setText(pharmacy.getDistance());
         // holder.productImg.setImageResource(product.getImgId());
