@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,9 +59,12 @@ public class EditProfile extends AppCompatActivity {
 
         editEmail = findViewById(R.id.editEmail);
         editPass = findViewById(R.id.editPass);
+
+        editPass.setTransformationMethod(new PasswordTransformationMethod());//
+
         editUsername = findViewById(R.id.editUser);
         save = findViewById(R.id.saveBtn);
-        cancel = findViewById(R.id.cancelBtn);
+//        cancel = findViewById(R.id.cancelBtn);
 
         editEmail.setText(user.getEmail());
         email = user.getEmail();
@@ -83,7 +87,7 @@ public class EditProfile extends AppCompatActivity {
                         editPass.setText(user.getPassword());
                         editUsername.setText(user.getUsername());
                     }
-                    Toast.makeText(EditProfile.this,"SUCCESSFULL EDIT", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(EditProfile.this,"SUCCESSFULL EDIT", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -93,9 +97,34 @@ public class EditProfile extends AppCompatActivity {
             }
         });
 
+        //dialog
+
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.logout_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        okBtn=dialog.findViewById(R.id.ok_btn_dialog);
+        cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
+        dialogMsg=dialog.findViewById(R.id.dialog_message);
+        dialogMsg.setText("Are you sure you want to save changes ?");
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View view) {
+                                             dialog.cancel();
+
+                                         }//end of onClick
+                                     }//end of OnClickListener
+        );
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                dialog.show();
+                okBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
                 if(validate()) {
 
                     //updating in Auth
@@ -106,6 +135,7 @@ public class EditProfile extends AppCompatActivity {
                     user.reauthenticate(authCredential).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
+
                             FirebaseUser user2 = FirebaseAuth.getInstance().getCurrentUser();
                             user2.updateEmail(editEmail.getText().toString());
                             user2.updatePassword(editPass.getText().toString());
@@ -127,7 +157,7 @@ public class EditProfile extends AppCompatActivity {
                                     ref.child(snapshot.getKey()).child("username").setValue(editUsername.getText().toString());
 
                                 }
-                                Toast.makeText(EditProfile.this, "SUCCESSFULL SAVE", Toast.LENGTH_LONG).show();
+                                Toast.makeText(EditProfile.this, "Changes successfully saved!", Toast.LENGTH_SHORT).show();
                             }
                         } //end onDataChange
 
@@ -138,6 +168,9 @@ public class EditProfile extends AppCompatActivity {
                     });
                     //end of DB save
                 }//end of ifValidate()
+                        dialog.dismiss();
+                    } //inner onClick
+                });
             } // end onClick
         }); //end SetOnClickListner
 
@@ -165,6 +198,12 @@ public class EditProfile extends AppCompatActivity {
             createDialog(getResources().getString(R.string.invalid_email_address));
             return false;
         }
+
+        else
+            if(passInput.length()<6){
+                createDialog("Password should be at least 6 characters");
+                return false;
+            }
         /*
         else
         if(!passInput.equals(confPassInput)){
@@ -199,6 +238,7 @@ public class EditProfile extends AppCompatActivity {
 
         dialogMsg.setText(message);
 
+        okBtn.setText("OK");
         okBtn.setOnClickListener(new View.OnClickListener() {
                                      @Override
                                      public void onClick(View view) {

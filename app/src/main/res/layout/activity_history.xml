@@ -25,12 +25,12 @@
 
         <TextView
             android:id="@+id/history"
-            android:layout_width="200dp"
-            android:layout_height="81dp"
+            android:layout_width="207dp"
+            android:layout_height="70dp"
             android:layout_gravity="center"
-            android:layout_marginTop="90dp"
-            android:layout_marginBottom="60dp"
             android:layout_marginLeft="96dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="60dp"
             android:text="History of payments"
             android:textAlignment="center"
             android:textColor="@color/colorAccent"
@@ -48,6 +48,7 @@
             android:layout_gravity="left"
             android:layout_marginTop="60dp"
             android:textAlignment="center"
+            android:layout_marginLeft="20dp"
             android:text="Payment method:"
             android:textColor="@color/colorAccent"
             android:textSize="10sp"
@@ -57,7 +58,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="30dp"
-
+            android:layout_marginTop="-8dp"
             android:src="@drawable/paypalicon"></ImageView>
 
         <TextView
@@ -81,6 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="60dp"
             android:textAlignment="center"
             android:text="Payment method:"
@@ -92,6 +94,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="30dp"
+            android:layout_marginTop="-8dp"
             android:src="@drawable/paypalicon"></ImageView>
     <TextView
         android:id="@+id/price2"
@@ -111,6 +114,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/payMethod3"
+                android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -125,6 +129,7 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="30dp"
+                android:layout_marginTop="-8dp"
                 android:src="@drawable/paypalicon"></ImageView>
     <TextView
         android:id="@+id/price3"
