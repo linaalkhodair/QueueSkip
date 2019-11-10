@@ -37,6 +37,9 @@ public class AdminMainActivity extends AppCompatActivity {
         addProduct=findViewById(R.id.add_product);
         logout = findViewById(R.id.logout_admin);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
+
 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,13 +74,13 @@ public class AdminMainActivity extends AppCompatActivity {
 
     }
 
-    public void logout() {
+    public void logout(){
         firebaseAuth.signOut();
-        finish();
-        startActivity(new Intent(this, LoginActivity.class));
-        // getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
-    }
+        //finish();
+        dialog.dismiss();
+        startActivity(new Intent(AdminMainActivity.this, LoginActivity.class));
 
+    }
     private void createDialog(){
 
 

@@ -66,6 +66,12 @@ public class EditProfile extends AppCompatActivity {
         email = user.getEmail();
         final String id = user.getUid();
 
+        //set toolbar
+        Toolbar toolbar=findViewById(R.id.edit_profile_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -221,4 +227,10 @@ public class EditProfile extends AppCompatActivity {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
         return matcher.find();
     }//end of emailValidator
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }//end of onSupportNavigateUp
     } //end class

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -97,6 +98,12 @@ public class GenerateQRCode extends AppCompatActivity {
        // logout = findViewById(R.id.admin_logout);
         calendar =findViewById(R.id.calendar);
        // sear_btn=findViewById( R.id.sear_btn );
+
+        //set toolbar
+        Toolbar toolbar=findViewById(R.id.add_product_Toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //Database
         //  databaseItem = FirebaseDatabase.getInstance().getReference();//???????
@@ -346,5 +353,11 @@ public class GenerateQRCode extends AppCompatActivity {
         });
 
     } //end saveToDatabase
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }//end of onSupportNavigateUp
 
 }

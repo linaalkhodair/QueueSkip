@@ -8,6 +8,13 @@
     android:background="@color/colorBackground"
     tools:context=".EditProfile">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/edit_profile_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@android:color/white"
+        ></androidx.appcompat.widget.Toolbar>
 
     <ImageView
         android:layout_width="150dp"
@@ -64,6 +71,8 @@
         app:passwordToggleEnabled="true"
         android:layout_marginTop="15dp"
         >
+
+
 
         <EditText
             android:id="@+id/editPass"

@@ -19,11 +19,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".AdminMainActivity"></activity>
-        <activity android:name=".HistoryActivity" />
-        <activity android:name=".EditProfile" />
+        <activity android:name=".HistoryActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".EditProfile" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CheckoutActivity" />
         <activity android:name=".SuccessActivity" />
-        <activity android:name=".search_frag" />
+        <activity android:name=".search_frag" android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".GenerateQRCode" />
+        <activity android:name=".GenerateQRCode" android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"

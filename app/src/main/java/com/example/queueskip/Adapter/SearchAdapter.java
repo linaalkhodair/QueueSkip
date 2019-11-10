@@ -29,6 +29,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     private Context context;
 
 
+
     public SearchAdapter(List<Items> itemList,Context context ) {
         this.itemList = itemList;
         this.context=context;
