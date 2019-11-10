@@ -1,9 +1,11 @@
 package com.example.queueskip.Adapter;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -13,6 +15,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.queueskip.Items;
 import com.example.queueskip.R;
+import com.example.queueskip.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +35,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     private List<Items> productList_full;
     private List<Items> itemList;
     private Context context;
+    ImageView delete;
+    DatabaseReference ref;
+    private List<Items>  productList=new ArrayList<>( );
+
 
 
     public SearchAdapter(List<Items> itemList,Context context ) {
@@ -46,14 +58,30 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
 
     @Override
-    public void onBindViewHolder(@NonNull SearchAdapter.MyViewHolder holder,final int position) {
-        Items product = itemList.get(position);
+    public void onBindViewHolder(@NonNull final SearchAdapter.MyViewHolder holder, final int position) {
+        final Items product = itemList.get(position);
 
         // Pharmacy pharmacy= product.getPharmacy();
         holder.product_name.setText(product.getName());
         holder.product_price.setText(product.getPrice());
         holder.product_expire.setText( product.getExpire() );
         Glide.with(context).load(product.getPhoto()).into(holder.product_img); //?? here
+
+        ref = FirebaseDatabase.getInstance().getReference().child("items");
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                itemList.remove(position);
+//                notifyItemRemoved(position);
+                ref.child(product.getId()).removeValue();
+                itemList.remove(position);
+                notifyItemRemoved(position); //PROBLEM DOESN'T WORK !!!
+                //ref.child(product.getId()).removeValue();
+
+
+            }
+        });
+
 
         //holder.product_img.setImageResource(product.getPhoto());
         // holder.distance.setText(pharmacy.getDistance());
@@ -85,6 +113,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
             product_price=(TextView) view.findViewById(R.id.product_price);
             product_expire=(TextView) view.findViewById(R.id.product_expire);
             product_img=(ImageView) view.findViewById(R.id.product_img);
+            delete = view.findViewById(R.id.deleteItemAdmin);
+
 
             //  viewForeground = view.findViewById(R.id.view_foregroundSearch);
 

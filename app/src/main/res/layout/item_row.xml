@@ -46,6 +46,15 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="15dp" />
 
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:id="@+id/deleteItemAdmin"
+            android:layout_marginLeft="330dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_delete_black_24dp"></ImageView>
+
+
         <TextView
             android:id="@+id/product_price"
             android:layout_marginTop="20dp"
