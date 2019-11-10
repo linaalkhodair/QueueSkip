@@ -13,21 +13,21 @@
         android:layout_height="80dp"
         android:id="@+id/img_product"
        />
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="279dp"
         android:layout_height="wrap_content"
-       android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/txt_product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_product_name"
-            android:textSize="20dp"
-            android:textStyle="bold"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/colorPrimary"
-            android:layout_marginStart="20dp"
-            />
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,29 +36,30 @@
             android:weightSum="7">
 
             <TextView
+                android:id="@+id/txt_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txt_price"
-                android:textStyle="bold"
-                android:textSize="15dp"
-                android:textColor="@color/colorAccent"
                 android:layout_marginStart="20dp"
-                android:layout_weight="6"/>
-<com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-    android:layout_width="70dp"
-    android:layout_height="30dp"
-    android:id="@+id/txt_amount"
-    android:layout_weight="1"
-    app:finalNumber="300"
-    app:backGroundColor="@color/colorPrimaryDark"
-    app:textSize="10sp"
-    android:layout_marginEnd="8dp"
-    app:textColor="@color/colorBackground"
-    ></com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
+                android:layout_weight="6"
+                android:textColor="@color/colorAccent"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+                android:id="@+id/txt_amount"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                app:backGroundColor="@color/colorPrimaryDark"
+                app:finalNumber="300"
+                app:textColor="@color/colorBackground"
+                app:textSize="10sp"></com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
+
             <ImageView
+                android:id="@+id/deleteItem"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:id="@+id/deleteItem"
                 android:src="@drawable/ic_delete_black_24dp"></ImageView>
 
         </LinearLayout>

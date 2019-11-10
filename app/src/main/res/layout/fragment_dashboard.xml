@@ -22,8 +22,8 @@
         />
 
     <androidx.core.widget.NestedScrollView
-        android:layout_width="411dp"
-        android:layout_height="272dp"
+        android:layout_width="400dp"
+        android:layout_height="205dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="8dp">
 
@@ -31,86 +31,83 @@
             android:id="@+id/recycler_cart"
             android:layout_width="match_parent"
             android:layout_height="310dp"
+
             android:layout_above="@+id/btn_place_order"
             tools:ignore="ExtraText"></androidx.recyclerview.widget.RecyclerView>
+
     </androidx.core.widget.NestedScrollView>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></RelativeLayout>
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="WE ACCEPT "-->
-<!--        android:id="@+id/accept">-->
+        <TextView
+            android:id="@+id/accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WE ACCEPT ">
 
-<!--    </TextView>-->
+        </TextView>
 
-<!--    <ImageView-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:src="@drawable/paypalicon"></ImageView>-->
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:src="@drawable/paypalicon"></ImageView>
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Total price"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--       >-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total price">
 
-<!--    </TextView>-->
+        </TextView>
 
-<!--    <TextView-->
-<!--        android:id="@+id/totalP"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="end"-->
-<!--        android:text="30$">-->
+        <TextView
+            android:id="@+id/tp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="30$">
 
-<!--    </TextView>-->
+        </TextView>
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:text="VAT 5%">-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VAT 5%">
 
-<!--    </TextView>-->
+        </TextView>
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="2$"-->
-<!--        android:layout_gravity="end"-->
-<!--        android:id="@+id/vat">-->
+        <TextView
+            android:id="@+id/vat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="2$">
 
-<!--    </TextView>-->
+        </TextView>
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Total to pay"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:textColor="@color/colorAccent"-->
-<!--        android:id="@+id/TotalPrice">-->
+        <TextView
+            android:id="@+id/TotalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total to pay"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold">
 
-<!--    </TextView>-->
+        </TextView>
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="32$"-->
-<!--        android:layout_gravity="end"-->
-<!--        android:id="@+id/totalPay">-->
+        <TextView
+            android:id="@+id/totalPay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="32$"
+            android:textStyle="bold">
 
-<!--    </TextView>-->
+        </TextView>
 
     <Button
         android:id="@+id/btn_place_order"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="4dp"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
         android:background="@drawable/round_shape_btn"
