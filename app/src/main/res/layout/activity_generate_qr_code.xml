@@ -11,6 +11,14 @@
 
     <!--    tools:context=".GenerateQRCode"-->
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/add_product_Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@android:color/white"
+        ></androidx.appcompat.widget.Toolbar>
+
 
     <TextView
         android:id="@+id/textView"
@@ -131,17 +139,6 @@
         tools:ignore="MissingConstraints"
         android:background="@drawable/round_shape_btn"
         android:textColor="@color/colorBackground"/>
-    <Button
-        android:id="@+id/sear_btn"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:text="GO"
-        tools:ignore="MissingConstraints"
-        android:background="@drawable/round_shape_btn"
-        android:textColor="@color/colorBackground"/>
-        />
 
     <ImageView
         android:id="@+id/image"
@@ -152,13 +149,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
-    <ImageView
-        android:id="@+id/admin_logout"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/ic_power_settings_new_black_24dp"
-        android:layout_marginStart="300dp"
-        ></ImageView>
 
 
 </LinearLayout>

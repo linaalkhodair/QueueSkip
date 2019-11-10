@@ -28,7 +28,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder>  {
+public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> implements Filterable {
 
     //Filterable class has been removed
 
@@ -38,6 +38,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     ImageView delete;
     DatabaseReference ref;
     private List<Items>  productList=new ArrayList<>( );
+
 
 
 
@@ -63,7 +64,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
         // Pharmacy pharmacy= product.getPharmacy();
         holder.product_name.setText(product.getName());
-        holder.product_price.setText(product.getPrice());
+        holder.product_price.setText(product.getPrice()+" SR");
         holder.product_expire.setText( product.getExpire() );
         Glide.with(context).load(product.getPhoto()).into(holder.product_img); //?? here
 
@@ -145,45 +146,45 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     }
 
 //.........
-//    @Override
-//    public Filter getFilter() {
-//        return exampleFilter;
-//    }
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
     //........
 
     //......
-//    private Filter exampleFilter = new Filter() {
-//        @Override
-//        protected FilterResults performFiltering(CharSequence constraint) {
-//            List<Items> filteredList = new ArrayList<>();
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Items> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(productList_full);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Items item : productList_full) {
+
+                    if (item.getName().toLowerCase().contains(filterPattern)) {
+
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
 //
-//            if (constraint == null || constraint.length() == 0) {
-//                filteredList.addAll(productList_full);
-//            } else {
-//                String filterPattern = constraint.toString().toLowerCase().trim();
-//
-//                for (Items item : productList_full) {
-//
-//                    if (item.getName().toLowerCase().contains(filterPattern)) {
-//
-//                        filteredList.add(item);
-//                    }
-//                }
-//            }
-//
-//            FilterResults results = new FilterResults();
-//            results.values = filteredList;
-//
-//            return results;
-//        }
-//
-//        @Override
-//        protected void publishResults(CharSequence constraint, FilterResults results) {
-//            itemList.clear();
-//            itemList.addAll((List)results.values);
-//            notifyDataSetChanged();
-//        }
-//    };
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            itemList.clear();
+            itemList.addAll((List)results.values);
+            notifyDataSetChanged();
+        }
+    };
     //......
 
     //====================================================================================//

@@ -47,6 +47,12 @@ public class search_frag extends AppCompatActivity implements SearchAdapter.OnIt
         super.onCreate(saveInstanceState);
         setContentView(R.layout.search);
 
+        //set toolbar
+        Toolbar toolbar=findViewById(R.id.search_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         // elegantNumberButton=view.findViewById(R.id.txt_amount);
       /*  compositionDisposable = new CompositeDisposable();
@@ -62,15 +68,21 @@ public class search_frag extends AppCompatActivity implements SearchAdapter.OnIt
        //---- setTitle("Search");
         // setTitle("Search");
         //  Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.filter_2);
-//        drawable.setBounds(0, 0, 50, 50);
+        // drawable.setBounds(0, 0, 50, 50);
         //  navView.getMenu().getItem(1).setChecked(true);
         // toolbar.setOverflowIcon(drawable);
         // setTitle("Search");
-//navView.getMenu().getItem( 1 ).setChecked( true );
+    //navView.getMenu().getItem( 1 ).setChecked( true );
         prepareProductLists();
         setUpRecyclerView();
 
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }//end of onSupportNavigateUp
 
     private void prepareProductLists()
 
@@ -119,27 +131,27 @@ public class search_frag extends AppCompatActivity implements SearchAdapter.OnIt
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) searchItem.getActionView();
-
-        searchView.setImeOptions( EditorInfo.IME_ACTION_DONE);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) { return false; }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // productAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu){
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.search_menu, menu);
+//
+//        MenuItem searchItem = menu.findItem(R.id.action_search);
+//        searchView = (SearchView) searchItem.getActionView();
+//
+//        searchView.setImeOptions( EditorInfo.IME_ACTION_DONE);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) { return false; }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                // productAdapter.getFilter().filter(newText);
+//                return false;
+//            }
+//        });
+//        return true;
+//    }
 
 
 //    public boolean onOptionsItemSelected( MenuItem item){
@@ -167,4 +179,6 @@ public class search_frag extends AppCompatActivity implements SearchAdapter.OnIt
     public void onItemClick(int position) {
 
     }
+
+
 }

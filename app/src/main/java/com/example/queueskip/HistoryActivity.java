@@ -2,6 +2,7 @@ package com.example.queueskip;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -32,6 +33,12 @@ public class HistoryActivity extends AppCompatActivity {
         price1 = findViewById(R.id.price1);
         price2 = findViewById(R.id.price2);
         price3 = findViewById(R.id.price3);
+
+        //set toolbar
+        Toolbar toolbar=findViewById(R.id.history_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         ref= FirebaseDatabase.getInstance().getReference().child("User");
         firebaseAuth = FirebaseAuth.getInstance();
@@ -65,4 +72,10 @@ public class HistoryActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }//end of onSupportNavigateUp
 }
