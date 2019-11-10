@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.queueskip.Adapter.CartAdapter;
 import com.example.queueskip.ui.home.HomeFragment;
 import com.example.queueskip.utliz.Common;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,32 +29,51 @@ import static com.example.queueskip.ui.dashboard.DashboardFragment.totalAmount;
 public class SuccessActivity extends AppCompatActivity {
     DatabaseReference ref;
     private Button button2;
+    private FirebaseAuth firebaseAuth;
+    String email;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_success);
 
-//        ref= FirebaseDatabase.getInstance().getReference().child("User");
-//        ref.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    User userDB = snapshot.getValue(User.class);
-//                    if(!userDB.getTransList().get(0).equals(5)){
-//                        ref.child(snapshot.getKey()).child("transList").push().setValue(90);
-//                        Toast.makeText(SuccessActivity.this, "SUCCESSFULL WORK", Toast.LENGTH_LONG).show();
-//
-//                    }
-//
-//                }//end for
-//            }
+        firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+//        uid= user.getUid();
+        email=user.getEmail();
 
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
+        ref= FirebaseDatabase.getInstance().getReference().child("User");
+
+
+//                                         ref= FirebaseDatabase.getInstance().getReference("User").child(uid).child("transList");
+//                                         double hi = 90;
+//                                         ref.push().setValue(hi);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User userDB = snapshot.getValue(User.class);
+//                                                     Trans t = new Trans();
+//                                                     t.setTransAmount(90);
+//                                                     //double hi =90;
+                    if(userDB.getEmail().equals(email)){
+                        transHistory(userDB);
+
+
 //
-//            }
-//        });
+
+                    } //end if
+                    // ref.child(snapshot.getKey()).child("transList").push().setValue(90);
+                }//end for
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         button2=findViewById(R.id.button2);
 
@@ -70,5 +91,39 @@ public class SuccessActivity extends AppCompatActivity {
         });
 
     }
+    private void transHistory(User userDB){
 
+        if(userDB.getTrans1()!=0&&userDB.getTrans2()!=0&&userDB.getTrans3()!=0) {
+
+            ref.child(userDB.getId()).child("trans1").setValue(0);
+            ref.child(userDB.getId()).child("trans2").setValue(0);
+            ref.child(userDB.getId()).child("trans3").setValue(0);
+            ref.child(userDB.getId()).child("trans1").setValue(totalAmount);
+
+
+        }
+//
+
+
+        if(userDB.getTrans1()==0){
+            ref.child(userDB.getId()).child("trans1").setValue(totalAmount);
+//
+        }
+
+        else if (userDB.getTrans2()==0){
+            ref.child(userDB.getId()).child("trans2").setValue(totalAmount);
+
+//
+        }
+        else if (userDB.getTrans3()==0){
+            ref.child(userDB.getId()).child("trans3").setValue(totalAmount);
+
+//
+        }
+
+
+
+
+
+    }
 }
