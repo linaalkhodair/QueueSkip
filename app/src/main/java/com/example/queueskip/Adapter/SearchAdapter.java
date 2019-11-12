@@ -1,16 +1,22 @@
 package com.example.queueskip.Adapter;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.queueskip.Items;
@@ -37,6 +43,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     private Context context;
     ImageView delete;
     DatabaseReference ref;
+    private Button okBtn, cancelBtn;
+    private TextView dialogMsg;
     private List<Items>  productList=new ArrayList<>( );
 
 
@@ -68,20 +76,42 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         holder.product_expire.setText( product.getExpire() );
         Glide.with(context).load(product.getPhoto()).into(holder.product_img); //?? here
 
+
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.logout_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        okBtn=dialog.findViewById(R.id.ok_btn_dialog);
+        cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
+        dialogMsg=dialog.findViewById(R.id.dialog_message);
+        dialogMsg.setText("Are you sure you want to delete item?");
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View view) {
+                                             dialog.cancel();
+
+                                         }//end of onClick
+                                     }//end of OnClickListener
+        );
+
+
         ref = FirebaseDatabase.getInstance().getReference().child("items");
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                itemList.remove(position);
-//                notifyItemRemoved(position);
-                ref.child(product.getId()).removeValue();
-                itemList.remove(position);
-                notifyItemRemoved(position); //PROBLEM DOESN'T WORK !!!
-                //ref.child(product.getId()).removeValue();
+                dialog.show();
+                okBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ref.child(product.getId()).removeValue();
+                        ((Activity)context).finish(); //MAYBE?
+                        dialog.cancel();
+                        Toast.makeText(context, "Item deleted successfully", Toast.LENGTH_SHORT).show();
 
+                    }
+                }); //inner onClick
 
             }
-        });
+        }); //outer onClick
 
 
         //holder.product_img.setImageResource(product.getPhoto());
