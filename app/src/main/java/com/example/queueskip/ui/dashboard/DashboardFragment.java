@@ -46,8 +46,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class DashboardFragment extends Fragment {
-//private Button cartBut;
-//private TextView testText;
+
     private ElegantNumberButton elegantNumberButton;
     RecyclerView recycler_cart;
     public static Button btn_place_order;
@@ -61,16 +60,9 @@ public class DashboardFragment extends Fragment {
     private Button closeBtn;
     private Button okBtn, cancelBtn;
     private TextView dialogMsg;
-    DatabaseReference ref;
-    String email;
     private static TextView totalP;
     private static TextView vat;
     private static TextView totalPay;
-    private FirebaseAuth firebaseAuth;
-    String uid;
-    int trans1=0;
-    int trans2=0;
-    int trans3=0;
 
 
     private DashboardViewModel dashboardViewModel;
@@ -82,10 +74,6 @@ public class DashboardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         elegantNumberButton=view.findViewById(R.id.txt_amount);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = firebaseAuth.getCurrentUser();
-//        uid= user.getUid();
-        email=user.getEmail();
 
         //        cartBut = (Button)view.findViewById(R.id.cartAct); //new new new added
 //        testText = view.findViewById(R.id.testText); //??new new added
@@ -252,38 +240,6 @@ public class DashboardFragment extends Fragment {
         super.onDestroy();
     }
 
-    private void transHistory(User userDB){
-
-        if(userDB.getTrans1()!=0&&userDB.getTrans2()!=0&&userDB.getTrans3()!=0) {
-
-            ref.child(userDB.getId()).child("trans1").setValue(0);
-            ref.child(userDB.getId()).child("trans2").setValue(0);
-            ref.child(userDB.getId()).child("trans3").setValue(0);
-        }
-//
-
-
-        if(userDB.getTrans1()==0){
-            ref.child(userDB.getId()).child("trans1").setValue(90);
-//
-        }
-
-        else if (userDB.getTrans2()==0){
-            ref.child(userDB.getId()).child("trans2").setValue(100);
-
-//
-        }
-        else if (userDB.getTrans3()==0){
-            ref.child(userDB.getId()).child("trans3").setValue(110);
-
-//
-        }
-
-
-
-
-
-    }
     private void loadCartItems() {
 
         compositionDisposable.add(
@@ -327,7 +283,7 @@ public class DashboardFragment extends Fragment {
         df.format(vat1);
         btn_place_order.setText("Check out");
         totalP.setText(totalAmount+"SR");
-        vat.setText(vat1+"SR");
+        vat.setText(String.format("%.2f", vat1)+"SR");
         totalPay.setText(totalAmount+vat1+"SR");
 
         totalAmount=totalAmount+vat1; //NOT SURE

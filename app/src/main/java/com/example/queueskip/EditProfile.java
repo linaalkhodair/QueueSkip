@@ -60,8 +60,6 @@ public class EditProfile extends AppCompatActivity {
         editEmail = findViewById(R.id.editEmail);
         editPass = findViewById(R.id.editPass);
 
-        editPass.setTransformationMethod(new PasswordTransformationMethod());//
-
         editUsername = findViewById(R.id.editUser);
         save = findViewById(R.id.saveBtn);
 //        cancel = findViewById(R.id.cancelBtn);
@@ -136,9 +134,9 @@ public class EditProfile extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 
-                            FirebaseUser user2 = FirebaseAuth.getInstance().getCurrentUser();
-                            user2.updateEmail(editEmail.getText().toString());
-                            user2.updatePassword(editPass.getText().toString());
+//                            FirebaseUser user2 = FirebaseAuth.getInstance().getCurrentUser();
+                            user.updateEmail(editEmail.getText().toString());
+                            user.updatePassword(editPass.getText().toString());
                         }
                     });
 
