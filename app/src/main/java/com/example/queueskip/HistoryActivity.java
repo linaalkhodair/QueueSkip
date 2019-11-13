@@ -54,9 +54,9 @@ public class HistoryActivity extends AppCompatActivity {
                     User userDB = snapshot.getValue(User.class);
 
                     if(userDB.getEmail().equals(email)){
-                        price1.setText("Amount: "+userDB.getTrans1());
-                        price2.setText("Amount: "+userDB.getTrans2());
-                        price3.setText("Amount: "+userDB.getTrans3());
+                        price1.setText("Amount: "+userDB.getTrans1()+"SR");
+                        price2.setText("Amount: "+userDB.getTrans2()+"SR");
+                        price3.setText("Amount: "+userDB.getTrans3()+"SR");
                     }
                     //Toast.makeText(HistoryActivity.this,"SUCCESSFULL HISTORY ", Toast.LENGTH_LONG).show();
                 }
