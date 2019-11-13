@@ -9,6 +9,34 @@
     android:orientation="vertical"
     android:background="@color/colorBackground">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/admin_main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@android:color/white"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QueueSkip"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+           >
+
+        </TextView>
+        <ImageView
+            android:id="@+id/logout_admin"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_power_settings_new_black_24dp"
+            android:padding="10dp"
+            android:layout_marginStart="220dp"
+            ></ImageView>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -78,17 +106,6 @@
 </LinearLayout>
 
 
-
-
-        <ImageView
-            android:id="@+id/logout_admin"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_power_settings_new_black_24dp"
-            android:padding="10dp"
-            android:layout_marginTop="170dp"
-            android:layout_marginStart="270dp"
-            ></ImageView>
 
 
 
