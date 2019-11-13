@@ -1,4 +1,4 @@
-package com.example.queueskip.Adapter;
+/*package com.example.queueskip.Adapter;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +39,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
     //Filterable class has been removed
 
-    private List<Items> productList_full;
+    private List<Items> productList_full=null;
     private List<Items> itemList;
     private Context context;
     ImageView delete;
@@ -50,10 +51,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
 
 
-    public SearchAdapter(List<Items> itemList,Context context ) {
+   // public SearchAdapter(List<Items> itemList,Context context ) {
+         public SearchAdapter(List<Items> itemList ) {
         this.itemList = itemList;
-        this.context=context;
-        productList_full = new ArrayList<>(itemList);
+        //this.context=context;
+        this.productList_full = new ArrayList<Items>();
+        this.productList_full.addAll(itemList);
+        this.itemList=itemList;
     }
 
     @NonNull
@@ -68,6 +72,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final SearchAdapter.MyViewHolder holder, final int position) {
+
         final Items product = itemList.get(position);
 
         // Pharmacy pharmacy= product.getPharmacy();
@@ -127,9 +132,32 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
             holder.circleIcon.setImageResource(R.drawable.circle_unavailable);
         }*/
 
+/*
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-    }
+import com.example.queueskip.Items;
+import com.example.queueskip.R;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import androidx.recyclerview.widget.RecyclerView;}
+   public void removeItems(int position){
+             itemList.remove( position );
+             notifyItemRemoved( position );
+   }
+
+public void restoreIteme(Items item,int position){
+             itemList.add(position,item);
+             notifyItemInserted( position );
+
+}
+public List<Items> getItemList(){
+             return itemList;
+}
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView product_name,product_price,product_expire;
@@ -174,7 +202,20 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     public int getItemCount() {
         return itemList.size();
     }
-
+    public void filter(String charText){
+        charText = charText.toLowerCase( Locale.getDefault());
+        itemList.clear();
+        if(charText.length()==0)
+            itemList.addAll(productList_full)   ;
+        else{
+            for(Items item:productList_full){
+                if(item.getName().toLowerCase(Locale.getDefault()).contains( charText )){
+                    itemList.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
 //.........
     @Override
     public Filter getFilter() {
@@ -208,8 +249,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
             return results;
         }
 //
+
         @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
+       protected void publishResults(CharSequence constraint, FilterResults results) {
             itemList.clear();
             itemList.addAll((List)results.values);
             notifyDataSetChanged();
@@ -239,4 +281,4 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     //..........
 
 
-}
+}*/

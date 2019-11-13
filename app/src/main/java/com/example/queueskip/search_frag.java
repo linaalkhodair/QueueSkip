@@ -3,14 +3,10 @@ package com.example.queueskip;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 
-import com.example.queueskip.Adapter.SearchAdapter;
-import com.example.queueskip.Items;
-import com.example.queueskip.R;
+import com.example.queueskip.Adapter.SearchAdapter1;
+//import com.example.queueskip.Adapter.SearchAdapter1;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,14 +25,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class search_frag extends AppCompatActivity implements SearchAdapter.OnItemClickListener  {
+public class search_frag extends AppCompatActivity implements SearchAdapter1.OnItemClickListener  {
     CompositeDisposable compositionDisposable;
     RecyclerView recycler_search;
     //private searchViewModel searchviewmodel;
     DatabaseReference reff;
     private RecyclerView recyclerView;
     private List<Items>  productList=new ArrayList<>( );
-    private SearchAdapter productAdapter;
+    private SearchAdapter1 productAdapter;
     SearchView searchView;
     View view;
     Context mContext;
@@ -122,57 +118,59 @@ public class search_frag extends AppCompatActivity implements SearchAdapter.OnIt
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter= new SearchAdapter( productList,this);
+        productAdapter= new SearchAdapter1( productList);
         recyclerView.setLayoutManager( new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(productAdapter);
 
-        productAdapter.setOnItemClickListener(  search_frag.this );
+        productAdapter.setOnItemClickListener( (SearchAdapter1.OnItemClickListener) search_frag.this );
 
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu){
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.search_menu, menu);
-//
-//        MenuItem searchItem = menu.findItem(R.id.action_search);
-//        searchView = (SearchView) searchItem.getActionView();
-//
-//        searchView.setImeOptions( EditorInfo.IME_ACTION_DONE);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) { return false; }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                // productAdapter.getFilter().filter(newText);
-//                return false;
-//            }
-//        });
-//        return true;
-//    }
+    @Override
+   public boolean onCreateOptionsMenu(Menu menu){
+    //    MenuInflater inflater = getMenuInflater();
+      //  inflater.inflate(R.menu.search_menu, menu);
+
+       // MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchView=findViewById( R.id.action_search );
+     // searchView = (SearchView) searchItem.getActionView();
+
+      // searchView.setImeOptions( EditorInfo.IME_ACTION_DONE);
+              searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+           @Override
+          public boolean onQueryTextSubmit(String query)
+           { return false; }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                productAdapter.filter(newText);
+                return false;
+            }
+        });
+        return true;
+    }
 
 
-//    public boolean onOptionsItemSelected( MenuItem item){
-//        productAdapter.notifyDataSetChanged();
-//        if(item.getItemId()==R.id.action_search){
-//            searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-//            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//                @Override
-//                public boolean onQueryTextSubmit(String query) {
-//                    return false; }
+   /* public boolean onOptionsItemSelected( MenuItem item){
+        productAdapter.notifyDataSetChanged();
+        if(item.getItemId()==R.id.action_search){
+           searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false; }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                   productAdapter.getFilter().filter(newText);
+                    return false;
+               }
+           });
+      }
+       return true;
 //
-//                @Override
-//                public boolean onQueryTextChange(String newText) {
-//                    productAdapter.getFilter().filter(newText);
-//                    return false;
-//                }
-//            });
-//        }
-//        return true;
-//
-//    }
+   }*/
 
 
     @Override
