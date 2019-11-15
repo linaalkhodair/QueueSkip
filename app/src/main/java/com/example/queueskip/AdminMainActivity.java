@@ -1,6 +1,7 @@
 package com.example.queueskip;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -38,6 +39,11 @@ public class AdminMainActivity extends AppCompatActivity {
         logout = findViewById(R.id.logout_admin);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        //set toolbar
+        Toolbar toolbar=findViewById(R.id.admin_main_toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("QueueSkip");
 
 
 
