@@ -1,15 +1,19 @@
 package com.example.queueskip.Adapter;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +24,9 @@ import com.example.queueskip.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,6 +40,11 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
     private SearchAdapter1.OnItemClickListener mListener;
     private Button okBtn, cancelBtn;
     private TextView dialogMsg;
+    ImageView edit;
+    private Button okBtn2, cancelBtn2;
+    private ImageView calendar;
+    private EditText editExp, editName, editPrice;
+    private String name, price, expire;
     ImageView delete;
     DatabaseReference reff;
 
@@ -51,12 +62,13 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
         public  MyViewHolder(View view , final OnItemClickListener listener){
             super(view);
 
-
             product_name=(TextView) view.findViewById( R.id.product_name );
             product_price=(TextView) view.findViewById( R.id.product_price);
             product_expire=(TextView) view.findViewById(R.id.product_expire);
             product_img=(ImageView) view.findViewById(R.id.product_img);
             delete = view.findViewById(R.id.deleteItemAdmin);
+            edit = view.findViewById(R.id.editItemAdmin);
+
 
             view.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -72,6 +84,8 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
             });
         }
     }
+
+
     public SearchAdapter1(List<Items> itemList,Context context){
         this.itemList=itemList;
         this.arrayList=new ArrayList<Items>(  );
@@ -96,6 +110,7 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
         holder.product_price.setText(product.getPrice());
         holder.product_expire.setText( product.getExpire() );
         Glide.with(mContext).load(product.getPhoto()).into(holder.product_img);
+
 
         final Dialog dialog = new Dialog(mContext);
         dialog.setContentView(R.layout.logout_dialog);
@@ -131,6 +146,96 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
 
             }
         });
+
+        //  EDIT ITEM
+        final Dialog dialogEdit = new Dialog(mContext);
+        dialogEdit.setContentView(R.layout.edit_dialog);
+        dialogEdit.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        okBtn2= dialogEdit.findViewById(R.id.ok_btn_dialog);
+        cancelBtn2= dialogEdit.findViewById(R.id.cancel_btn_dialog);
+        editExp = dialogEdit.findViewById(R.id.editExp);
+        editName = dialogEdit.findViewById(R.id.editName);
+        editPrice = dialogEdit.findViewById(R.id.editPrice);
+        calendar = dialogEdit.findViewById(R.id.calendar);
+
+        //Calendar settings...
+        final Calendar myCalendar = Calendar.getInstance();
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+            private void updateLabel() {
+                String myFormat = "MM/dd/yy"; //In which you need put here
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                editExp.setText(sdf.format(myCalendar.getTime()));
+                //editExp.setEnabled(false);
+            }
+        };
+
+        //Expire date event listener
+
+        cancelBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogEdit.cancel();
+            }
+        });
+
+        calendar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(mContext, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogEdit.show();
+                okBtn2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (validate()) {
+                            reff.child(product.getId()).child("name").setValue(editName.getText().toString());
+                            reff.child(product.getId()).child("price").setValue(editPrice.getText().toString());
+                            reff.child(product.getId()).child("expire").setValue(editExp.getText().toString());
+                            dialogEdit.cancel();
+                            ((Activity) mContext).finish();
+                            Toast.makeText(mContext, "Item updated successfully!", Toast.LENGTH_SHORT).show();
+                        } //end if
+                    }
+                }); //inner onClick
+
+            }
+        }); //outer onClick
+
+
+    }
+    public boolean validate() {
+        name = editName.getText().toString();
+        price = editPrice.getText().toString();
+        expire = editExp.getText().toString();
+        if ((TextUtils.isEmpty(name)) || (TextUtils.isEmpty(price)) || (TextUtils.isEmpty(expire))) {
+            Toast.makeText(mContext, "Please fill in all required fields", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (!TextUtils.isDigitsOnly(price)) {
+            Toast.makeText(mContext, "Price should be digits only", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
     @Override
     public int getItemCount(){
