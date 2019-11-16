@@ -94,6 +94,21 @@ import io.reactivex.disposables.CompositeDisposable;
               }
 
           } );
+
+          searchView=findViewById( R.id.action_search );
+
+
+          searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+              @Override
+              public boolean onQueryTextSubmit(String query) {
+                  return false; }
+
+              @Override
+              public boolean onQueryTextChange(String newText) {
+                  productAdapter.filter(newText);
+                  return false;
+              }
+          });
           //
 
 
@@ -168,32 +183,7 @@ import io.reactivex.disposables.CompositeDisposable;
           Log.d( "TTest", " I am here too!!" );
       }
 
-      /* @Override
-       public boolean onSupportNavigateUp() {
-           onBackPressed();
-           return true;
-       }//end of onSupportNavigateUp
-   */
-     // @Override
-     /* public void onSuccess(DataSnapshot dataSnapshot){
-          for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-              Items item = snapshot.getValue( Items.class );
-              // Toast.makeText(getActivity(),item.getName(),Toast.LENGTH_SHORT).show();
-              productList.add( item );
-              Log.d( "TTest", productList.get( 0 ).getName() );
 
-              //just for testing retrieving data
-
-              // text.setText(item.getName()+" Item retrieved successfully :)");
-          }
-          Log.d( "TTest", productList.get( 0 ).getName() );
-          productAdapter = new SearchAdapter1( productList, search_frag.this );
-          recyclerView.setAdapter( productAdapter );
-      }*/
-      //  @Override
-     // public void onFailure(){
-
-     // }
 
       private void prepareProductLists(){
 
@@ -234,49 +224,9 @@ import io.reactivex.disposables.CompositeDisposable;
 
 
   }
-   /* private void prepareProducts(){
-       for(int i=0;i<productList.size();i++)
-           List<Items> products=productList.get.(i)
-    }*/
 
-  /*  private void setUpRecyclerView() {
-
-
-        productAdapter= new SearchAdapter1( productList,search_frag.this);
-        recyclerView.setLayoutManager( new LinearLayoutManager(this));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(productAdapter);
-
-        productAdapter.setOnItemClickListener( (SearchAdapter1.OnItemClickListener) search_frag.this );
-
-    }*/
-
-    //@Override
-  /* public boolean onCreateOptionsMenu(Menu menu){
-    //    MenuInflater inflater = getMenuInflater();
-      //  inflater.inflate(R.menu.search_menu, menu);
-
-       // MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchView=findViewById( R.id.action_search );
-     // searchView = (SearchView) searchItem.getActionView();
-
-      // searchView.setImeOptions( EditorInfo.IME_ACTION_DONE);
-              searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-           @Override
-          public boolean onQueryTextSubmit(String query)
-           { return false; }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                productAdapter.filter(newText);
-                return false;
-            }
-        });
-        return true;
-    }
-
-*/
     public boolean onOptionsItemSelected( MenuItem item){
+        Log.d("TTest","I am on onOptionselected");
         productAdapter.notifyDataSetChanged();
         if(item.getItemId()==R.id.action_search){
            searchView.setImeOptions( EditorInfo.IME_ACTION_DONE);
