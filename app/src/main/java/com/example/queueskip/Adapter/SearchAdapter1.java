@@ -1,16 +1,24 @@
 package com.example.queueskip.Adapter;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.queueskip.Items;
 import com.example.queueskip.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +32,10 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
     private List<Items> itemList;
     private ArrayList<Items> arrayList;
     private SearchAdapter1.OnItemClickListener mListener;
+    private Button okBtn, cancelBtn;
+    private TextView dialogMsg;
+    ImageView delete;
+    DatabaseReference reff;
 
     public void setOnItemClickListener(SearchAdapter1.OnItemClickListener listener)
     {
@@ -44,7 +56,7 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
             product_price=(TextView) view.findViewById( R.id.product_price);
             product_expire=(TextView) view.findViewById(R.id.product_expire);
             product_img=(ImageView) view.findViewById(R.id.product_img);
-            //delete = view.findViewById(R.id.deleteItemAdmin);
+            delete = view.findViewById(R.id.deleteItemAdmin);
 
             view.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -77,13 +89,48 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
     @Override
     public void onBindViewHolder(MyViewHolder holder,int position){
         Log.d(  "TTest", String.valueOf( position ) );
-        Items product=itemList.get(position);
+        final Items product=itemList.get(position);
 
         holder.product_name.setText(product.getName());
        // holder.product_price.setText(product.getPrice()+" SR");
         holder.product_price.setText(product.getPrice());
         holder.product_expire.setText( product.getExpire() );
         Glide.with(mContext).load(product.getPhoto()).into(holder.product_img);
+
+        final Dialog dialog = new Dialog(mContext);
+        dialog.setContentView(R.layout.logout_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable( Color.TRANSPARENT));
+        okBtn=dialog.findViewById(R.id.ok_btn_dialog);
+        cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
+        dialogMsg=dialog.findViewById(R.id.dialog_message);
+        dialogMsg.setText("Are you sure you want to delete item?");
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View view) {
+                                             dialog.cancel();
+
+                                         }//end of onClick
+                                     }//end of OnClickListener
+        );
+        reff = FirebaseDatabase.getInstance().getReference().child("items");
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+                okBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        reff.child(product.getId()).removeValue();
+                        ((Activity)mContext).finish(); //MAYBE?
+                        dialog.cancel();
+                        Toast.makeText(mContext, "Item deleted successfully", Toast.LENGTH_SHORT).show();
+
+                    }
+                }); //inner onClick
+
+            }
+        });
     }
     @Override
     public int getItemCount(){
