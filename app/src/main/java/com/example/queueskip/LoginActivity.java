@@ -198,18 +198,23 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             throw task.getException();
                         } catch (FirebaseAuthInvalidUserException e) {
+                            progressDialog.dismiss();
                             createDialog(getResources().getString(R.string.invalid_user));
                             counter--;
                         } catch (FirebaseAuthInvalidCredentialsException e) {
+                            progressDialog.dismiss();
                             createDialog(getResources().getString(R.string.invalid_email_or_pass));
                             counter--;
 
                         } catch (FirebaseNetworkException e) {
+                            progressDialog.dismiss();
                             createDialog(getResources().getString(R.string.network_failed));
                         } catch (IllegalArgumentException e) {
+                            progressDialog.dismiss();
                             createDialog(getResources().getString(R.string.fill_required_fields)); //?maybe no need
                             counter--;
                         } catch (Exception e) {
+                            progressDialog.dismiss();
                             Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                             counter--;
                         }
@@ -257,6 +262,7 @@ public class LoginActivity extends AppCompatActivity {
         Name = findViewById(R.id.username);
         Pass = findViewById(R.id.pass);
         if (Name.getText().toString().isEmpty() || Pass.getText().toString().isEmpty()) {
+            progressDialog.dismiss();
             createDialog(getResources().getString(R.string.fill_required_fields));
             return true;
         }

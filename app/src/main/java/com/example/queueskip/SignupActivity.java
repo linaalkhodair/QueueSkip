@@ -145,11 +145,14 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         try{
                             throw task.getException();
                         }catch (FirebaseAuthUserCollisionException e){
+                            progressDialog.dismiss();
                             createDialog(getResources().getString(R.string.already_registered));
                         }catch (FirebaseAuthWeakPasswordException e){
+                            progressDialog.dismiss();
                             createDialog("Password should be at least 6 characters");
                         }
                         catch (Exception e){
+                            progressDialog.dismiss();
                             e.printStackTrace();
                         }
 
@@ -174,17 +177,20 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
 
      if(nameInput.isEmpty()||emailInput.isEmpty()||passInput.isEmpty()||confPassInput.isEmpty()){
+         progressDialog.dismiss();
          createDialog(getResources().getString(R.string.fill_required_fields));
          return false;
 
      }
      else
      if(!emailValidator(emailInput)) {
+         progressDialog.dismiss();
          createDialog(getResources().getString(R.string.invalid_email_address));
          return false;
      }
      else
      if(!passInput.equals(confPassInput)){
+         progressDialog.dismiss();
          createDialog(getResources().getString(R.string.passwords_do_not_match));
          return false;
 
