@@ -1,6 +1,7 @@
 package com.example.queueskip.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,7 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
         this.arrayList.addAll(itemList);
         this.itemList=itemList;
         mContext=context;
+        Log.d(  "TTest", String.valueOf( itemList.get( 0 ) ) );
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent ,int position){
@@ -73,9 +75,12 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
     }
     @Override
     public void onBindViewHolder(MyViewHolder holder,int position){
+        Log.d(  "TTest", String.valueOf( position ) );
         Items product=itemList.get(position);
+
         holder.product_name.setText(product.getName());
-        holder.product_price.setText(product.getPrice()+" SR");
+       // holder.product_price.setText(product.getPrice()+" SR");
+        holder.product_price.setText(product.getPrice());
         holder.product_expire.setText( product.getExpire() );
         Glide.with(mContext).load(product.getPhoto()).into(holder.product_img);
     }
