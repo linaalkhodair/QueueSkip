@@ -287,7 +287,7 @@ import io.reactivex.disposables.CompositeDisposable;
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                 //  productAdapter.filter(newText);
+                  productAdapter.filter(newText);
                     return false;
                }
            });
