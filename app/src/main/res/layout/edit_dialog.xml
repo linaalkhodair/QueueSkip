@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/round_shape_dialog">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:text="Edit Item"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        />
+
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        app:errorEnabled="true"-->
+<!--        >-->
+
+        <EditText
+            android:id="@+id/editName"
+            android:layout_width="300dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="Enter new item name"
+            android:textSize="15dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/round_shape"
+            android:padding="8dp"/>
+
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        app:errorEnabled="true"-->
+<!--        >-->
+
+        <EditText
+            android:id="@+id/editPrice"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:layout_marginTop="10dp"
+            android:hint="Enter new item price"
+            android:textSize="15dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/round_shape"
+            android:padding="8dp"/>
+
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        app:errorEnabled="true"-->
+<!--        >-->
+
+        <EditText
+            android:id="@+id/editExp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:layout_marginTop="10dp"
+
+            android:hint="Enter new expiration date"
+            android:textSize="15dp"
+            android:editable="false"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/round_shape"
+            android:padding="8dp"/>
+
+        <ImageView
+            android:id="@+id/calendar"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_date_range_black_24dp"
+            android:layout_marginLeft="280dp"
+            android:layout_marginTop="-35dp"
+            ></ImageView>
+
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
+        >
+        <Button
+            android:id="@+id/cancel_btn_dialog"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:textColor="@color/colorBackground"
+            android:background="@drawable/round_shape_btn"
+            android:text="Cancel"
+
+            ></Button>
+        <Button
+            android:id="@+id/ok_btn_dialog"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="Save"
+            android:background="@drawable/round_shape_btn"
+            android:textColor="@color/colorBackground"></Button>
+
+    </LinearLayout>
+
+</LinearLayout>

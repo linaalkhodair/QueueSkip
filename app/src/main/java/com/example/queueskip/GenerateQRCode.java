@@ -109,6 +109,8 @@ public class GenerateQRCode extends AppCompatActivity {
         //  databaseItem = FirebaseDatabase.getInstance().getReference();//???????
 
         databaseItem = FirebaseDatabase.getInstance().getReference("items");//???????
+        id = databaseItem.push().getKey();
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         //Storage for an image
@@ -303,7 +305,7 @@ public class GenerateQRCode extends AppCompatActivity {
 
         //Item Id
 
-        id = databaseItem.push().getKey();
+//        id = databaseItem.push().getKey();
 
 
         //put Item inside hash map

@@ -97,10 +97,12 @@ private HomeViewModel homeViewModel;
     DatabaseReference reff;
     DataSnapshot dataSnapshot; //?
     private String photo;
-
+    boolean enter=false;
     String price="";
     String name="";
     String qrId="";
+    String itemName, itemPrice, itemExp;
+
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
@@ -198,16 +200,17 @@ private HomeViewModel homeViewModel;
 
                           int   x=qrtext.indexOf( '-');
                           int y=qrtext.indexOf("-", x + 1);
-                            int z=qrtext.indexOf("-",y+1);
+                          int z=qrtext.indexOf("-",y+1);
 
-                          try {
+//                          qrId=qrtext.substring(z+1  );
 
+                            try {
                               price = qrtext.substring(x + 1, y);
                               name = qrtext.substring(0, x);
                               qrId=qrtext.substring(z+1  );
-                              productNameTxt.setText("Item: " + qrtext.substring(0, x));
-                              productPriceTxt.setText("Price: " + qrtext.substring(x + 1, y) + " SR");
-                          }catch (StringIndexOutOfBoundsException e){
+//                              productNameTxt.setText("Item: " + qrtext.substring(0, x));
+//                              productPriceTxt.setText("Price: " + qrtext.substring(x + 1, y) + " SR");
+                          } catch (StringIndexOutOfBoundsException e){
                               productNameTxt.setText("This QR Code doesn't exist");
                               addBTn.setVisibility(View.INVISIBLE);
                           }
@@ -218,6 +221,7 @@ private HomeViewModel homeViewModel;
 
                            // reff.child( id ).setValue( item );
 
+
                             reff.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -226,17 +230,26 @@ private HomeViewModel homeViewModel;
                                         Items item = snapshot.getValue(Items.class);
                                        // Toast.makeText(getActivity(),item.getName(),Toast.LENGTH_SHORT).show();
 
-                                        if(item.getName().equals(name)){
-                                             photo = item.getPhoto();
-
-
+                                        if(item.getId().equals(qrId)){
+                                            photo = item.getPhoto();
                                             Glide.with(mContext).load(photo).into(productImg);
+                                            productNameTxt.setText("Item: "+item.getName());
+                                            itemName=item.getName();
+                                            productPriceTxt.setText("Price: "+item.getPrice());
+                                            itemPrice=item.getPrice();
+                                            itemExp=item.getExpire();
+                                            enter=true;
                                         }
 
                                         //just for testing retrieving data
 
                                        // text.setText(item.getName()+" Item retrieved successfully :)");
                                     }
+                                    if(!enter){
+                                        productNameTxt.setText("This item doesn't exist");
+                                        addBTn.setVisibility(View.INVISIBLE);
+                                    }
+
                                 }
 
                                 @Override
@@ -244,6 +257,7 @@ private HomeViewModel homeViewModel;
 
                                 }
                             });
+
 
 //                            final ElegantNumberButton quantity=dialog.findViewById(R.id.txt_amount_dialog);
 //                              final Integer quant=Integer.parseInt(quantity.getNumber());
@@ -276,9 +290,9 @@ private HomeViewModel homeViewModel;
 
                                     }else {
                                         Cart cart = new Cart();
-                                        cart.setName( name );
+                                        cart.setName( itemName );
                                         cart.setId( qrId );
-                                        cart.setPrice( Integer.parseInt( (String) price ) );
+                                        cart.setPrice( Integer.parseInt( (String) itemPrice ) );
                                         cart.setAmount( 1 );
                                         cart.setLink( photo );
 
@@ -340,7 +354,8 @@ private HomeViewModel homeViewModel;
             }
         });
         return view;
-    }
+    } //end OnCreateView
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
