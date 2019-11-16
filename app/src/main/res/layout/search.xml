@@ -17,6 +17,13 @@
         tools:ignore="MissingConstraints">
 
     </androidx.appcompat.widget.Toolbar>
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/action_search"
+        android:icon="@drawable/searchbar"
+        android:title="Search"
+        tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView
 
