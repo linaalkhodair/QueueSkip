@@ -2,11 +2,16 @@ package com.example.queueskip;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 
 import com.example.queueskip.Adapter.SearchAdapter1;
 //import com.example.queueskip.Adapter.SearchAdapter1;
+import com.example.queueskip.Items;
+import com.example.queueskip.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,110 +30,229 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class search_frag extends AppCompatActivity implements SearchAdapter1.OnItemClickListener  {
-    CompositeDisposable compositionDisposable;
-    RecyclerView recycler_search;
-    //private searchViewModel searchviewmodel;
-    DatabaseReference reff;
-    private RecyclerView recyclerView;
-    private List<Items>  productList=new ArrayList<>( );
-    private SearchAdapter1 productAdapter;
-    SearchView searchView;
-    View view;
-    Context mContext;
+       public   class  search_frag extends AppCompatActivity implements SearchAdapter1.OnItemClickListener {
+      CompositeDisposable compositionDisposable;
+      RecyclerView recycler_search;
+      //private searchViewModel searchviewmodel;
+      DatabaseReference reff;
+      private RecyclerView recyclerView;
+      private List<Items> productList = new ArrayList<>();
+      private SearchAdapter1 productAdapter;
+      SearchView searchView;
+      View view;
+      Context mContext;
+     // final  OnGetDataListener listener;
+
+
+      public void onCreate(Bundle saveInstanceState) {
+          super.onCreate( saveInstanceState );
+          setContentView( R.layout.search );
+
+          //set toolbar
+          Toolbar toolbar = findViewById( R.id.search_toolbar );
+          setSupportActionBar( toolbar );
+         // getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+         // getSupportActionBar().setDisplayShowHomeEnabled( true );
+
+
+          recyclerView = (RecyclerView) findViewById( R.id.search );
+
+
+          recyclerView.setLayoutManager( new LinearLayoutManager( this ) );
+          recyclerView.setHasFixedSize( true );
+          recyclerView.setItemAnimator( new DefaultItemAnimator() );
+
+
+          reff = FirebaseDatabase.getInstance().getReference().child( "items");
+         // setItem(reff);
+          reff.addValueEventListener( new ValueEventListener() {
+
+              @Override
+
+              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                  Log.d( "TTest", " I am in OnDataChange!!" );
+
+                  for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                      Items item = snapshot.getValue( Items.class );
+                      // Toast.makeText(getActivity(),item.getName(),Toast.LENGTH_SHORT).show();
+                      productList.add( item );
+                      Log.d( "TTest", productList.get( 0 ).getName() );
+
+                      //just for testing retrieving data
+
+                      // text.setText(item.getName()+" Item retrieved successfully :)");
+                  }
+                  Log.d( "TTest", productList.get( 0 ).getName() );
+                  productAdapter = new SearchAdapter1( productList, search_frag.this );
+                  recyclerView.setAdapter( productAdapter );
+
+              }
+
+              @Override
+              public void onCancelled(@NonNull DatabaseError databaseError) {
+
+              }
+
+          } );
+          //
 
 
 
-    public void onCreate(Bundle saveInstanceState){
-        super.onCreate(saveInstanceState);
-        setContentView(R.layout.search);
+          //
+          ///hhhheeerrrreee
 
-        //set toolbar
-        Toolbar toolbar=findViewById(R.id.search_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+          Log.d( "TTest", " I am here!!" );
+
+          // new OnGetDataListener().onStart();
 
 
-        // elegantNumberButton=view.findViewById(R.id.txt_amount);
-      /*  compositionDisposable = new CompositeDisposable();
-        recycler_search = (RecyclerView) view.findViewById( R.id.search );
-        recycler_search.setLayoutManager( new LinearLayoutManager( getContext() ) );
-        recycler_search.setHasFixedSize( true );*/
 
-        // BottomNavigationView navView = view.findViewById(R.id.nav_view);
-        //navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-       //---- Toolbar toolbar=findViewById(R.id.toolbar);
+          ////hhhheeerrrreee
 
-       ///----- setSupportActionBar(toolbar);
-       //---- setTitle("Search");
-        // setTitle("Search");
-        //  Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.filter_2);
-        // drawable.setBounds(0, 0, 50, 50);
-        //  navView.getMenu().getItem(1).setChecked(true);
-        // toolbar.setOverflowIcon(drawable);
-        // setTitle("Search");
-    //navView.getMenu().getItem( 1 ).setChecked( true );
-        prepareProductLists();
-        setUpRecyclerView();
+          //  prepareProductLists();
+          //setUpRecyclerView();
 
-    }
+      }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }//end of onSupportNavigateUp
+      public void setItem(DatabaseReference reff){
+               readData(reff, new OnGetDataListener() {
 
-    private void prepareProductLists()
+                   @Override
+                   public void onSuccess(DataSnapshot dataSnapshot) {
 
-    {
-        reff = FirebaseDatabase.getInstance().getReference().child( "items" );
-        reff.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                       //whatever you need to do with the data
+                       for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                           Items item = snapshot.getValue( Items.class );
+                           // Toast.makeText(getActivity(),item.getName(),Toast.LENGTH_SHORT).show();
+                           productList.add( item );
+                           Log.d( "TTest", productList.get( 0 ).getName() );
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Items item = snapshot.getValue( Items.class );
-                    // Toast.makeText(getActivity(),item.getName(),Toast.LENGTH_SHORT).show();
-                    productList.add( item );
+                           //just for testing retrieving data
+
+                           // text.setText(item.getName()+" Item retrieved successfully :)");
+                       }
+                       Log.d( "TTest", productList.get( 0 ).getName() );
+                       productAdapter = new SearchAdapter1( productList, search_frag.this );
+                       recyclerView.setAdapter( productAdapter );
+                   }
+                   @Override
+                   public void onStart() {
+                       //whatever you need to do onStart
+                       Log.d("ONSTART", "Started");
+                   }
+
+                   @Override
+                   public void onFailure() {
 
 
-                    //just for testing retrieving data
+                   }
+               });
+           }
+      public void readData(DatabaseReference ref, final OnGetDataListener listener){
+          listener.onStart();
+          reff.addValueEventListener( new ValueEventListener() {
+              @Override
+              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                  Log.d( "TTest", " I am in OnDataChange!!" );
 
-                    // text.setText(item.getName()+" Item retrieved successfully :)");
-                }
-            }
+                  listener.onSuccess( dataSnapshot );
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+              }
 
-            }
-        });
-    }
+              @Override
+              public void onCancelled(@NonNull DatabaseError databaseError) {
+
+              }
+
+          } );
+          Log.d( "TTest", " I am here too!!" );
+      }
+
+      /* @Override
+       public boolean onSupportNavigateUp() {
+           onBackPressed();
+           return true;
+       }//end of onSupportNavigateUp
+   */
+     // @Override
+     /* public void onSuccess(DataSnapshot dataSnapshot){
+          for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+              Items item = snapshot.getValue( Items.class );
+              // Toast.makeText(getActivity(),item.getName(),Toast.LENGTH_SHORT).show();
+              productList.add( item );
+              Log.d( "TTest", productList.get( 0 ).getName() );
+
+              //just for testing retrieving data
+
+              // text.setText(item.getName()+" Item retrieved successfully :)");
+          }
+          Log.d( "TTest", productList.get( 0 ).getName() );
+          productAdapter = new SearchAdapter1( productList, search_frag.this );
+          recyclerView.setAdapter( productAdapter );
+      }*/
+      //  @Override
+     // public void onFailure(){
+
+     // }
+
+      private void prepareProductLists(){
+
+
+        Log.d("TTest"," I am here!!");
+      reff =FirebaseDatabase.getInstance().
+
+      getReference().
+
+      child( "items");
+        reff.addValueEventListener(new
+
+      ValueEventListener() {
+          @Override
+          public void onDataChange (@NonNull DataSnapshot dataSnapshot){
+
+              for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                  Items item = snapshot.getValue( Items.class );
+                  // Toast.makeText(getActivity(),item.getName(),Toast.LENGTH_SHORT).show();
+                  productList.add( item );
+                  Log.d( "TTest", productList.get( 0 ).getName() );
+
+                  //just for testing retrieving data
+
+                  // text.setText(item.getName()+" Item retrieved successfully :)");
+              }
+              Log.d( "TTest", productList.get( 0 ).getName() );
+              productAdapter = new SearchAdapter1( productList, search_frag.this );
+              recyclerView.setAdapter( productAdapter );
+          }
+
+          @Override
+          public void onCancelled (@NonNull DatabaseError databaseError){
+
+          }
+      });
+        Log.d("TTest"," I am here too!!");
+
+
+  }
    /* private void prepareProducts(){
        for(int i=0;i<productList.size();i++)
            List<Items> products=productList.get.(i)
     }*/
 
-    private void setUpRecyclerView() {
-        recyclerView = (RecyclerView) findViewById( R.id.search );
+  /*  private void setUpRecyclerView() {
 
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter= new SearchAdapter1( productList);
+        productAdapter= new SearchAdapter1( productList,search_frag.this);
         recyclerView.setLayoutManager( new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(productAdapter);
 
         productAdapter.setOnItemClickListener( (SearchAdapter1.OnItemClickListener) search_frag.this );
 
-    }
+    }*/
 
-    @Override
-   public boolean onCreateOptionsMenu(Menu menu){
+    //@Override
+  /* public boolean onCreateOptionsMenu(Menu menu){
     //    MenuInflater inflater = getMenuInflater();
       //  inflater.inflate(R.menu.search_menu, menu);
 
@@ -151,11 +275,11 @@ public class search_frag extends AppCompatActivity implements SearchAdapter1.OnI
         return true;
     }
 
-
-   /* public boolean onOptionsItemSelected( MenuItem item){
+*/
+    public boolean onOptionsItemSelected( MenuItem item){
         productAdapter.notifyDataSetChanged();
         if(item.getItemId()==R.id.action_search){
-           searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+           searchView.setImeOptions( EditorInfo.IME_ACTION_DONE);
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
@@ -163,20 +287,21 @@ public class search_frag extends AppCompatActivity implements SearchAdapter1.OnI
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                   productAdapter.getFilter().filter(newText);
+                 //  productAdapter.filter(newText);
                     return false;
                }
            });
       }
        return true;
 //
-   }*/
+   }
 
 
     @Override
     public void onItemClick(int position) {
 
     }
+
 
 
 }

@@ -25,6 +25,7 @@
         <activity android:name=".CheckoutActivity" />
         <activity android:name=".SuccessActivity" />
         <activity android:name=".search_frag" android:theme="@style/AppTheme.NoActionBar" />
+      
         <activity
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
