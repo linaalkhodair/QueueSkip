@@ -40,6 +40,7 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
             super(view);
 
 
+            product_name=(TextView) view.findViewById( R.id.product_name );
             product_price=(TextView) view.findViewById( R.id.product_price);
             product_expire=(TextView) view.findViewById(R.id.product_expire);
             product_img=(ImageView) view.findViewById(R.id.product_img);
