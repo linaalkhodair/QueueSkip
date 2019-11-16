@@ -2,6 +2,7 @@ package com.example.queueskip;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -49,6 +50,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private String uid;
     Button okBtn,cancelBtn;
     TextView dialogMsg;
+    private ProgressDialog progressDialog;
+
 
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -74,9 +77,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         editPass=findViewById(R.id.signUpPasswordET);
         editConfPass=findViewById(R.id.confPasswordET);
         registerBtn=findViewById(R.id.registerBtn);
-       login=findViewById(R.id.login);
+        login=findViewById(R.id.login);
 
-
+        progressDialog = new ProgressDialog(SignupActivity.this);
+        progressDialog.setMessage("Please wait...");
 
         // Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
@@ -108,7 +112,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
-
                         sendEmailVerification();
                     Toast.makeText(getApplicationContext(),
                             "inside onComplete",
@@ -138,6 +141,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     }
                     else{
                         //MAYBE
+                        progressDialog.dismiss();
                         try{
                             throw task.getException();
                         }catch (FirebaseAuthUserCollisionException e){
@@ -159,6 +163,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private boolean validate() {
+
+        progressDialog.show();
 
         nameInput = editName.getText().toString();
         emailInput = editEmail.getText().toString();
@@ -283,11 +289,13 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         //sendUserData();
+                        progressDialog.dismiss();
                         Toast.makeText(SignupActivity.this, "Successfully Registered, Verification mail sent!", Toast.LENGTH_SHORT).show();
                         firebaseAuth.signOut();
                         finish();
                         startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                     }else{
+                        progressDialog.dismiss();
                         Toast.makeText(SignupActivity.this, "Verification mail has'nt been sent!", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -311,7 +319,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         okBtn=dialog.findViewById(R.id.ok_btn_dialog);
         cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
         dialogMsg=dialog.findViewById(R.id.dialog_message);
-
+        okBtn.setText("OK");
 
         dialogMsg.setText(message);
 

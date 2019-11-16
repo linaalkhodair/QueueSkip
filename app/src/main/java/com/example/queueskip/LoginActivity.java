@@ -2,6 +2,7 @@ package com.example.queueskip;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView forgot;//not yet
     private TextView register;
     private FirebaseAuth firebaseAuth;
-    //private ProgressDialog;
+    private ProgressDialog progressDialog;
     private EditText email;
     private Button passwordReset;
     private Context mContext;
@@ -63,6 +64,9 @@ public class LoginActivity extends AppCompatActivity {
         attempts = findViewById(R.id.attempts);
         forgot = findViewById(R.id.forgot);
         register = findViewById(R.id.register);
+
+        progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog.setMessage("Please wait...");
 
         //underlines text
         SpannableString content = new SpannableString("Sign up!");
@@ -166,12 +170,14 @@ public class LoginActivity extends AppCompatActivity {
     }//end on create.
 
     private void validate(final String name, String pass) {
+        progressDialog.show();
 
         if(!isEmpty()) {
             firebaseAuth.signInWithEmailAndPassword(name.trim(), pass.trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        progressDialog.dismiss();
                         //Toast.makeText(LoginActivity.this,"Login success",Toast.LENGTH_SHORT).show();
                         //startActivity(new Intent(LoginActivity.this,MainActivity.class) );
                         if(name.equals("queueskipad1@outlook.com")){
@@ -230,16 +236,18 @@ public class LoginActivity extends AppCompatActivity {
 
 
         if(Name.equals("queueskipad1@outlook.com")&&firebaseUser.getEmail().equals("queueskipad1@outlook.com")){
+            progressDialog.dismiss();
             finish();
             startActivity(new Intent(LoginActivity.this, AdminMainActivity.class));
         }
            else
         if (emailflag) {
+            progressDialog.dismiss();
             finish();
-
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
         } else {
+            progressDialog.dismiss();
             Toast.makeText(this, "Verify your email", Toast.LENGTH_SHORT).show();
             firebaseAuth.signOut();
         }
