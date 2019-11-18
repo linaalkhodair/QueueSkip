@@ -1,20 +1,37 @@
 package com.example.queueskip;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.onesignal.OneSignal;
+
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
 
 public class AdminMainActivity extends AppCompatActivity {
 
@@ -22,8 +39,10 @@ public class AdminMainActivity extends AppCompatActivity {
     ImageView logout;
     private FirebaseAuth firebaseAuth;
     Dialog dialog;
-    Button okBtn,cancelBtn;
+    Button okBtn,cancelBtn, notification;
     TextView dialogMsg;
+    String emails[] = new String [100];
+    DatabaseReference databaseReference;
 
 
 
@@ -34,16 +53,21 @@ public class AdminMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
 
+
         edit=findViewById(R.id.edit);
         addProduct=findViewById(R.id.add_product);
         logout = findViewById(R.id.logout_admin);
+        notification= findViewById(R.id.notification);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         //set toolbar
         Toolbar toolbar=findViewById(R.id.admin_main_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("QueueSkip");
+
+//        OneSignal.sendTag("email","Raazansaleh@gmail.com");
 
 
 
@@ -70,6 +94,37 @@ public class AdminMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                createDialog();
+
+            }
+        });
+
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+               Query query1 = databaseReference.child("User").orderByChild("email");
+                query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        int i = 0;
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            sendNotification(ds.child("email").getValue(String.class).toLowerCase());
+                            //Log.e("TAG","ENTER111111111111111111");
+                        }
+//
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+//                if(emails!=null)
+//                for(int i = 0; i< emails.length; i++)
+//                    if(emails[i]!=null)
+//                        sendNotification(emails[i]);
+                //sendNotification();
+
 
             }
         });
@@ -142,4 +197,74 @@ public class AdminMainActivity extends AppCompatActivity {
     alertDialog.show();
 */
     }//end of createDialog
+
+    private void sendNotification(final String email)
+    {
+
+
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                int SDK_INT = android.os.Build.VERSION.SDK_INT;
+                if (SDK_INT > 8) {
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                            .permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+
+
+
+                    try {
+                        String jsonResponse;
+
+                        URL url = new URL("https://onesignal.com/api/v1/notifications");
+                        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                        con.setUseCaches(false);
+                        con.setDoOutput(true);
+                        con.setDoInput(true);
+
+                        con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                        con.setRequestProperty("Authorization", "Basic NGJkOTdjMGYtNDc0MC00MDM2LWI2NDItMThiODYyZjRjMjM0");
+                        con.setRequestMethod("POST");
+
+                        String strJsonBody = "{"
+                                + "\"app_id\": \"a5561ea4-0127-4043-856c-40565cd6ed10\","
+
+                                + "\"filters\": [{\"field\": \"tag\", \"key\": \"email\", \"relation\": \"=\", \"value\": \"" + email + "\"}],"
+
+                                + "\"data\": {\"foo\": \"bar\"},"
+                                + "\"contents\": {\"en\": \"Dear customer,we have missed you! check out our new offers\"}"
+                                + "}";
+
+
+                        System.out.println("strJsonBody:\n" + strJsonBody);
+
+                        byte[] sendBytes = strJsonBody.getBytes("UTF-8");
+                        con.setFixedLengthStreamingMode(sendBytes.length);
+
+                        OutputStream outputStream = con.getOutputStream();
+                        outputStream.write(sendBytes);
+
+                        int httpResponse = con.getResponseCode();
+                        System.out.println("httpResponse: " + httpResponse);
+
+                        if (httpResponse >= HttpURLConnection.HTTP_OK
+                                && httpResponse < HttpURLConnection.HTTP_BAD_REQUEST) {
+                            Scanner scanner = new Scanner(con.getInputStream(), "UTF-8");
+                            jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                            scanner.close();
+                        } else {
+                            Scanner scanner = new Scanner(con.getErrorStream(), "UTF-8");
+                            jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                            scanner.close();
+                        }
+                        System.out.println("jsonResponse:\n" + jsonResponse);
+
+                    } catch (Throwable t) {
+                        t.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
 }
