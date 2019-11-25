@@ -132,6 +132,13 @@ public class DashboardFragment extends Fragment {
         );
 
         clear_btn=(Button) view.findViewById( R.id.clear );
+        //if cart is empty
+        int size = Common.cartRepository.countCartItems();
+        if (size==0){
+            clear_btn.setEnabled(false);
+            clear_btn.setBackground(getResources().getDrawable(R.drawable.round_shape_btn_gray));
+        }
+
         clear_btn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
