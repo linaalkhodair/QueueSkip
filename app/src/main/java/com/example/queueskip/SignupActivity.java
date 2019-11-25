@@ -51,6 +51,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     Button okBtn,cancelBtn;
     TextView dialogMsg;
     private ProgressDialog progressDialog;
+    DatabaseReference refFav;
 
 
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
@@ -62,6 +63,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_signup);
 
         reff= FirebaseDatabase.getInstance().getReference().child("User");
+        refFav= FirebaseDatabase.getInstance().getReference().child("FavoriteList");
+
         uid = reff.push().getKey();
 
 
@@ -113,13 +116,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
                         sendEmailVerification();
-                    Toast.makeText(getApplicationContext(),
-                            "inside onComplete",
-                            Toast.LENGTH_SHORT).show();
+
 
 //                         ArrayList transList = new ArrayList<Double>(6);
 //
-//                         Trans t = new Trans();
 //                         t.setTransAmount(5);
 //
 //                         double hi = 5;
@@ -136,6 +136,13 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         user.setTrans2(0);
                         user.setTrans3(0);
                         reff.child(uid).setValue(user);
+
+                        FavoriteList fav = new FavoriteList();
+                        fav.setUserId(uid);
+                        ArrayList<Items> itemsList = new ArrayList<>();
+                        itemsList.add(new Items());
+                        fav.setItemsList(itemsList);
+                        refFav.child(uid).setValue(fav);
 
                         startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                     }

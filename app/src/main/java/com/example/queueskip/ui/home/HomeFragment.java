@@ -24,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.queueskip.Adapter.CartAdapter;//sarah's virsion
+
+import java.util.ArrayList;
 import java.util.List;//sarah's virsion
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -39,15 +41,19 @@ import com.example.queueskip.Database.DataSource.CartRepository;
 import com.example.queueskip.Database.Local.CartDataSource;
 import com.example.queueskip.Database.Local.CartDatabase;
 import com.example.queueskip.Database.ModelDB.Cart;
+import com.example.queueskip.FavoriteList;
 import com.example.queueskip.Items;
 import com.example.queueskip.LoginActivity;
 import com.example.queueskip.R;
 import com.example.queueskip.SignupActivity;
+import com.example.queueskip.User;
 import com.example.queueskip.utliz.Common;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -92,9 +98,12 @@ private HomeViewModel homeViewModel;
     private TextView productNameTxt;
     private TextView productPriceTxt;
     private Button addBTn;
+    private Button fav;
     private Context mContext;
     private ImageView productImg;
     DatabaseReference reff;
+    DatabaseReference refFav;
+    DatabaseReference ref;
     DataSnapshot dataSnapshot; //?
     private String photo;
     boolean enter=false;
@@ -102,6 +111,12 @@ private HomeViewModel homeViewModel;
     String name="";
     String qrId="";
     String itemName, itemPrice, itemExp;
+    private FirebaseAuth firebaseAuth;
+    Items itemHere;
+    private String email;
+    ArrayList<Items> itemsList = new ArrayList<>();
+    private String id;
+
 
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -120,6 +135,9 @@ private HomeViewModel homeViewModel;
 
         reff= FirebaseDatabase.getInstance().getReference().child("items");
 //        dataSnapshot.child("Items").getValue();
+        firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseUser userAuth = firebaseAuth.getCurrentUser();
+        email = userAuth.getEmail();
 
 
         barcodeDetector=new BarcodeDetector.Builder(mContext).setBarcodeFormats(Barcode.QR_CODE).build();
@@ -193,6 +211,7 @@ private HomeViewModel homeViewModel;
                             productPriceTxt=dialog.findViewById( R.id.product_price_dialog );
                             addBTn=dialog.findViewById( R.id.Add);
                             productImg=dialog.findViewById(R.id.product_img_dialog);
+                            fav = dialog.findViewById(R.id.fav);
 
                             String qrtext=(qrcodes.valueAt(0).displayValue);
 
@@ -222,6 +241,7 @@ private HomeViewModel homeViewModel;
                            // reff.child( id ).setValue( item );
 
 
+
                             reff.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -238,6 +258,7 @@ private HomeViewModel homeViewModel;
                                             productPriceTxt.setText("Price: "+item.getPrice());
                                             itemPrice=item.getPrice();
                                             itemExp=item.getExpire();
+                                            itemHere=item;
                                             enter=true;
                                         }
 
@@ -275,6 +296,43 @@ private HomeViewModel homeViewModel;
                            // int e = productNameTxt.getText().toString().indexOf('E');
 
                            // productPriceTxt.setText(productNameTxt.getText().toString().substring(s,e));
+
+
+                            Log.d("TTest", "before fav ondata");
+                            ref= FirebaseDatabase.getInstance().getReference("User");
+
+                            ref.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                        User user = snapshot.getValue(User.class);
+                                        if(user.getEmail().equals(email)){
+                                            Log.d("TTest", "user id"+user.getId());
+                                           // id=user.getId();
+                                            refFav= FirebaseDatabase.getInstance().getReference("FavoriteList").child(user.getId()).child("itemsList");
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+//                            refFav= FirebaseDatabase.getInstance().getReference("FavoriteList").child(id).child("itemsList"); //HERE THE PROBLEM
+                            fav.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    refFav.push().setValue(itemHere);
+                                    Log.d("TTest", "inside fav ondata");
+                                    Toast.makeText( getActivity(), "Item is now a favorite!", Toast.LENGTH_SHORT ).show();
+                                    dialog.dismiss();
+
+
+                                }
+                            });
+
 
 
                             addBTn.setOnClickListener( new View.OnClickListener() {
