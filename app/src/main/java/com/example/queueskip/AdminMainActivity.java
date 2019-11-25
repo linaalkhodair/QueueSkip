@@ -39,7 +39,8 @@ public class AdminMainActivity extends AppCompatActivity {
     ImageView logout;
     private FirebaseAuth firebaseAuth;
     Dialog dialog;
-    Button okBtn,cancelBtn, notification;
+    Button okBtn,cancelBtn ;
+    LinearLayout notification;
     TextView dialogMsg;
     String emails[] = new String [100];
     DatabaseReference databaseReference;
@@ -57,7 +58,7 @@ public class AdminMainActivity extends AppCompatActivity {
         edit=findViewById(R.id.edit);
         addProduct=findViewById(R.id.add_product);
         logout = findViewById(R.id.logout_admin);
-        notification= findViewById(R.id.notification);
+        notification= findViewById(R.id.notfiy);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
