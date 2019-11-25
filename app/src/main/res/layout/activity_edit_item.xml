@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/round_shape_dialog">
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    android:background="@color/colorBackground">
+
+    <!--    tools:context=".GenerateQRCode"-->
+
+
 
     <TextView
         android:id="@+id/textView"
@@ -13,9 +21,12 @@
         android:textSize="20dp"
         android:layout_marginTop="15dp"
         android:text="Edit Item"
+        tools:ignore="MissingConstraints"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         />
+
+
 
     <TextView
         android:layout_width="match_parent"
@@ -28,7 +39,7 @@
 
 
     <EditText
-        android:id="@+id/nameEdit"
+        android:id="@+id/editName"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
@@ -56,7 +67,7 @@
 
 
     <EditText
-        android:id="@+id/priceEdit"
+        android:id="@+id/editPrice"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
@@ -78,7 +89,7 @@
 
 
     <EditText
-        android:id="@+id/expEdit"
+        android:id="@+id/editExp"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
@@ -86,11 +97,12 @@
         android:textSize="16dp"
         android:background="@drawable/round_shape"
         android:padding="8dp"
+        android:editable="false"
         android:textColor="@color/colorPrimaryDark" />
 
 
     <ImageView
-        android:id="@+id/calendarEdit"
+        android:id="@+id/calendar"
         android:layout_width="40dp"
         android:layout_height="30dp"
         android:src="@drawable/ic_date_range_black_24dp"
@@ -98,34 +110,21 @@
         android:layout_marginTop="-35dp"
         ></ImageView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+
+
+    <Button
+        android:id="@+id/save_btn"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="15dp"
-        >
-        <Button
-            android:id="@+id/cancel_btn_dialog2"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:textColor="@color/colorBackground"
-            android:background="@drawable/round_shape_btn"
-            android:text="Cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:text="Save"
+        tools:ignore="MissingConstraints"
+        android:background="@drawable/round_shape_btn"
+        android:textColor="@color/colorBackground"/>
 
-            ></Button>
-        <Button
-            android:id="@+id/ok_btn_dialog2"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="Save"
-            android:background="@drawable/round_shape_btn"
-            android:textColor="@color/colorBackground"></Button>
 
-    </LinearLayout>
 
 </LinearLayout>
+
+

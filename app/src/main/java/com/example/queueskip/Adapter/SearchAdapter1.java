@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.queueskip.EditItem;
+import com.example.queueskip.GenerateQRCode;
 import com.example.queueskip.Items;
 import com.example.queueskip.R;
 import com.google.firebase.database.DatabaseReference;
@@ -66,8 +69,7 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
             product_price=(TextView) view.findViewById( R.id.product_price);
             product_expire=(TextView) view.findViewById(R.id.product_expire);
             product_img=(ImageView) view.findViewById(R.id.product_img);
-            delete = view.findViewById(R.id.deleteItemAdmin);
-            edit = view.findViewById(R.id.editItemAdmin);
+
 
 
             view.setOnClickListener(new View.OnClickListener(){
@@ -97,13 +99,17 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent ,int position){
         View itemView= LayoutInflater.from( parent.getContext() ).inflate(R.layout.item_row,parent,false);
+        delete = itemView.findViewById(R.id.deleteItemAdmin);
+        edit = itemView.findViewById(R.id.editItemAdmin);
        return  new MyViewHolder(itemView, (OnItemClickListener) mListener );
-       // return new MyViewHolder(itemView);
+
+//        return new MyViewHolder(itemView);
     }
     @Override
-    public void onBindViewHolder(MyViewHolder holder,int position){
+    public void onBindViewHolder(MyViewHolder holder, final int position){
         Log.d(  "TTest", String.valueOf( position ) );
         final Items product=itemList.get(position);
+//put extra
 
         holder.product_name.setText(product.getName());
        // holder.product_price.setText(product.getPrice()+" SR");
@@ -111,7 +117,7 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
         holder.product_expire.setText( product.getExpire() );
         Glide.with(mContext).load(product.getPhoto()).into(holder.product_img);
 
-
+        //Delete Item
         final Dialog dialog = new Dialog(mContext);
         dialog.setContentView(R.layout.logout_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable( Color.TRANSPARENT));
@@ -129,114 +135,135 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
         );
         reff = FirebaseDatabase.getInstance().getReference().child("items");
 
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reff.child(product.getId()).removeValue();
+                ((Activity)mContext).finish(); //MAYBE?
+                dialog.cancel();
+                Toast.makeText(mContext, "Item deleted successfully", Toast.LENGTH_SHORT).show();
+
+            }
+        }); //inner onClick
+
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.show();
-                okBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        reff.child(product.getId()).removeValue();
-                        ((Activity)mContext).finish(); //MAYBE?
-                        dialog.cancel();
-                        Toast.makeText(mContext, "Item deleted successfully", Toast.LENGTH_SHORT).show();
-
-                    }
-                }); //inner onClick
-
             }
         });
 
-        //  EDIT ITEM
-        final Dialog dialogEdit = new Dialog(mContext);
-        dialogEdit.setContentView(R.layout.edit_dialog);
-        dialogEdit.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        okBtn2= dialogEdit.findViewById(R.id.ok_btn_dialog);
-        cancelBtn2= dialogEdit.findViewById(R.id.cancel_btn_dialog);
-        editExp = dialogEdit.findViewById(R.id.editExp);
-        editName = dialogEdit.findViewById(R.id.editName);
-        editPrice = dialogEdit.findViewById(R.id.editPrice);
-        calendar = dialogEdit.findViewById(R.id.calendar);
-
-        //Calendar settings...
-        final Calendar myCalendar = Calendar.getInstance();
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
-            }
-
-            private void updateLabel() {
-                String myFormat = "MM/dd/yy"; //In which you need put here
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-                editExp.setText(sdf.format(myCalendar.getTime()));
-                //editExp.setEnabled(false);
-            }
-        };
-
-        //Expire date event listener
-
-        cancelBtn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogEdit.cancel();
-            }
-        });
-
-        calendar.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(mContext, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
+//        Edit Item
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogEdit.show();
-                okBtn2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        if (validate()) {
-                            reff.child(product.getId()).child("name").setValue(editName.getText().toString());
-                            reff.child(product.getId()).child("price").setValue(editPrice.getText().toString());
-                            reff.child(product.getId()).child("expire").setValue(editExp.getText().toString());
-                            dialogEdit.cancel();
-                            ((Activity) mContext).finish();
-                            Toast.makeText(mContext, "Item updated successfully!", Toast.LENGTH_SHORT).show();
-                        } //end if
-                    }
-                }); //inner onClick
-
+                Intent intent = new Intent(mContext, EditItem.class).putExtra("ItemId", product.getId()).putExtra("ItemName", product.getName())
+                        .putExtra("ItemExpire", product.getExpire()).putExtra("ItemPrice", product.getPrice());
+                mContext.startActivity(intent);
+                ((Activity)mContext).finish();
             }
         }); //outer onClick
 
+//        //  Edit Item
+//        final Dialog dialogEdit = new Dialog(mContext);
+//        dialogEdit.setContentView(R.layout.edit_dialog);
+//        dialogEdit.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        okBtn2= dialogEdit.findViewById(R.id.ok_btn_dialog2);
+//        cancelBtn2= dialogEdit.findViewById(R.id.cancel_btn_dialog2);
+//        editExp = dialogEdit.findViewById(R.id.expEdit);
+//        editName = dialogEdit.findViewById(R.id.nameEdit);
+//        editPrice = dialogEdit.findViewById(R.id.priceEdit);
+//        calendar = dialogEdit.findViewById(R.id.calendarEdit);
+//
+//        editName.setText(product.getName());
+//        editExp.setText(product.getExpire());
+//        editPrice.setText(product.getPrice());
+//
+//
+//        edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialogEdit.show();
+//            }
+//        }); //outer onClick
+//
+////        Calendar settings...
+//        final Calendar myCalendar = Calendar.getInstance();
+//        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                // TODO Auto-generated method stub
+//                myCalendar.set(Calendar.YEAR, year);
+//                myCalendar.set(Calendar.MONTH, monthOfYear);
+//                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                updateLabel();
+//            }
+//
+//            private void updateLabel() {
+//                String myFormat = "MM/dd/yy"; //In which you need put here
+//                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+//                Log.d("Test1", "Inside date setting");
+//                editExp.setText(sdf.format(myCalendar.getTime()));
+//                editExp.setEnabled(false);
+//            }
+//        };
+//
+//
+//        cancelBtn2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialogEdit.cancel();
+//            }
+//        });
+//
+//        calendar.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                new DatePickerDialog(mContext, date, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//            }
+//        });
+////
+//        okBtn2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("TTest",editName.getText().toString());
+//                Log.d("TTest","I am in before validate");
+//                if (validate()) {
+//
+//                    reff.child(product.getId()).child("name").setValue(editName.getText().toString());
+//                    reff.child(product.getId()).child("price").setValue(editPrice.getText().toString());
+//                    reff.child(product.getId()).child("expire").setValue(editExp.getText().toString());
+//                    dialogEdit.cancel();
+//                    ((Activity) mContext).finish();
+//                    Toast.makeText(mContext, "Item updated successfully!", Toast.LENGTH_SHORT).show();
+//                } //end if
+//            }
+//        }); //inner onClick
+//
+//
+//    }
+//    private boolean validate() {
+//        name = editName.getText().toString().trim();
+//        price = editPrice.getText().toString().trim();
+//        expire = editExp.getText().toString().trim();
+//        Log.d("Test2", "i'm here"+editName.getText().toString());
+//
+//        if ((TextUtils.isEmpty(name)) || (TextUtils.isEmpty(price)) || (TextUtils.isEmpty(expire)) ) {
+//            Toast.makeText(mContext, "Please fill in all required fields", Toast.LENGTH_LONG).show();
+//            Log.d("TTest","The name is empty");
+//            return false;
+//        } else if (!TextUtils.isDigitsOnly(price)) {
+//            Toast.makeText(mContext, "Price should be digits only", Toast.LENGTH_LONG).show();
+//            return false;
+//        }
+//        return true;
+    }
 
-    }
-    public boolean validate() {
-        name = editName.getText().toString();
-        price = editPrice.getText().toString();
-        expire = editExp.getText().toString();
-        if ((TextUtils.isEmpty(name)) || (TextUtils.isEmpty(price)) || (TextUtils.isEmpty(expire))) {
-            Toast.makeText(mContext, "Please fill in all required fields", Toast.LENGTH_LONG).show();
-            return false;
-        } else if (!TextUtils.isDigitsOnly(price)) {
-            Toast.makeText(mContext, "Price should be digits only", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
-    }
     @Override
     public int getItemCount(){
         return itemList.size();
