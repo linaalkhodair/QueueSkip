@@ -31,8 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.disposables.CompositeDisposable;
 
        public   class  search_frag extends AppCompatActivity implements SearchAdapter1.OnItemClickListener {
-      CompositeDisposable compositionDisposable;
-      RecyclerView recycler_search;
+
       //private searchViewModel searchviewmodel;
       DatabaseReference reff;
       private RecyclerView recyclerView;
@@ -40,7 +39,7 @@ import io.reactivex.disposables.CompositeDisposable;
       private SearchAdapter1 productAdapter;
       SearchView searchView;
       View view;
-      Context mContext;
+
      // final  OnGetDataListener listener;
 
 
