@@ -98,7 +98,7 @@ private HomeViewModel homeViewModel;
     private TextView productNameTxt;
     private TextView productPriceTxt;
     private Button addBTn;
-    private Button fav;
+    private ImageView fav;
     private Context mContext;
     private ImageView productImg;
     DatabaseReference reff;
