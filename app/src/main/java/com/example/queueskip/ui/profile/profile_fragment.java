@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.queueskip.EditProfile;
+import com.example.queueskip.Favorite;
 import com.example.queueskip.HistoryActivity;
 import com.example.queueskip.Items;
 import com.example.queueskip.R;
@@ -42,6 +43,7 @@ public class profile_fragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private Button edit;
     private ImageView history;
+    private ImageView favorite;
 
 
     String email2;
@@ -63,6 +65,7 @@ public class profile_fragment extends Fragment {
         pass = view.findViewById(R.id.passProf);
         username = view.findViewById(R.id.usernameProf);
         history = view.findViewById(R.id.historyIc);
+        favorite = view.findViewById(R.id.fav);
 
         //edit Button
         edit = view.findViewById(R.id.editBtn);
@@ -104,6 +107,13 @@ public class profile_fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), HistoryActivity.class));
+            }
+        });
+
+        favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), Favorite.class));
             }
         });
 

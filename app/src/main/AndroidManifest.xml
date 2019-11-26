@@ -23,6 +23,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".EditItem"></activity>
+        <activity android:name=".Favorite"></activity>
         <activity
             android:name=".AdminMainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
