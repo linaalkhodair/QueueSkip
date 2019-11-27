@@ -141,6 +141,8 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
                                                                  cart.setLink( product.getPhoto() );
 
                                                                  Common.cartRepository.insertToCart( cart );
+                                                                 Toast.makeText(mContext, "Item is now in cart!", Toast.LENGTH_SHORT).show();
+
                                                                  enter=true;
                                                              }
 
@@ -149,7 +151,7 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
                                                              // text.setText(item.getName()+" Item retrieved successfully :)");
                                                          }
                                                          if(!enter){
-                                                             //Toast.makeText(this, "Item is not exist", Toast.LENGTH_SHORT ).show();
+                                                             Toast.makeText(mContext, "Item doesn't exist!", Toast.LENGTH_SHORT).show();
                                                          }
 
                                                      }
