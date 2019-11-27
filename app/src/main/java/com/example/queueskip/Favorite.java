@@ -71,7 +71,37 @@ public class Favorite extends AppCompatActivity implements FavoriteAddapter.OnIt
                         userID=user.getId();
                         Log.d( "TestNull", userID);
 
-                        //refFav= refFav.child(user.getId()).child("itemsList");
+                        refFav= FirebaseDatabase.getInstance().getReference("FavoriteList").child(userID).child("itemsList");
+
+                        refFav.addValueEventListener( new ValueEventListener() {
+
+                            @Override
+
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                Log.d( "TTest", " I am in OnDataChange!!" );
+
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    Items item = snapshot.getValue( Items.class );
+                                    // Toast.makeText(getActivity(),item.getName(),Toast.LENGTH_SHORT).show();
+                                    favoriteList.add( item );
+
+
+                                    //just for testing retrieving data
+
+                                    // text.setText(item.getName()+" Item retrieved successfully :)");
+                                }
+
+                                favoriteAddapter = new FavoriteAddapter( favoriteList, Favorite.this );
+                                recyclerView.setAdapter( favoriteAddapter );
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+
+                        } );
                     }
                 }
             }
@@ -81,37 +111,7 @@ public class Favorite extends AppCompatActivity implements FavoriteAddapter.OnIt
 
             }
         });
-        refFav= FirebaseDatabase.getInstance().getReference("FavoriteList").child(userID).child("itemsList");
 
-        refFav.addValueEventListener( new ValueEventListener() {
-
-            @Override
-
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d( "TTest", " I am in OnDataChange!!" );
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Items item = snapshot.getValue( Items.class );
-                    // Toast.makeText(getActivity(),item.getName(),Toast.LENGTH_SHORT).show();
-                    favoriteList.add( item );
-
-
-                    //just for testing retrieving data
-
-                    // text.setText(item.getName()+" Item retrieved successfully :)");
-                }
-
-                favoriteAddapter = new FavoriteAddapter( favoriteList, Favorite.this );
-                recyclerView.setAdapter( favoriteAddapter );
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-
-        } );
 
 
 
