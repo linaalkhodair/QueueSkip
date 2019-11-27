@@ -49,13 +49,13 @@ import io.reactivex.disposables.CompositeDisposable;
           super.onCreate( saveInstanceState );
           setContentView( R.layout.search );
 
-
           //set toolbar
-          Toolbar toolbar = findViewById( R.id.search_toolbar );
-          setSupportActionBar( toolbar );
+          Toolbar toolbar=findViewById(R.id.search_toolbar);
+          setSupportActionBar(toolbar);
+          getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+          getSupportActionBar().setDisplayShowHomeEnabled(true);
           toolbar.setTitle("");
-          getSupportActionBar().setDisplayHomeAsUpEnabled( true );
-          getSupportActionBar().setDisplayShowHomeEnabled( true );
+
 
 
           recyclerView = (RecyclerView) findViewById( R.id.search );
@@ -227,26 +227,7 @@ import io.reactivex.disposables.CompositeDisposable;
 
   }
 
-    public boolean onOptionsItemSelected( MenuItem item){
-        Log.d("TTest","I am on onOptionselected");
-        productAdapter.notifyDataSetChanged();
-        if(item.getItemId()==R.id.action_search){
-           searchView.setImeOptions( EditorInfo.IME_ACTION_DONE);
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false; }
 
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                  productAdapter.filter(newText);
-                    return false;
-               }
-           });
-      }
-       return true;
-
-   }
 
 
     @Override
