@@ -79,7 +79,7 @@ import io.reactivex.disposables.CompositeDisposable;
                       Items item = snapshot.getValue( Items.class );
                       // Toast.makeText(getActivity(),item.getName(),Toast.LENGTH_SHORT).show();
                       productList.add( item );
-                      Log.d( "TTest", productList.get( 0 ).getName() );
+                    //  Log.d( "TTest", productList.get( 0 ).getName() );
 
                       //just for testing retrieving data
 

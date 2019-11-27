@@ -81,7 +81,7 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
         this.arrayList.addAll(itemList);
         this.itemList=itemList;
         mContext=context;
-        Log.d(  "TTest", String.valueOf( itemList.get( 0 ) ) );
+        //Log.d(  "TTest", String.valueOf( itemList.get( 0 ) ) );
     }
     @Override
     public FavoriteAddapter.MyViewHolder onCreateViewHolder(ViewGroup parent , int position){
