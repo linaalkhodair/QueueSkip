@@ -1,12 +1,14 @@
 package com.example.queueskip;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
 
 import com.example.queueskip.Adapter.SearchAdapter1;
 //import com.example.queueskip.Adapter.SearchAdapter1;
@@ -48,11 +50,13 @@ import io.reactivex.disposables.CompositeDisposable;
           super.onCreate( saveInstanceState );
           setContentView( R.layout.search );
 
+
           //set toolbar
           Toolbar toolbar = findViewById( R.id.search_toolbar );
           setSupportActionBar( toolbar );
-         // getSupportActionBar().setDisplayHomeAsUpEnabled( true );
-         // getSupportActionBar().setDisplayShowHomeEnabled( true );
+          toolbar.setTitle("");
+          getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+          getSupportActionBar().setDisplayShowHomeEnabled( true );
 
 
           recyclerView = (RecyclerView) findViewById( R.id.search );
@@ -96,7 +100,6 @@ import io.reactivex.disposables.CompositeDisposable;
           } );
 
           searchView=findViewById( R.id.action_search );
-
 
           searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
               @Override
@@ -243,7 +246,7 @@ import io.reactivex.disposables.CompositeDisposable;
            });
       }
        return true;
-//
+
    }
 
 
@@ -251,6 +254,14 @@ import io.reactivex.disposables.CompositeDisposable;
     public void onItemClick(int position) {
 
     }
+
+           @Override
+           public boolean onSupportNavigateUp() {
+               onBackPressed();
+               return true;
+           }//end of onSupportNavigateUp
+
+
 
 
 

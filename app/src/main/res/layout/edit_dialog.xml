@@ -103,7 +103,7 @@
         android:layout_marginBottom="15dp"
         >
         <Button
-            android:id="@+id/cancel_btn_dialog"
+            android:id="@+id/cancel_btn_edit_dialog"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:visibility="visible"
@@ -113,7 +113,7 @@
 
             ></Button>
         <Button
-            android:id="@+id/ok_btn_dialog"
+            android:id="@+id/ok_btn_edit_dialog"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"

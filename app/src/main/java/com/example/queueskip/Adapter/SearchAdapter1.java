@@ -151,8 +151,8 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
         final Dialog dialogEdit = new Dialog(mContext);
         dialogEdit.setContentView(R.layout.edit_dialog);
         dialogEdit.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        okBtn2= dialogEdit.findViewById(R.id.ok_btn_dialog);
-        cancelBtn2= dialogEdit.findViewById(R.id.cancel_btn_dialog);
+        okBtn2= dialogEdit.findViewById(R.id.ok_btn_edit_dialog);
+        cancelBtn2= dialogEdit.findViewById(R.id.cancel_btn_edit_dialog);
         editExp = dialogEdit.findViewById(R.id.editExp);
         editName = dialogEdit.findViewById(R.id.editName);
         editPrice = dialogEdit.findViewById(R.id.editPrice);
@@ -185,6 +185,7 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
         cancelBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            //?    dialog.hide();
                 dialogEdit.cancel();
             }
         });
@@ -203,6 +204,7 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            //?    dialog.hide();
                 dialogEdit.show();
                 okBtn2.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -267,4 +269,7 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
         }
         notifyDataSetChanged();
     }
+
+
+
 }

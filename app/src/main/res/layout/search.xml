@@ -16,6 +16,8 @@
         app:titleTextColor="@android:color/white"
         tools:ignore="MissingConstraints">
 
+
+
     </androidx.appcompat.widget.Toolbar>
     <androidx.appcompat.widget.SearchView
         android:layout_width="match_parent"
@@ -23,7 +25,10 @@
         android:id="@+id/action_search"
         android:icon="@drawable/searchbar"
         android:title="Search"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:layout_marginStart="30dp"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
 
