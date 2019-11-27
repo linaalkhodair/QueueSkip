@@ -35,6 +35,7 @@ public class Favorite extends AppCompatActivity implements FavoriteAddapter.OnIt
     private FirebaseAuth firebaseAuth;
     private String email;
     View view;
+    private String userID;
 
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate( saveInstanceState );
@@ -54,7 +55,7 @@ public class Favorite extends AppCompatActivity implements FavoriteAddapter.OnIt
         firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseUser userAuth = firebaseAuth.getCurrentUser();
         email = userAuth.getEmail();
-        refFav= FirebaseDatabase.getInstance().getReference("FavoriteList");
+       // refFav= FirebaseDatabase.getInstance().getReference();
 
 
 
@@ -67,7 +68,9 @@ public class Favorite extends AppCompatActivity implements FavoriteAddapter.OnIt
                     User user = snapshot.getValue(User.class);
                     if(user.getEmail().equals(email)){
 
-                        refFav= refFav.child(user.getId()).child("itemsList");
+                        userID=user.getId();
+
+                        //refFav= refFav.child(user.getId()).child("itemsList");
                     }
                 }
             }
@@ -77,7 +80,7 @@ public class Favorite extends AppCompatActivity implements FavoriteAddapter.OnIt
 
             }
         });
-
+        refFav= FirebaseDatabase.getInstance().getReference("FavoriteList").child(userID).child("itemsList");
 
         refFav.addValueEventListener( new ValueEventListener() {
 
@@ -96,7 +99,7 @@ public class Favorite extends AppCompatActivity implements FavoriteAddapter.OnIt
 
                     // text.setText(item.getName()+" Item retrieved successfully :)");
                 }
-               
+
                 favoriteAddapter = new FavoriteAddapter( favoriteList, Favorite.this );
                 recyclerView.setAdapter( favoriteAddapter );
 
