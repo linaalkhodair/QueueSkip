@@ -116,6 +116,7 @@ private HomeViewModel homeViewModel;
     private String email;
     ArrayList<Items> itemsList = new ArrayList<>();
     private String id;
+    private boolean isEnter=false;
 
 
     public void onAttach(Context context) {
@@ -310,6 +311,25 @@ private HomeViewModel homeViewModel;
                                             Log.d("TTest", "user id"+user.getId());
                                            // id=user.getId();
                                             refFav= FirebaseDatabase.getInstance().getReference("FavoriteList").child(user.getId()).child("itemsList");
+
+                                            refFav.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    for (DataSnapshot snapshot1 : dataSnapshot.getChildren()){
+                                                        Items item = snapshot1.getValue( Items.class );
+                                                        if (item.getId().equals(itemHere.getId())){
+                                                            isEnter = true;
+                                                        }
+
+                                                    }
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                }
+                                            });
                                         }
                                     }
                                 }
@@ -324,10 +344,15 @@ private HomeViewModel homeViewModel;
                             fav.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    if(!isEnter){
                                     refFav.push().setValue(itemHere);
                                     Log.d("TTest", "inside fav ondata");
                                     Toast.makeText( getActivity(), "Item is now a favorite!", Toast.LENGTH_SHORT ).show();
-                                    dialog.dismiss();
+                                    dialog.dismiss();}
+                                    else {
+                                        Toast.makeText( getActivity(), "Item is already a favorite!", Toast.LENGTH_SHORT ).show();
+                                        dialog.dismiss();
+                                    }
 
 
                                 }
