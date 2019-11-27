@@ -14,7 +14,8 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         app:titleTextColor="@android:color/white"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        app:title="">
 
 
 
