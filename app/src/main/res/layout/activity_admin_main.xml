@@ -37,76 +37,122 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-   >
+    <!-- <Button
+            android:id="@+id/notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notifications"
+            />-->
 
     <LinearLayout
-        android:id="@+id/edit"
-        android:layout_width="140dp"
-        android:layout_height="170dp"
-        android:layout_marginTop="100dp"
-        android:orientation="vertical"
-        android:layout_marginStart="20dp"
-        android:background="@drawable/round_shape"
-        >
-        <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="60dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/edit"
             android:layout_width="140dp"
-            android:layout_height="130dp"
-            android:src="@drawable/ic_edit_black_24dp"
-            android:padding="10dp"
-            ></ImageView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:textColor="@color/colorPrimary"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="5dp"></TextView>
+            android:layout_height="170dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_shape"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="140dp"
+                android:layout_height="130dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_edit_black_24dp"></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="5dp"
+                android:text="Edit"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp"
+                android:textStyle="bold"></TextView>
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
 
+       <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/add_product"
-        android:layout_width="140dp"
-        android:layout_height="170dp"
-        android:orientation="vertical"
-        android:layout_marginStart="30dp"
-        android:background="@drawable/round_shape"
-        android:layout_marginTop="100dp"
-        >
-        <ImageView
+
+        <LinearLayout
+            android:id="@+id/add_product"
             android:layout_width="140dp"
-            android:layout_height="130dp"
-            android:src="@drawable/ic_add_black_24dp"
-            android:padding="10dp"
-            ></ImageView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add product"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"></TextView>
+            android:layout_height="170dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_shape"
+            android:orientation="vertical">
 
+
+            <ImageView
+                android:layout_width="140dp"
+                android:layout_height="130dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_add_black_24dp"></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Add product"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp"
+                android:textStyle="bold"></TextView>
+        </LinearLayout>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-</LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/notfiy"
+            android:layout_width="140dp"
+            android:layout_height="170dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_shape"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="140dp"
+                android:layout_height="130dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_notifications_active_black_24dp"></ImageView>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Notify users"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp"
+                android:textStyle="bold"></TextView>
+        </LinearLayout>
 
-
+    </LinearLayout>
 
 </LinearLayout>

@@ -28,6 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+import com.onesignal.OneSignal;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -65,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
         forgot = findViewById(R.id.forgot);
         register = findViewById(R.id.register);
 
+
+
         progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setMessage("Please wait...");
 
@@ -92,6 +95,13 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
         if (user != null) { //not very much
+
+            OneSignal.startInit(this)
+                    .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                    .unsubscribeWhenNotificationsAreDisabled(true)
+                    .init(); //for notification
+            OneSignal.sendTag("email",user.getEmail());
+
             finish();
 
             startActivity(new Intent(LoginActivity.this, MainActivity.class));

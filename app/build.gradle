@@ -1,3 +1,18 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/'}
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.4, 0.99.99]'
+    }
+}
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+repositories {
+    maven { url 'https://maven.google.com' }
+}
+// all above are added for notification
+
 apply plugin: 'com.android.application'
 
 android {
@@ -10,6 +25,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                onesignal_app_id: 'a5561ea4-0127-4043-856c-40565cd6ed10',
+                // Project number pulled from dashboard, local value is ignored.
+                onesignal_google_project_number: 'REMOTE'
+        ]
         multiDexEnabled true
 
     }
@@ -71,6 +91,9 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
     implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'//added for payment
     implementation 'com.firebaseui:firebase-ui-database:0.4.0'
+    implementation 'com.onesignal:OneSignal:[3.11.2, 3.99.99]'  //added for notification
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'  //added for notification
+
 
 
 }

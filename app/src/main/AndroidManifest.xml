@@ -5,12 +5,14 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:allowBackup="true"
@@ -20,14 +22,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".AdminMainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".HistoryActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".EditProfile" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".EditItem"></activity>
+        <activity android:name=".Favorite"></activity>
+        <activity
+            android:name=".AdminMainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HistoryActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EditProfile"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CheckoutActivity" />
         <activity android:name=".SuccessActivity" />
-        <activity android:name=".search_frag" android:theme="@style/AppTheme.NoActionBar" />
-      
+        <activity
+            android:name=".search_frag"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -42,7 +52,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".GenerateQRCode" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".GenerateQRCode"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
