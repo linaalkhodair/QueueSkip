@@ -85,7 +85,7 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
     }
     @Override
     public FavoriteAddapter.MyViewHolder onCreateViewHolder(ViewGroup parent , int position){
-        View itemView= LayoutInflater.from( parent.getContext() ).inflate(R.layout.item_row,parent,false);
+        View itemView= LayoutInflater.from( parent.getContext() ).inflate(R.layout.favorite_row,parent,false);
 
         moveBtn=itemView.findViewById(R.id.move_btn);
         return  new FavoriteAddapter.MyViewHolder(itemView, (FavoriteAddapter.OnItemClickListener) mListener );

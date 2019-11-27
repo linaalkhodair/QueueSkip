@@ -54,6 +54,7 @@ public class Favorite extends AppCompatActivity implements FavoriteAddapter.OnIt
         firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseUser userAuth = firebaseAuth.getCurrentUser();
         email = userAuth.getEmail();
+        refFav= FirebaseDatabase.getInstance().getReference("FavoriteList");
 
 
 
