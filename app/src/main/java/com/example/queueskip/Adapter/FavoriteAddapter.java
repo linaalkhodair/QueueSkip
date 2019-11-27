@@ -21,11 +21,16 @@ import com.example.queueskip.EditItem;
 import com.example.queueskip.Items;
 import com.example.queueskip.R;
 import com.example.queueskip.utliz.Common;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyViewHolder> {
@@ -36,6 +41,8 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
     private Context mContext;
     private Button moveBtn;
     private String qrId;
+    DatabaseReference reff;
+    boolean enter=false;
 
 
     public void setOnItemClickListener(FavoriteAddapter.OnItemClickListener listener)
@@ -105,7 +112,7 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
         holder.product_price.setText(product.getPrice());
         holder.product_expire.setText( product.getExpire() );
         Glide.with(mContext).load(product.getPhoto()).into(holder.product_img);
-
+        reff = FirebaseDatabase.getInstance().getReference().child( "items");
         moveBtn.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View view) {
@@ -117,14 +124,42 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
 
 
                                              }else {
-                                                 Cart cart = new Cart();
-                                                 cart.setName( product.getName() );
-                                                 cart.setId( qrId );
-                                                 cart.setPrice( Integer.parseInt( (String) product.getPrice()) );
-                                                 cart.setAmount( 1 );
-                                                 cart.setLink( product.getPhoto() );
+                                                 reff.addValueEventListener(new ValueEventListener() {
+                                                     @Override
+                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                                 Common.cartRepository.insertToCart( cart ); //?
+                                                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                             Items item = snapshot.getValue(Items.class);
+                                                             // Toast.makeText(getActivity(),item.getName(),Toast.LENGTH_SHORT).show();
+
+                                                             if(item.getId().equals(qrId)){
+                                                                 Cart cart = new Cart();
+                                                                 cart.setName( product.getName() );
+                                                                 cart.setId( qrId );
+                                                                 cart.setPrice( Integer.parseInt( (String) product.getPrice()) );
+                                                                 cart.setAmount( 1 );
+                                                                 cart.setLink( product.getPhoto() );
+
+                                                                 Common.cartRepository.insertToCart( cart );
+                                                                 enter=true;
+                                                             }
+
+                                                             //just for testing retrieving data
+
+                                                             // text.setText(item.getName()+" Item retrieved successfully :)");
+                                                         }
+                                                         if(!enter){
+                                                             //Toast.makeText(this, "Item is not exist", Toast.LENGTH_SHORT ).show();
+                                                         }
+
+                                                     }
+
+                                                     @Override
+                                                     public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                     }
+                                                 });
+                                             //?
 
 
 
