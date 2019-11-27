@@ -68,7 +68,7 @@ public class Favorite extends AppCompatActivity implements FavoriteAddapter.OnIt
                     if(user.getEmail().equals(email)){
                         Log.d("TTest", "user id"+user.getId());
                         // id=user.getId();
-                        refFav= FirebaseDatabase.getInstance().getReference("FavoriteList").child(user.getId()).child("itemsList");
+                        refFav= refFav.child(user.getId()).child("itemsList");
                     }
                 }
             }
