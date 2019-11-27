@@ -66,8 +66,7 @@ public class Favorite extends AppCompatActivity implements FavoriteAddapter.OnIt
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     User user = snapshot.getValue(User.class);
                     if(user.getEmail().equals(email)){
-                        Log.d("TTest", "user id"+user.getId());
-                        // id=user.getId();
+
                         refFav= refFav.child(user.getId()).child("itemsList");
                     }
                 }
@@ -91,13 +90,13 @@ public class Favorite extends AppCompatActivity implements FavoriteAddapter.OnIt
                     Items item = snapshot.getValue( Items.class );
                     // Toast.makeText(getActivity(),item.getName(),Toast.LENGTH_SHORT).show();
                     favoriteList.add( item );
-                    Log.d( "TTest", favoriteList.get( 0 ).getName() );
+
 
                     //just for testing retrieving data
 
                     // text.setText(item.getName()+" Item retrieved successfully :)");
                 }
-                Log.d( "TTest", favoriteList.get( 0 ).getName() );
+               
                 favoriteAddapter = new FavoriteAddapter( favoriteList, Favorite.this );
                 recyclerView.setAdapter( favoriteAddapter );
 
