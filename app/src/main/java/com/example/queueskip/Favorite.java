@@ -69,6 +69,7 @@ public class Favorite extends AppCompatActivity implements FavoriteAddapter.OnIt
                     if(user.getEmail().equals(email)){
 
                         userID=user.getId();
+                        Log.d( "TestNull", userID);
 
                         //refFav= refFav.child(user.getId()).child("itemsList");
                     }
