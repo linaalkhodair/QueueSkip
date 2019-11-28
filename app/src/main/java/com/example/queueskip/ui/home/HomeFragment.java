@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
@@ -61,6 +62,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+
 import java.io.IOException;
 /*
 public class HomeFragment extends Fragment {
@@ -106,7 +108,7 @@ private HomeViewModel homeViewModel;
     DatabaseReference ref;
     DataSnapshot dataSnapshot; //?
     private String photo;
-    boolean enter=false;
+    private boolean enter=false;
     String price="";
     String name="";
     String qrId="";
@@ -143,6 +145,10 @@ private HomeViewModel homeViewModel;
 
         barcodeDetector=new BarcodeDetector.Builder(mContext).setBarcodeFormats(Barcode.QR_CODE).build();
         cameraSource = new CameraSource.Builder(getContext(),barcodeDetector).setRequestedPreviewSize(640,480).build();
+
+        cameraSource= new CameraSource.Builder(requireContext(), barcodeDetector)
+                .setAutoFocusEnabled(true)
+                .build();
 //        homeViewModel =
 //                ViewModelProviders.of(this).get(HomeViewModel.class);
        // final TextView textView = root.findViewById(R.id.text_home);
@@ -172,8 +178,10 @@ private HomeViewModel homeViewModel;
                 }
             }
 
+
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
 
             }
 
@@ -269,6 +277,8 @@ private HomeViewModel homeViewModel;
                                     }
                                     if(!enter){
                                         productNameTxt.setText("This item doesn't exist");
+                                        Log.d("TTest", "Im inside !enter ");
+                                        fav.setVisibility(View.INVISIBLE);
                                         addBTn.setVisibility(View.INVISIBLE);
                                     }
 
@@ -317,10 +327,11 @@ private HomeViewModel homeViewModel;
                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                     for (DataSnapshot snapshot1 : dataSnapshot.getChildren()){
                                                         Items item = snapshot1.getValue( Items.class );
-                                                        if (item.getId().equals(itemHere.getId())){
-                                                            isEnter = true;
-                                                        }
-
+                                                        if(enter) {
+                                                            if (item.getId().equals(itemHere.getId())) {
+                                                                isEnter = true;
+                                                            }
+                                                        }// end first if
                                                     }
 
                                                 }
