@@ -52,7 +52,7 @@ public class DashboardFragment extends Fragment {
     public static Button btn_place_order;
     TextView total;
     CompositeDisposable compositionDisposable;
-    Button clear_btn;
+    public static Button clear_btn;
     CartAdapter cartAdapter;
     public static double totalAmount = 0; //changed to double?
     private Button checkoutBtnDialog;
