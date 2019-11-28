@@ -54,7 +54,7 @@
                 app:backGroundColor="@color/colorPrimaryDark"
                 app:finalNumber="300"
                 app:textColor="@color/colorBackground"
-                app:textSize="10sp"></com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
+                app:textSize="5dp"></com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
 
             <ImageView
                 android:id="@+id/deleteItem"

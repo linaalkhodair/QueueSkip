@@ -52,7 +52,7 @@ public class DashboardFragment extends Fragment {
     public static Button btn_place_order;
     TextView total;
     CompositeDisposable compositionDisposable;
-    Button clear_btn;
+    public static Button clear_btn;
     CartAdapter cartAdapter;
     public static double totalAmount = 0; //changed to double?
     private Button checkoutBtnDialog;
@@ -149,6 +149,8 @@ public class DashboardFragment extends Fragment {
                         cartAdapter.clear();
                         btn_place_order.setText("Checkout"+"     Total price: "+0+"SR");
                         dialog.cancel();
+                        clear_btn.setEnabled(false);
+                        clear_btn.setBackground(getResources().getDrawable(R.drawable.round_shape_btn_gray));
                     }
                 });
 

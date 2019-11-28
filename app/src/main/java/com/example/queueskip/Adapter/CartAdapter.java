@@ -26,6 +26,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.example.queueskip.ui.dashboard.DashboardFragment.clear_btn;
 import static com.example.queueskip.ui.dashboard.DashboardFragment.totalAmount;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
@@ -87,6 +88,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     public void onClick(View v) {
                         Common.cartRepository.deleteCartItem(cartList.get(position));
                         dialog.cancel();
+
+                        if (Common.cartRepository.countCartItems()==0){
+                            clear_btn.setEnabled(false);
+                            clear_btn.setBackground(context.getDrawable(R.drawable.round_shape_btn_gray));
+                        }
                     }
                 });
                // Common.cartRepository.deleteCartItem(cartList.get(position));
