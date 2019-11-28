@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
 
         }
         else
-        if (user != null) { //not very much
+        if (user != null && user.isEmailVerified() ) { //not very much
 
             OneSignal.startInit(this)
                     .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)

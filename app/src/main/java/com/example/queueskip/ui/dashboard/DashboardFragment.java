@@ -149,6 +149,8 @@ public class DashboardFragment extends Fragment {
                         cartAdapter.clear();
                         btn_place_order.setText("Checkout"+"     Total price: "+0+"SR");
                         dialog.cancel();
+                        clear_btn.setEnabled(false);
+                        clear_btn.setBackground(getResources().getDrawable(R.drawable.round_shape_btn_gray));
                     }
                 });
 

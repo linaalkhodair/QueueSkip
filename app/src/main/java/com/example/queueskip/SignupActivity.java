@@ -144,7 +144,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         fav.setItemsList(itemsList);
                         refFav.child(uid).setValue(fav);
 
+                        progressDialog.dismiss();
                         startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                        finish();
                     }
                     else{
                         //MAYBE
@@ -302,14 +304,15 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         //sendUserData();
-                        progressDialog.dismiss();
+
                         Toast.makeText(SignupActivity.this, "Successfully Registered, Verification mail sent!", Toast.LENGTH_SHORT).show();
+//                        progressDialog.dismiss();
                         firebaseAuth.signOut();
-                        finish();
-                        startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+//                        startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+//                        finish();
                     }else{
                         progressDialog.dismiss();
-                        Toast.makeText(SignupActivity.this, "Verification mail has'nt been sent!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignupActivity.this, "Verification mail has not been sent!", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
