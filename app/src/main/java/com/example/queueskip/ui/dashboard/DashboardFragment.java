@@ -304,7 +304,7 @@ public class DashboardFragment extends Fragment {
         vat.setText(String.format("%.2f", vat1)+"SR");
         totalPay.setText(String.format("%.2f",totalAmount+vat1)+"SR");
 
-       // totalAmount=totalAmount+vat1; //NOT SURE
+       totalAmount=totalAmount+vat1; //NOT SURE
 
 //        total.setText(""+totalAmount);
 //        return totalAmount;
