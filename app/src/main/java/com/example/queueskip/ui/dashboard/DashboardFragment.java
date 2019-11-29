@@ -63,6 +63,7 @@ public class DashboardFragment extends Fragment {
     private static TextView totalP;
     private static TextView vat;
     private static TextView totalPay;
+    private static TextView discountAmount;
 
 
     private DashboardViewModel dashboardViewModel;
@@ -102,8 +103,8 @@ public class DashboardFragment extends Fragment {
 
         totalP = view.findViewById(R.id.tp);
         vat = view.findViewById(R.id.vat);
-        totalPay = view.findViewById(R.id.totalPay); //Total after VAT
-
+        totalPay = view.findViewById(R.id.totalPay);//Total after VAT
+        discountAmount=view.findViewById(R.id.discountAmount);
         loadCartItems(); //it was a comment!!!!!
         btn_place_order.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -288,14 +289,22 @@ public class DashboardFragment extends Fragment {
             totalAmount+=  price*amount;
         }
         double vat1 =totalAmount*0.05;
+        totalP.setText(String.format("%.2f", totalAmount)+"SR");
+        if(totalAmount>=20){//checcckkk itt!!!
+           double discountAmountt;
+           discountAmountt=0.10*totalAmount;
+           totalAmount=totalAmount-discountAmountt;
+            discountAmount.setText("-"+String.format("%.2f", discountAmountt)+"SR");
+        }
+        else{  discountAmount.setText("-0.00SR");}
+
         DecimalFormat df = new DecimalFormat("#.###");
         df.format(vat1);
         btn_place_order.setText("Check out");
-        totalP.setText(totalAmount+"SR");
         vat.setText(String.format("%.2f", vat1)+"SR");
-        totalPay.setText(totalAmount+vat1+"SR");
+        totalPay.setText(String.format("%.2f",totalAmount+vat1)+"SR");
 
-        totalAmount=totalAmount+vat1; //NOT SURE
+       // totalAmount=totalAmount+vat1; //NOT SURE
 
 //        total.setText(""+totalAmount);
 //        return totalAmount;
