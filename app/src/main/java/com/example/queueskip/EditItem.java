@@ -5,7 +5,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.queueskip.Adapter.SearchAdapter1;
@@ -32,6 +36,8 @@ public class EditItem extends AppCompatActivity {
     DatabaseReference reff;
     private String id ="";
     private String itemName, itemPrice, itemExpire;
+    Button okBtn,cancelBtn;
+    TextView dialogMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +101,31 @@ public class EditItem extends AppCompatActivity {
         });
 
 
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.logout_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        okBtn=dialog.findViewById(R.id.ok_btn_dialog);
+        cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
+        dialogMsg=dialog.findViewById(R.id.dialog_message);
+        dialogMsg.setText("Are you sure you want to save changes ?");
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View view) {
+                                             dialog.cancel();
+
+                                         }//end of onClick
+                                     }//end of OnClickListener
+        );
+
+
         save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("TTest",editName.getText().toString());

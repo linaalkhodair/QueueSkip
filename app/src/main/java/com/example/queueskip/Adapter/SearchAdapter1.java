@@ -161,7 +161,7 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
                 Intent intent = new Intent(mContext, EditItem.class).putExtra("ItemId", product.getId()).putExtra("ItemName", product.getName())
                         .putExtra("ItemExpire", product.getExpire()).putExtra("ItemPrice", product.getPrice());
                 mContext.startActivity(intent);
-               // ((Activity)mContext).finish();
+              ((Activity)mContext).finish();
             }
         }); //outer onClick
 
