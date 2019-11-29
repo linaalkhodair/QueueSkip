@@ -39,6 +39,7 @@ public class HistoryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setTitle("My Payment History");
 
         ref= FirebaseDatabase.getInstance().getReference().child("User");
         firebaseAuth = FirebaseAuth.getInstance();
