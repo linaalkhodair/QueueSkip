@@ -1,6 +1,7 @@
 package com.example.queueskip;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -49,6 +50,12 @@ public class EditItem extends AppCompatActivity {
         editPrice = findViewById(R.id.editPrice);
         calendar = findViewById(R.id.calendar);
         save = findViewById(R.id.save_btn);
+
+        Toolbar toolbar=findViewById(R.id.edit_item_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setTitle("Edit Item");
 
         editExp.setText(itemExpire);
         editName.setText(itemName);
@@ -127,6 +134,12 @@ public class EditItem extends AppCompatActivity {
         }
         return true;
     } //end validate
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+        }//end of onSupportNavigateUp
 
     }
 

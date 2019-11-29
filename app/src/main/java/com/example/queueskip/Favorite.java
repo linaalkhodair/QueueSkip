@@ -41,16 +41,18 @@ public class Favorite extends AppCompatActivity implements FavoriteAddapter.OnIt
         super.onCreate( saveInstanceState );
         setContentView( R.layout.favorite );
 
-
-
-
         recyclerView = (RecyclerView) findViewById( R.id.favorite);
-
 
         recyclerView.setLayoutManager( new LinearLayoutManager( this ) );
         recyclerView.setHasFixedSize( true );
         recyclerView.setItemAnimator( new DefaultItemAnimator() );
 
+
+        Toolbar toolbar=findViewById(R.id.fav_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setTitle("My Favorite Items");
 
         firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseUser userAuth = firebaseAuth.getCurrentUser();
@@ -124,4 +126,9 @@ public class Favorite extends AppCompatActivity implements FavoriteAddapter.OnIt
     public void onItemClick(int position) {
 
     }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }//end of onSupportNavigateUp
 }

@@ -22,8 +22,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".EditItem"></activity>
-        <activity android:name=".Favorite"></activity>
+        <activity android:name=".EditItem"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label=""/>
+        <activity android:name=".Favorite"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label=""/>
         <activity
             android:name=".AdminMainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
