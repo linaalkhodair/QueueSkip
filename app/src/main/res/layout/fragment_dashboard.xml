@@ -23,15 +23,14 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="400dp"
-        android:layout_height="205dp"
+        android:layout_height="330dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="8dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_cart"
             android:layout_width="match_parent"
-            android:layout_height="310dp"
-
+            android:layout_height="match_parent"
             android:layout_above="@+id/btn_place_order"
             tools:ignore="ExtraText"></androidx.recyclerview.widget.RecyclerView>
 

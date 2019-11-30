@@ -364,7 +364,8 @@ private HomeViewModel homeViewModel;
                                     fav.setVisibility(View.INVISIBLE);
                                     fav1.setVisibility(View.VISIBLE);
                                     if(!isEnter) {
-                                        refFav.push().setValue(itemHere);
+                                        refFav.child(itemHere.getId()).setValue(itemHere);
+                                       // refFav.push().setValue(itemHere);
                                         Log.d("TTest", "inside fav ondata");
                                         Toast.makeText(getActivity(), "Item is now a favorite!", Toast.LENGTH_SHORT).show();
                                         // dialog.dismiss();

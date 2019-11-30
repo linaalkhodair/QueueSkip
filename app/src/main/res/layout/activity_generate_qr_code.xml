@@ -17,21 +17,22 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         app:titleTextColor="@android:color/white"
+        app:title="add"
         ></androidx.appcompat.widget.Toolbar>
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="20dp"
-        android:layout_marginTop="15dp"
-        android:text="Add Item"
-        tools:ignore="MissingConstraints"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
-        />
+<!--    <TextView-->
+<!--        android:id="@+id/textView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:textSize="20dp"-->
+<!--        android:layout_marginTop="15dp"-->
+<!--        android:text="Add Item"-->
+<!--        tools:ignore="MissingConstraints"-->
+<!--        android:textColor="@color/colorPrimary"-->
+<!--        android:textStyle="bold"-->
+<!--        />-->
 
 
 
@@ -39,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="25dp"
         android:text="Item name:"
         android:textColor="@color/colorAccent"></TextView>
 
