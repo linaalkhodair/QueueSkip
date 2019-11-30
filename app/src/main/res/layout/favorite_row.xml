@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/product_img1"
-            android:layout_width="90dp"
-            android:layout_height="80dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_marginEnd="@dimen/activity_padding_horizontal"
             android:scaleType="centerCrop" />
 
@@ -36,7 +36,6 @@
         <TextView
             android:id="@+id/product_expire1"
             android:layout_width="150dp"
-
             android:layout_height="wrap_content"
             android:layout_below="@id/product_name1"
             android:layout_marginTop="5dp"
@@ -58,20 +57,20 @@
 <!--        ></Button>-->
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_add_shopping_cart_black_24dp"
-            android:layout_marginStart="300dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginStart="280dp"
+            android:layout_marginTop="55dp"
             android:id="@+id/move_btn"></ImageView>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_remove_circle_black_24dp"
-            android:layout_marginLeft="320dp"
-            android:layout_marginTop="20dp"
-            android:id="@+id/unfav"></ImageView>
+            android:id="@+id/unfav"
+            android:layout_width="43dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="280dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_remove_circle_black_24dp"></ImageView>
 
 
         <TextView
@@ -79,14 +78,11 @@
             android:layout_marginTop="15dp"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
+            android:layout_marginStart="90dp"
             android:layout_below="@+id/product_expire1"
             android:maxLines="1"
             android:textColor="@color/colorPrimary"
             android:textSize="17dp" />
-
-
-
 
 
 

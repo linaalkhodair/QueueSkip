@@ -1,6 +1,5 @@
 package com.example.queueskip;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;

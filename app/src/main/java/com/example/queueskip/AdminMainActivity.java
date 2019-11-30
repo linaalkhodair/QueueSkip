@@ -103,29 +103,58 @@ public class AdminMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-               Query query1 = databaseReference.child("User").orderByChild("email");
-                query1.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        int i = 0;
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            sendNotification(ds.child("email").getValue(String.class).toLowerCase());
-                            //Log.e("TAG","ENTER111111111111111111");
-                        }
-//
-                    }
+                dialog = new Dialog(AdminMainActivity.this);
+                dialog.setContentView(R.layout.logout_dialog);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                okBtn=dialog.findViewById(R.id.ok_btn_dialog);
+                cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
+                dialogMsg=dialog.findViewById(R.id.dialog_message);
 
-                    }
-                });
+
+                dialogMsg.setText("Are you sure you want to send notification?");
+
+                dialog.show();
+
+
+                okBtn.setOnClickListener(new View.OnClickListener() {
+                                             @Override
+                                             public void onClick(View view) {
+                                                 Query query1 = databaseReference.child("User").orderByChild("email");
+                                                 query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                     @Override
+                                                     public void onDataChange(DataSnapshot dataSnapshot) {
+                                                         int i = 0;
+                                                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                                             sendNotification(ds.child("email").getValue(String.class).toLowerCase());
+                                                             //Log.e("TAG","ENTER111111111111111111");
+                                                         }
+                                                     }
+
+                                                     @Override
+                                                     public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                         dialog.cancel();
+
+                                                     }
+                                                 });
 //                if(emails!=null)
 //                for(int i = 0; i< emails.length; i++)
 //                    if(emails[i]!=null)
 //                        sendNotification(emails[i]);
-                //sendNotification();
+                                                 //sendNotification();
 
+                                             }//end of onClick
+                                         }//end of OnClickListener
+                );
+
+                cancelBtn.setOnClickListener(new View.OnClickListener() {
+                                                 @Override
+                                                 public void onClick(View view) {
+                                                     dialog.cancel();
+
+                                                 }//end of onClick
+                                             }//end of OnClickListener
+                );
 
             }
         });
@@ -203,6 +232,7 @@ public class AdminMainActivity extends AppCompatActivity {
     {
 
 
+        dialog.cancel();
 
         AsyncTask.execute(new Runnable() {
             @Override
