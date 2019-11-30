@@ -290,7 +290,7 @@ public class DashboardFragment extends Fragment {
         }
         double vat1 =totalAmount*0.05;
         totalP.setText(String.format("%.2f", totalAmount)+"SR");
-        if(totalAmount>=20){//checcckkk itt!!!
+        if(totalAmount>=100){//checcckkk itt!!!
            double discountAmountt;
            discountAmountt=0.10*totalAmount;
            totalAmount=totalAmount-discountAmountt;
