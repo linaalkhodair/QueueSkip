@@ -119,6 +119,7 @@ private HomeViewModel homeViewModel;
     ArrayList<Items> itemsList = new ArrayList<>();
     private String id;
     private boolean isEnter=false;
+    ImageView fav1;
 
 
     public void onAttach(Context context) {
@@ -221,6 +222,8 @@ private HomeViewModel homeViewModel;
                             addBTn=dialog.findViewById( R.id.Add);
                             productImg=dialog.findViewById(R.id.product_img_dialog);
                             fav = dialog.findViewById(R.id.fav);
+                            fav1=dialog.findViewById(R.id.fav1);
+                            fav1.setVisibility(View.INVISIBLE);
 
                             String qrtext=(qrcodes.valueAt(0).displayValue);
 
@@ -353,18 +356,23 @@ private HomeViewModel homeViewModel;
                                 }
                             });
 
+
 //                            refFav= FirebaseDatabase.getInstance().getReference("FavoriteList").child(id).child("itemsList"); //HERE THE PROBLEM
                             fav.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    if(!isEnter){
-                                    refFav.push().setValue(itemHere);
-                                    Log.d("TTest", "inside fav ondata");
-                                    Toast.makeText( getActivity(), "Item is now a favorite!", Toast.LENGTH_SHORT ).show();
-                                    dialog.dismiss();}
+                                    fav.setVisibility(View.INVISIBLE);
+                                    fav1.setVisibility(View.VISIBLE);
+                                    if(!isEnter) {
+                                        refFav.child(itemHere.getId()).setValue(itemHere);
+                                       // refFav.push().setValue(itemHere);
+                                        Log.d("TTest", "inside fav ondata");
+                                        Toast.makeText(getActivity(), "Item is now a favorite!", Toast.LENGTH_SHORT).show();
+                                        // dialog.dismiss();
+                                    }
                                     else {
                                         Toast.makeText( getActivity(), "Item is already a favorite!", Toast.LENGTH_SHORT ).show();
-                                        dialog.dismiss();
+                                       // dialog.dismiss();
                                     }
 
 
@@ -388,7 +396,7 @@ private HomeViewModel homeViewModel;
                                         Cart cart = new Cart();
                                         cart.setName( itemName );
                                         cart.setId( qrId );
-                                        cart.setPrice( Integer.parseInt( (String) itemPrice ) );
+                                        cart.setPrice( Integer.parseInt( (String) itemPrice +"SR") );
                                         cart.setAmount( 1 );
                                         cart.setLink( photo );
 

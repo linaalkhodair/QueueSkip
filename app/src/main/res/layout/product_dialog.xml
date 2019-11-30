@@ -101,6 +101,14 @@
             android:layout_width="80dp"
             android:layout_height="37dp"
             android:layout_gravity="center"
+            android:src="@drawable/ic_favorite_border_white_24dp"></ImageView>
+
+        <ImageView
+            android:id="@+id/fav1"
+            android:layout_width="80dp"
+            android:layout_height="37dp"
+            android:layout_marginLeft="-80dp"
+            android:layout_gravity="center"
             android:src="@drawable/ic_favorite_black_24dp"></ImageView>
     </LinearLayout>
 

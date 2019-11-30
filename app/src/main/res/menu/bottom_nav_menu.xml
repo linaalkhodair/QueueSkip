@@ -6,23 +6,23 @@
     <item
         android:id="@+id/navigation_cart"
         android:icon="@drawable/ic_shopping_cart_black_24dp"
-        android:title="" />
+        android:title="Cart" />
 
     <item
         android:id="@+id/navigation_camera"
         android:icon="@drawable/ic_camera_alt_black_24dp"
-        android:title=""
+        android:title="Camera"
         />
 
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_account_circle_black_24dp"
-        android:title="" />
+        android:title="Profile" />
 
     <item
         android:id="@+id/navigation_logout"
         android:icon="@drawable/ic_power_settings_new_black_24dp"
-        android:title="" />
+        android:title="Logout" />
 
 
 
