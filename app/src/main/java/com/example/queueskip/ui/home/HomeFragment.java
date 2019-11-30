@@ -357,7 +357,7 @@ private HomeViewModel homeViewModel;
                             });
 
 
-//                            refFav= FirebaseDatabase.getInstance().getReference("FavoriteList").child(id).child("itemsList"); //HERE THE PROBLEM
+                  //       refFav= FirebaseDatabase.getInstance().getReference("FavoriteList").child(id).child("itemsList"); //HERE THE PROBLEM
                             fav.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
