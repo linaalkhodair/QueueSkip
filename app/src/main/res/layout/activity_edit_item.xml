@@ -117,7 +117,16 @@
         android:layout_marginTop="-35dp"
         ></ImageView>
 
-
+    <Button
+        android:id="@+id/upload"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:text="UPLOAD"
+        tools:ignore="MissingConstraints"
+        android:background="@drawable/round_shape_btn_gray"
+        android:textColor="@color/colorBackground"/>
 
     <Button
         android:id="@+id/save_btn"

@@ -127,8 +127,11 @@ public class AdminMainActivity extends AppCompatActivity {
                                                          int i = 0;
                                                          for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                                              sendNotification(ds.child("email").getValue(String.class).toLowerCase());
+
                                                              //Log.e("TAG","ENTER111111111111111111");
                                                          }
+                                                         Toast.makeText(AdminMainActivity.this, "Users have been notified successfully", Toast.LENGTH_LONG).show();
+
                                                      }
 
                                                      @Override
@@ -145,6 +148,7 @@ public class AdminMainActivity extends AppCompatActivity {
 
                                              }//end of onClick
                                          }//end of OnClickListener
+
                 );
 
                 cancelBtn.setOnClickListener(new View.OnClickListener() {

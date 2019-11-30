@@ -202,9 +202,11 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
                                          @Override
                                          public void onClick(View view) {
                                              int amount1 = 0;
-                                             if (isItemExist( qrId )) {
-                                                 amount1 = Common.cartRepository.getamountItemByID( qrId )+1;
-                                                 Common.cartRepository.updateAmount( amount1, qrId );
+                                             if (isItemExist( product.getId() )) {
+                                                 amount1 = Common.cartRepository.getamountItemByID( product.getId() )+1;
+                                                 Common.cartRepository.updateAmount( amount1, product.getId() );
+                                                 Toast.makeText(mContext, "Item is already in cart, quantity is updated!", Toast.LENGTH_SHORT).show();
+
 
 
 
@@ -217,10 +219,10 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
                                                              Items item = snapshot.getValue(Items.class);
                                                              // Toast.makeText(getActivity(),item.getName(),Toast.LENGTH_SHORT).show();
 
-                                                             if(item.getId().equals(qrId)){
+                                                             if(item.getId().equals(product.getId())){
                                                                  Cart cart = new Cart();
                                                                  cart.setName( product.getName() );
-                                                                 cart.setId( qrId );
+                                                                 cart.setId( product.getId() );
                                                                  cart.setPrice( Integer.parseInt( (String) product.getPrice()) );
                                                                  cart.setAmount( 1 );
                                                                  cart.setLink( product.getPhoto() );

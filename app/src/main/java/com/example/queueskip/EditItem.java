@@ -1,14 +1,17 @@
 package com.example.queueskip;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,12 +24,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.queueskip.Adapter.SearchAdapter1;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.UUID;
 
 public class EditItem extends AppCompatActivity {
     private EditText editExp, editName, editPrice;
@@ -38,6 +46,13 @@ public class EditItem extends AppCompatActivity {
     private String itemName, itemPrice, itemExpire;
     Button okBtn,cancelBtn;
     TextView dialogMsg;
+    private Button upload;
+    private FirebaseStorage storage;
+    private StorageReference storageReference, storageRef;
+    Uri filePath;
+    private Uri filepath;
+    String ImageLink;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +66,16 @@ public class EditItem extends AppCompatActivity {
         itemPrice = getIntent().getExtras().getString("ItemPrice");
 
 
+
         editExp = findViewById(R.id.editExp);
         editName = findViewById(R.id.editName);
         editPrice = findViewById(R.id.editPrice);
         calendar = findViewById(R.id.calendar);
         save = findViewById(R.id.save_btn);
+        upload=findViewById(R.id.upload);
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         Toolbar toolbar=findViewById(R.id.edit_item_toolbar);
         setSupportActionBar(toolbar);
@@ -88,6 +108,17 @@ public class EditItem extends AppCompatActivity {
                 editExp.setEnabled(false);
             }
         };
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent();
+                intent.setType("image/*");
+                intent.setAction(intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent,"select image"),1);
+            }
+        });
+
+
 
         calendar.setOnClickListener(new View.OnClickListener() {
 
@@ -131,13 +162,45 @@ public class EditItem extends AppCompatActivity {
                 Log.d("TTest",editName.getText().toString());
                 Log.d("TTest","I am in before validate");
 
+                //IMAGE !!!!!!!!!!!!!!!!!!!
 
+                if(filepath!=null){
+                    final ProgressDialog progressDialog = new ProgressDialog(EditItem.this);
+                    progressDialog.setTitle("Image uploaded");
+                    progressDialog.show();
 
+                    if (progressDialog!= null) {
+                        progressDialog.dismiss();
+                    }
+
+                    storageRef = storageReference.child("images/" + UUID.randomUUID().toString());
+
+                    storageRef.putFile(filepath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+
+                            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    ImageLink = uri.toString();
+                                    reff.child(id).child("photo").setValue(ImageLink);
+                                    Log.d("testImg", "image link  is : "+ImageLink);
+                                    progressDialog.dismiss();
+                                }
+                            });
+                        }
+                    });
+
+                }else {
+
+                    ImageLink= "https://i-love-png.com/images/no-image_7299.png";
+                }
+                Log.d("Test01", "image link is: "+ ImageLink);
                 if (validate()) {
-
                     reff.child(id).child("name").setValue(editName.getText().toString());
                     reff.child(id).child("price").setValue(editPrice.getText().toString());
                     reff.child(id).child("expire").setValue(editExp.getText().toString());
+//                    reff.child(id).child("photo").setValue(ImageLink);
                     Toast.makeText(EditItem.this
                             , "Item updated successfully!", Toast.LENGTH_SHORT).show();
                    finish();
@@ -148,10 +211,25 @@ public class EditItem extends AppCompatActivity {
 
     } // end onCreate
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==1 && resultCode== RESULT_OK && data!=null && data.getData() !=null){
+
+            filepath = data.getData();}
+//        Bitmap bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(),filepath);
+//        imageView.setImageBitmap(bitmap);
+//        BitMapToString(bitmap);
+    }
+
     private boolean validate() {
         name = editName.getText().toString().trim();
         price = editPrice.getText().toString().trim();
         expire = editExp.getText().toString().trim();
+//        ImageLink();
+//        Log.d("Test01", "image link is: "+ ImageLink);
+
         Log.d("Test2", "i'm here"+editName.getText().toString());
 
         if ((TextUtils.isEmpty(name)) || (TextUtils.isEmpty(price)) || (TextUtils.isEmpty(expire)) ) {
@@ -171,5 +249,43 @@ public class EditItem extends AppCompatActivity {
         return true;
         }//end of onSupportNavigateUp
 
+    private void ImageLink() {
+
+        if(filepath!=null){
+            final ProgressDialog progressDialog = new ProgressDialog(EditItem.this);
+            progressDialog.setTitle("Image uploaded");
+            progressDialog.show();
+
+            if (progressDialog!= null) {
+                progressDialog.dismiss();
+            }
+
+            storageRef = storageReference.child("images/" + UUID.randomUUID().toString());
+
+            storageRef.putFile(filepath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+
+                    storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            ImageLink = uri.toString();
+                            Log.d("testImg", "image link  is : "+ImageLink);
+                            progressDialog.dismiss();
+                        }
+                    });
+                }
+            });
+
+        }else {
+
+            ImageLink= "https://i-love-png.com/images/no-image_7299.png";
+        }
     }
+
+
+    } //end Class
+
+
+
 

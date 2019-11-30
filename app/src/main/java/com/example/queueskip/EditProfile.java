@@ -226,11 +226,11 @@ public class EditProfile extends AppCompatActivity {
 
     private void createDialog(String message){
         final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.logout_dialog);
+        dialog.setContentView(R.layout.alert_dialogs);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        okBtn=dialog.findViewById(R.id.ok_btn_dialog);
-        cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
+        okBtn=dialog.findViewById(R.id.ok_btn_alert_dialog);
+//        cancelBtn=dialog.findViewById(R.id.cancel_btn_dialog);
         dialogMsg=dialog.findViewById(R.id.dialog_message);
 
 
@@ -245,15 +245,15 @@ public class EditProfile extends AppCompatActivity {
                                  }//end of OnClickListener
         );
 
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View view) {
-                                             dialog.cancel();
-
-                                         }//end of onClick
-                                     }//end of OnClickListener
-        );
-        cancelBtn.setVisibility(View.INVISIBLE);
+//        cancelBtn.setOnClickListener(new View.OnClickListener() {
+//                                         @Override
+//                                         public void onClick(View view) {
+//                                             dialog.cancel();
+//
+//                                         }//end of onClick
+//                                     }//end of OnClickListener
+//        );
+//        cancelBtn.setVisibility(View.INVISIBLE);
         //  cancelBtn.setText("OK");
 
         dialog.show();

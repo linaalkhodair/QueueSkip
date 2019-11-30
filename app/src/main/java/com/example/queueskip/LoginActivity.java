@@ -190,7 +190,7 @@ public class LoginActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         //Toast.makeText(LoginActivity.this,"Login success",Toast.LENGTH_SHORT).show();
                         //startActivity(new Intent(LoginActivity.this,MainActivity.class) );
-                        if(name.equals("queueskipad1@outlook.com")){
+                        if(name.toLowerCase().equals("queueskipad1@outlook.com")){
                             finish();
                             startActivity(new Intent(LoginActivity.this, AdminMainActivity.class));
 
@@ -199,22 +199,20 @@ public class LoginActivity extends AppCompatActivity {
                         checkEmailVerification();
                     } else {
                         //attempts.setText("Number of attempts remaining: " + counter);
-                        if (counter == 0) {
-                            login.setEnabled(false);
-                            login.setBackground(getResources().getDrawable(R.drawable.round_shape_btn_gray));
-                            attempts.setText("Number of attempts remaining: " + counter);
-                        }
+//                        if (counter == 0) {
+//                            login.setEnabled(false);
+//                            login.setBackground(getResources().getDrawable(R.drawable.round_shape_btn_gray));
+//                            attempts.setText("Number of attempts remaining: " + counter);
+//                        }
                         //Toast.makeText(LoginActivity.this,"Login Failed",Toast.LENGTH_SHORT).show();
                         try {
                             throw task.getException();
                         } catch (FirebaseAuthInvalidUserException e) {
                             progressDialog.dismiss();
                             createDialog(getResources().getString(R.string.invalid_user));
-                            counter--;
                         } catch (FirebaseAuthInvalidCredentialsException e) {
                             progressDialog.dismiss();
                             createDialog(getResources().getString(R.string.invalid_email_or_pass));
-                            counter--;
 
                         } catch (FirebaseNetworkException e) {
                             progressDialog.dismiss();
@@ -222,11 +220,10 @@ public class LoginActivity extends AppCompatActivity {
                         } catch (IllegalArgumentException e) {
                             progressDialog.dismiss();
                             createDialog(getResources().getString(R.string.fill_required_fields)); //?maybe no need
-                            counter--;
                         } catch (Exception e) {
                             progressDialog.dismiss();
                             Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            counter--;
+
                         }
 
 
