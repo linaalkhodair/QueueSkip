@@ -39,6 +39,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="10dp"
         android:background="@android:color/darker_gray"></View>
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,7 +57,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="200dp"
+            android:layout_marginLeft="180dp"
             android:src="@drawable/paypalicon"></ImageView>
 
     </LinearLayout>
@@ -75,10 +76,10 @@
 
         <TextView
             android:id="@+id/tp"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:layout_marginLeft="230dp"
+            android:layout_marginLeft="199dp"
             android:text="0SR">
 
         </TextView>
@@ -91,17 +92,15 @@
 
         <TextView
             android:id="@+id/discount"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Discount" />
 
         <TextView
             android:id="@+id/discountAmount"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:layout_marginLeft="-120dp"
-
+            android:layout_marginLeft="205dp"
             android:text="0.00SR">
 
         </TextView>
@@ -123,10 +122,9 @@
 
         <TextView
             android:id="@+id/vat"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginLeft="250dp"
+            android:layout_marginLeft="218dp"
             >
 
         </TextView>
@@ -148,10 +146,9 @@
 
         <TextView
             android:id="@+id/totalPay"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-
-            android:layout_marginLeft="220dp"
+            android:layout_marginLeft="192dp"
             android:layout_marginRight="8dp"
             android:text="32$"
             android:textStyle="bold">
@@ -162,10 +159,10 @@
 
     <Button
         android:id="@+id/btn_place_order"
-        android:layout_width="350dp"
+        android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
         android:background="@drawable/round_shape_btn"

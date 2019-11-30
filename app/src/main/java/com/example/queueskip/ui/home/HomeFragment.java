@@ -396,7 +396,7 @@ private HomeViewModel homeViewModel;
                                         Cart cart = new Cart();
                                         cart.setName( itemName );
                                         cart.setId( qrId );
-                                        cart.setPrice( Integer.parseInt( (String) itemPrice +"SR") );
+                                        cart.setPrice( Integer.parseInt( (String) itemPrice ) );
                                         cart.setAmount( 1 );
                                         cart.setLink( photo );
 
