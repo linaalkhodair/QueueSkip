@@ -7,7 +7,16 @@
     android:theme="@style/AppTheme.NoActionBar"
     android:layout_height="match_parent"
     >
+<TextView
+    android:id="@+id/noFav"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:layout_marginTop="40dp"
+    android:text="You have no favorite items"
+    android:textStyle="bold">
 
+</TextView>
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/fav_toolbar"
         android:layout_width="match_parent"

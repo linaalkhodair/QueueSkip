@@ -267,7 +267,7 @@ private HomeViewModel homeViewModel;
                                             Glide.with(mContext).load(photo).into(productImg);
                                             productNameTxt.setText("Item: "+item.getName());
                                             itemName=item.getName();
-                                            productPriceTxt.setText("Price: "+item.getPrice());
+                                            productPriceTxt.setText("Price: "+item.getPrice() +" SR");
                                             itemPrice=item.getPrice();
                                             itemExp=item.getExpire();
                                             itemHere=item;
@@ -396,7 +396,7 @@ private HomeViewModel homeViewModel;
                                         Cart cart = new Cart();
                                         cart.setName( itemName );
                                         cart.setId( qrId );
-                                        cart.setPrice( Integer.parseInt( (String) itemPrice ) );
+                                        cart.setPrice( Integer.parseInt( (String) itemPrice) );
                                         cart.setAmount( 1 );
                                         cart.setLink( photo );
 

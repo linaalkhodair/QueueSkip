@@ -46,6 +46,7 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
     private ImageView moveBtn;
     private ImageView unFav;
     private String qrId;
+    private TextView noFav;
     DatabaseReference reff;
     boolean enter=false;
     FirebaseAuth firebaseAuth;
@@ -74,12 +75,17 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
             product_price=(TextView) view.findViewById( R.id.product_price1);
             product_expire=(TextView) view.findViewById(R.id.product_expire1);
             product_img=(ImageView) view.findViewById(R.id.product_img1);
+         //  noFav=view.findViewById(R.id.noFav);
+         //  noFav.setVisibility(View.INVISIBLE);
+        // empty();
 
 
 
             view.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
+
+
                     if(listener!=null){
                         int position =getAdapterPosition();
                         if(position !=RecyclerView.NO_POSITION){
@@ -92,6 +98,7 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
         }
     }
 
+
     public FavoriteAddapter(List<Items> itemList, Context context){
         this.itemList=itemList;
         this.arrayList=new ArrayList<Items>(  );
@@ -100,6 +107,8 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
         mContext=context;
         //Log.d(  "TTest", String.valueOf( itemList.get( 0 ) ) );
     }
+
+
     @Override
     public FavoriteAddapter.MyViewHolder onCreateViewHolder(ViewGroup parent , int position){
         View itemView= LayoutInflater.from( parent.getContext() ).inflate(R.layout.favorite_row,parent,false);
@@ -252,14 +261,21 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
 
                                          }
         } );
-
-                                         }
-
+                                 }
 
 
 
 
 
+
+
+
+//private void empty(){
+//        if(getItemCount()==0)
+//            noFav.setVisibility(View.VISIBLE);
+//        else
+//            noFav.setVisibility(View.INVISIBLE);
+//}
 
 
 
