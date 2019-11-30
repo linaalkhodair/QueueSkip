@@ -18,9 +18,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.queueskip.Database.ModelDB.Cart;
 import com.example.queueskip.EditItem;
+import com.example.queueskip.FavoriteList;
 import com.example.queueskip.Items;
 import com.example.queueskip.R;
+import com.example.queueskip.User;
 import com.example.queueskip.utliz.Common;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,10 +43,16 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
     private List<Items> itemList;
     private ArrayList<Items> arrayList;
     private Context mContext;
-    private Button moveBtn;
+    private ImageView moveBtn;
+    private ImageView unFav;
     private String qrId;
     DatabaseReference reff;
     boolean enter=false;
+    FirebaseAuth firebaseAuth;
+    DatabaseReference favRef;
+    private String email;
+    private String uid;
+    DatabaseReference userRef;
 
 
     public void setOnItemClickListener(FavoriteAddapter.OnItemClickListener listener)
@@ -95,6 +105,7 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
         View itemView= LayoutInflater.from( parent.getContext() ).inflate(R.layout.favorite_row,parent,false);
 
         moveBtn=itemView.findViewById(R.id.move_btn);
+        unFav = itemView.findViewById(R.id.unfav);
         return  new FavoriteAddapter.MyViewHolder(itemView, (FavoriteAddapter.OnItemClickListener) mListener );
 
 //        return new MyViewHolder(itemView);
@@ -107,12 +118,77 @@ public class FavoriteAddapter extends RecyclerView.Adapter<FavoriteAddapter.MyVi
         qrId=product.getId();
 //put extra
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseUser userAuth = firebaseAuth.getCurrentUser();
+        email = userAuth.getEmail();
+        Log.d("emailTest", "email is: "+ email);
+        userRef = FirebaseDatabase.getInstance().getReference("User");
+
+
         holder.product_name.setText(product.getName());
         // holder.product_price.setText(product.getPrice()+" SR");
-        holder.product_price.setText(product.getPrice());
+        holder.product_price.setText(product.getPrice()+ " SR");
         holder.product_expire.setText( product.getExpire() );
         Glide.with(mContext).load(product.getPhoto()).into(holder.product_img);
         reff = FirebaseDatabase.getInstance().getReference().child( "items");
+
+
+        //Unfavorite !!!!
+
+        unFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                userRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            User user = snapshot.getValue(User.class);
+                            if(user.getEmail().equals(email)){
+                                uid = user.getId();
+
+                                favRef = FirebaseDatabase.getInstance().getReference("FavoriteList").child(uid).child("itemsList");
+
+                                favRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                            Items items = snapshot.getValue(Items.class);
+                                            if (items.getId().equals(qrId)){
+
+                                                Log.d("ttest", "snapshot key"+ product.getId());
+                                                favRef.child(product.getId()).removeValue();
+                                                ((Activity)mContext).finish();
+                                                Toast.makeText(mContext, "Item is no longer a favorite!", Toast.LENGTH_SHORT).show();
+
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+                            } //end if outer
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+        });
+
+
+        //--------------------------------------------------------------------------------------
+
+
         moveBtn.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View view) {

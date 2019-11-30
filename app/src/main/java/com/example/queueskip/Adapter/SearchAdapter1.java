@@ -114,7 +114,7 @@ public class SearchAdapter1 extends RecyclerView.Adapter<SearchAdapter1.MyViewHo
 
         holder.product_name.setText(product.getName());
        // holder.product_price.setText(product.getPrice()+" SR");
-        holder.product_price.setText(product.getPrice());
+        holder.product_price.setText(product.getPrice() + " SR");
         holder.product_expire.setText( product.getExpire() );
         Glide.with(mContext).load(product.getPhoto()).into(holder.product_img);
 
